@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from cuenta_usr.models import Usuario
 
 # Create your views here.
 
@@ -7,5 +8,7 @@ def principal(request):
     # Render de paginaPrin.html de templates
 
 def database(request):
-    return render(request, 'bd_exitosa.html')
+    user = Usuario.objects.all()
+    return render(request, 'bd_exitosa.html',
+                  {'user': user})
     # Render de bd_exitosa.html de templates
