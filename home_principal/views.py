@@ -1,19 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from cuenta_usr.models import Usuario
+from django.templatetags.static import static
 
 # Create your views here.
 
 def principal(request):
-    return render(request, 'paginaPrin.html') 
+    # return render(request, 'index.html') 
     # Render de paginaPrin.html de templates
-
-def database(request):
-    try:
-        user = Usuario.objects.all()
-        db_ok = True
-    except Exception:
-        user = []
-        db_ok 
-    return render(request, 'bd_exitosa.html',
-                  {'db_ok': db_ok ,'user': user})
-    # Render de bd_exitosa.html de templates
+    imagen_url = static('media/myspace.svg')
+    return render(request, 'home_prin/index.html', {'imagen_url': imagen_url})
+    
+def index_user(request):
+    return render(request, 'user/index.html')

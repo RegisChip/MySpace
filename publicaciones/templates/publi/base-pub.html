@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- metadatos -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="MySpace">
+    <meta name="description" content="Red Social MySpace">
+    <meta name="author" content="Christian Regina Rodriguez Magaña, Leonardo Blanco Ambriz">
+    <!-- <meta http-equiv="refresh" content="30"> -->
+
+    <!-- links -->
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'myspace.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'myspace.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- fonds -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Anaheim:wght@400..800&family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bree+Serif&display=swap" rel="stylesheet">
+        <!-- Scrips -->
+
+    <!-- elementos -->
+    <title>{% block title %}MySpace{% endblock %}</title>
+</head>
+<body>
+
+  <div class="content-grid">
+    <aside id="aside-izq">
+      <div class="contenedor">
+        <button id="fle-izq">
+          <img src="{% static 'media/flecha-izq.svg' %}" alt="Menu-izq" class="fle-ico">
+        </button>
+        <div id="cont-izq">
+          {% block sidebar-izq %}
+          {% endblock %}
+        </div>
+      </div>
+    </aside>
+
+    <header id="head-base">
+      <h1>MySpace | <a href="#">{% block ubicacion %}Principal{% endblock %}</a></h1>
+    </header>
+
+    <main id="main-base">
+      <div class="main-content">
+        {% block content %}
+        
+        {% endblock %}
+      </div>
+      
+      <footer id="main-foot">
+        <p>
+          <a href="https://validator.w3.org/#validate_by_input" target="_blank">
+            <img style="border:0;width:88px;height:31px"
+              src="{% static 'media/w3c-html.png' %}" 
+              alt="Valid HTML!">
+          </a>
+        </p>
+        <p>
+          <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">
+            <img style="border:0;width:88px;height:31px"
+              src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
+              alt="Valid CSS!">
+          </a>
+        </p>
+      </footer>
+    </main>
+
+    <aside id="aside-der">
+      <button id="fle-der" >
+        <img src="{% static 'media/flecha-der.svg' %}" alt="Menu-der" class="fle-ico">
+      </button>  
+
+      <div id="ima-perfil"> 
+        <img id="btn-perfil"  style="border:0;width:100px;height:auto" src="{{ imagen_url }}" alt="Foto de perfil">
+        <div id="cont-dropdown">
+          <ul>
+            {% block op-dropdown %} 
+            <li><a href="#">Iniciar Sesión / Registrarse</a></li>
+            {% endblock %}
+          </ul>
+        </div>
+      </div>
+
+      <article id="cont-der">
+        <h3>Tablones</h3>
+        <input type="text" id="busqueda-tablon" placeholder="Buscar tablón..." name="buscar">
+        <ul id="list-der">
+          <li><a href="#">General</a></li>
+          <li><a href="#">Anime</a></li>
+          <li><a href="#">Animales</a></li>
+          <li><a href="#">Video Juegos</a></li>
+          <li><a href="#">Política</a></li>
+          <li><a href="#">Paranormal</a></li>
+          <li><a href="#">Cocina</a></li>
+          <li><a href="#">Deporte</a></li>
+          <li><a href="#">Arte</a></li>
+          <li><a href="#">MLP</a></li>
+          <li><a href="#">Literatura</a></li>
+          <li><a href="#">Programación</a></li>  
+          <li><a href="#">Música</a></li>
+          <li><a href="#">Comics</a></li>
+          <li><a href="#">Cultura</a></li>
+          <li><a href="#">Historia</a></li>
+          <li><a href="#">Manualidades</a></li>  
+        </ul>
+        <!-- <button id="add-der">
+          <i class="bi bi-file-plus"></i>
+        </button> -->
+      </article>
+    </aside>
+
+    <footer id="foot-base">
+      <ul>
+        <li><a href="#">Acerca de</a> |</li>
+        <li><a href="#">Reglas</a> |</li>
+        <li><a href="#">Términos y condiciones</a> |</li>
+        <li><a href="#">Privacidad</a> |</li>
+        <li><a href="#">Contacto</a> |</li>
+      </ul>
+      <p>&copy;2025 - MySpace.com Todos los derechos reservados</p>
+    </footer>
+  </div>
+
+</body>
+</html>

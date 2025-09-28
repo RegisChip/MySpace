@@ -1,0 +1,316 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  height: auto;
+  font-family: "Anaheim", sans-serif;
+  background-color: #e3eaf4;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 15% 68% 15%;
+  grid-template-rows: 120px auto 80px;
+  grid-template-areas:
+    "izq header der"
+    "izq main   der"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 0 13px;
+}
+
+/* Áreas */
+#aside-izq {
+  grid-area: izq;
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  margin-left: 13px;
+  margin-top: 3rem;
+  padding: 5px;
+  height: 500px;
+  width: auto;
+}
+
+.contenedor {
+  position: relative;
+}
+
+#fle-izq {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: #bfd5f1;
+  transition: color 0.3s ease;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#fle-izq img{
+  /* color: #bfd5f1; */
+  padding: 0px;
+  margin: 0px;
+  height: 22px;
+  width: auto;
+}
+
+#aside-der {
+  grid-area: der;
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  margin-right: 13px;
+  margin-top: 3rem;
+  padding: 5px;
+  height: 500px;
+  width: auto;
+}
+
+#ima-perfil {
+  position: relative;
+}
+
+/* Por defecto oculto */
+#cont-dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease 0.3s;
+  position: absolute;
+  background-color: #f4fbfd;
+  box-shadow: 0 4px 8px #bfd5f1;
+  border: 2px solid #bfd5f1;
+  padding: 10px;
+  z-index: 100;
+  top: 0;
+  right: 100%;
+  width: max-content;
+  margin-right: 10px;
+}
+
+/* Cuando el mouse está sobre el contenedor padre o sobre el dropdown mismo */
+/* cambiar despues con codigo en js */
+#ima-perfil:hover #cont-dropdown,
+#cont-dropdown:hover {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s; /* para que aparezca sin esperar */
+}
+
+#cont-dropdown ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#cont-dropdown ul li {
+  color: #1a4f9d;
+}
+
+#cont-dropdown ul li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 5px 0;
+}
+
+#cont-dropdown ul li a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#cont-der ul li:hover {
+  text-decoration: underline;
+  cursor: pointer; /* Opcional, para que se vea que es interactivo */
+}
+
+#fle-der{
+  top: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#fle-der img{
+  /* color: #bfd5f1; */
+  padding: 0px;
+  margin: 0px;
+  height: 22px;
+  width: auto;
+}
+
+#cont-der h3{
+  background: #bfd5f1;
+  color: #3c77cb;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+#cont-der input::placeholder{
+  color: #bfd5f1;
+}
+
+#cont-der input{
+  width: 100%; /* ocupa la mitad del ancho del contenedor padre */
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid #609ffa;
+  color: #3c77cb;
+}
+
+#cont-der input:focus {
+  outline: none;
+}
+
+#cont-der ul li a{
+  text-decoration: none;
+  color: inherit;
+}
+
+#cont-der ul{
+  list-style: none;
+  color: #1a4f9d;
+
+  max-height: 320px; /* Ajusta a la altura que quieras limitar */
+  overflow: hidden; /* Oculta el contenido que se sale */
+  padding-left: 0; /* Quita indentación si quieres */
+  margin: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#cont-der ul li {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 2px 0;
+}
+
+#cont-der ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+#cont-der ul::-webkit-scrollbar-thumb {
+  background-color: #bfd5f1;
+  border-radius: 4px;
+}
+
+#cont-der ul li:hover {
+  text-decoration: underline;
+  cursor: pointer; /* Opcional, para que se vea que es interactivo */
+}
+
+.fle-ico:hover {
+/* filter: invert(67%) sepia(30%) saturate(227%) hue-rotate(177deg) brightness(97%) contrast(95%); */
+filter: invert(53%) sepia(40%) saturate(438%) hue-rotate(177deg) brightness(96%) contrast(90%);
+}
+
+header {
+  grid-area: header;
+  color: #6c8ec2;
+  background: #bfd5f1;
+  border: 1px solid #609ffa;
+  font-family: "Bree Serif", serif;
+  color: #ffffff;
+  height: 120px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+header h1 {
+  margin: 1rem;
+  font-size: 3.5rem;
+  font-weight: 200;
+  font-style: normal;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+
+header h1 a:hover {
+  text-decoration: underline;
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column; /* apila el contenido en columna */
+  justify-content: space-between; /* separa el contenido */
+  height: 100%;
+  border: 1px solid #609ffa;
+  border-top: none;
+  background: #f4fbfd;
+  padding: 0px;
+  margin: 0px;
+}
+
+#main-foot{
+  background: #bfd5f1;
+  border-top: 1px solid #609ffa;
+  float: right;
+  padding: 5px;
+  padding-top: 10px;
+}
+
+#main-foot p{
+  align-items: end;
+  text-align: end;
+  padding-left: 15px;
+  float: right;
+}
+
+footer {
+  grid-area: footer;
+  text-align: center;
+  padding: 20px;
+  text-align: center;
+}
+
+#foot-base ul {   
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#foot-base ul li {
+  margin: 0px;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 0;
+}
+
+#foot-base ul li a {
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+  color: #1a4f9d; 
+  font-size: 14px;     
+  font-weight: 600;
+}
+
+#foot-base ul li a:hover {
+  text-decoration: underline;
+}
+
+#foot-base p {
+  margin-top: 15px;      /* Espacio entre la lista y el texto */
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
