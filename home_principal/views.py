@@ -12,3 +12,6 @@ def principal(request):
     
 def index_user(request):
     return render(request, 'user/index.html')
+
+def perfil(request):
+    return render(request, 'user/perfil.html')

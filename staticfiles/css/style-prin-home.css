@@ -1,0 +1,145 @@
+#cont-izq {
+  background: #bfd5f1;
+  height: 88%;
+  border: 1px solid #609ffa;
+  display: flex;
+  flex-direction: column;
+}
+
+#cont-izq h3 {
+  margin: 5px;
+  color: #3c77cb;
+}
+
+#cont-izq .izq-perf {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 390px; /* MISMA altura límite que en #cont-der ul */
+  list-style: none; /* si aplica */
+  padding-left: 0;
+  margin: 0;
+  color: #1a4f9d; /* si quieres también el mismo estilo de texto */
+}
+
+/* Scrollbar WebKit */
+#cont-izq .izq-perf::-webkit-scrollbar {
+  width: 8px;
+}
+
+#cont-izq .izq-perf::-webkit-scrollbar-thumb {
+  background-color: #bfd5f1;
+  border: 1px solid #1a4f9d;
+  border-radius: 4px;
+}
+
+/* Opcional: track para que se vea igual
+#cont-izq .izq-perf::-webkit-scrollbar-track {
+
+} */
+
+
+#izq-arti {
+  margin: 5px;
+}
+
+.menu-perf li {
+  background: #e3eaf4;
+  margin-bottom: 5px;
+  border: 3px solid #f4fbfd;
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* separación entre ícono y texto */
+  cursor: pointer;
+}
+
+.menu-perf li img{
+    width: 45px;
+    height: 45px;
+    border: 1px solid #e3eaf4;
+}
+
+.menu-perf li a {
+  text-decoration: none;
+  margin-left: 2px;
+  color: #000;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  padding-bottom: 0px;
+}
+
+.info-main {
+  display: flex;
+  flex-direction: column; /* Cambia a columna para que el h4 esté arriba separado */
+  border: 1px solid #609ffa;
+  margin-bottom: 1rem;
+  background: white; /* opcional para destacar */
+}
+
+
+.info-main p,
+.info-main img {
+  vertical-align: middle;
+}
+
+.info-main p {
+    margin: 5px 10px;
+    padding: 5px;
+    text-align: justify;
+}
+
+.info-main .parra-left {
+  flex: 1; /* Para que el texto ocupe el espacio disponible */
+  margin-right: 1rem; /* Espacio extra a la derecha */
+}
+
+.info-main h4 {
+  margin: 0;
+  padding: 10px;
+  background: #98bdf1;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-bottom: 1px solid #609ffa;
+  width: 100%; /* Que ocupe todo el ancho */
+  box-sizing: border-box; /* Para que padding no afecte ancho */
+}
+
+.text-main {
+  display: flex;
+  flex-direction: row; /* Texto e imagen al lado */
+  gap: 1rem;
+  padding: 10px;
+  align-items: center;
+}
+
+.text-main p {
+  flex: 1;
+  margin: 0;
+  text-align: justify;
+}
+
+.text-main img {
+  width: 60px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.info-main img {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0; /* La imagen no se reduce */
+  margin: 0;
+}
+
+
+

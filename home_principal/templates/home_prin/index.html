@@ -1,19 +1,79 @@
 {% extends "home_prin/base_principal.html" %}
+{% load static %}
+
+{% block extra_css %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/style-prin-home.css' %}">
+{% endblock %}
 
 <!-- titulo de cada pagina -->
 <!-- {% block title %}MySpace{% endblock %} -->
-
-<!-- contenido de la barra slateral izquierda -->
-<!-- {% block sidebar-izq %}
-
-{% endblock %} -->
 
 <!-- ubicacion de la pagina en la que nos encontramos -->
 <!-- {% block ubicacion %}
 Principal
 {% endblock %} -->
 
-<!-- contenido de la clase main -->
-<!-- {% block content %}
+<!-- contenido de la barra slateral izquierda -->
+{% block sidebar-izq %}
+<div id="cont-izq">
+    <h3>Perfiles</h3>
+    <div class="izq-perf">
+        <article id="izq-arti">
+            <!-- esta parte va acmbiar por que se ocupara la base de datos -->
+            <ul class="menu-perf">
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 1</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 2</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 3</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 4</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 5</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 6</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 7</a></li>
+                <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 8</a></li>
+            </ul>
+        </article>
+    </div>
+</div>
+{% endblock %}
 
-{% endblock %} -->
+<!-- contenido de la clase main -->
+{% block content %}
+<div class="main-content">
+  <article class="info-main">
+    <h4>¿Qué es MySpace?</h4>
+    <div class="text-main">
+      <p>
+        MySpace es un sitio web tipo red social, en el que los usuarios puedan compartir sus gustos e intereses de manera más efectiva, mediante la personalización de sus perfiles y la posibilidad de publicar en foros dedicados a sus preferencias. De esta forma, se crean espacios donde los usuarios puedan conocer e interactuar con otros perfiles.
+      </p>
+    </div>
+  </article>
+
+  <article class="info-main">
+    <h4>Misión</h4>
+    <div class="text-main">
+      <p>
+        Ofrecer un espacio digital libre y personalizable donde cada persona pueda compartir sus gustos, ideas y experiencias en tablones o foros temáticos, fomentando la creatividad, la autenticidad y la interacción genuina entre usuarios.
+      </p>
+      <img src="{% static 'media/mision.svg' %}" alt="mision" />
+    </div>
+  </article>
+
+  <article class="info-main">
+    <h4>Visión</h4>
+    <div class="text-main">
+      <p>
+        Ser la red social donde cada persona pueda sentirse libre y cómoda al expresarse, personalizar su espacio y compartir sus pasiones en tablones temáticos, creando comunidades auténticas y conectando con quienes disfrutan de lo mismo.
+      </p>
+      <img src="{% static 'media/vision.svg' %}" alt="vision" />
+    </div>
+  </article>
+
+  <article class="info-main">
+    <h4>Valores</h4>
+    <div class="text-main">
+      <p>Integridad, Respeto, Honestidad.</p>
+      <img src="{% static 'media/valores.svg' %}" alt="valores" />
+    </div>
+  </article>
+</div>
+
+{% endblock %}

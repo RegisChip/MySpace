@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- metadatos -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="MySpace">
+    <meta name="description" content="Red Social MySpace">
+    <meta name="author" content="Christian Regina Rodriguez Magaña, Leonardo Blanco Ambriz">
+    <!-- <meta http-equiv="refresh" content="30"> -->
+
+    <!-- links -->
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'myspace.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'myspace.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style-perfil.css' %}">
+
+    {% block extra_css %} 
+    {% endblock %}
+
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- fonds -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Anaheim:wght@400..800&family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bree+Serif&display=swap" rel="stylesheet">
+        <!-- Scrips -->
+
+    <!-- elementos -->
+    <title>{% block title %}MySpace{% endblock %}</title>
+</head>
+<body>
+
+  <div class="content-grid">
+    <aside id="aside-izq">
+      <div class="contenedor">
+        <div class="boton-container">
+          <button id="fle-izq">
+            <img src="/static/media/flecha-izq.svg" alt="Menu-izq" class="fle-ico">
+          </button>
+        </div>
+        <div id="cont-izq">
+            <h3>Siguinedo</h3>
+            <div class="izq-perf">
+                <article id="izq-arti">
+                    <!-- esta parte va acmbiar por que se ocupara la base de datos -->
+                    <ul class="menu-perf">
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 1</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 2</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 3</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 4</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 5</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 6</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 7</a></li>
+                        <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 8</a></li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+      </div>
+    </aside>
+
+    <header id="head-base">
+      <h1>MySpace | <a href="#">{% block ubicacion %}Perfil{% endblock %}</a></h1>
+    </header>
+
+    <main id="main-base">
+        <!-- aqui va mas codigo -->
+        <div class="main-content">
+            <div class="main-ima-perf">
+                <img src="{% static 'media/user.svg' %}" alt="foto de perfil">
+            </div>
+            <div class="descrip-perf">
+                <h2>Nombre</h2>
+                <p>Descripcion Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, eveniet? Sapiente autem quasi id quo provident natus quia, non recusandae quae odio accusantium ut cupiditate. Amet repudiandae ratione ipsa accusamus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore deserunt officia ducimus accusantium tempora recusandae nemo ea. Sequi eligendi quam tenetur ullam tempora placeat. Facilis est repellendus dolores animi ea! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi quam pariatur quod adipisci, fuga nisi a expedita temporibus modi nostrum suscipit, id quis distinctio odio magni, omnis similique! Quas, architecto. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate aliquid quaerat quidem eius officiis nulla et minima impedit! Perspiciatis atque voluptas eos ex laudantium aperiam saepe tempora cum tempore nihil!</p>
+            </div>
+            <div class="main-blog">
+                <hr>
+                <div class="main-navbar">
+                    <nav class="nav-option">
+                        <ul class="navbar-ul">
+                            <li><a href="">[Hashtags]</a></li>
+                            <li><a href=""></a>[Imágenes]</li>
+                        </ul>
+                        <button><i class="bi bi-pencil-square"></i></button>
+                        <button><i class="bi bi-trash3"></i></button>
+                    </nav>
+                </div>
+                <div class="blog-post">
+                    <div class="post-perf">
+                        <div class="info-main">
+                            <img src="" alt="foto perfil">
+                            <h6>Nombre</h6>
+                            <h6>Publicó</h6>
+                            <h6>fecha :</h6>
+                            <button class="crear-coment"><i class="bi bi-caret-right-fill"></i></button>
+                        </div>
+                        <div class="post">
+                            <p>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat distinctio voluptate facere animi exercitationem culpa quisquam vitae quod numquam quos est iste saepe necessitatibus iusto, obcaecati voluptatum sint molestias ullam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis nulla aperiam animi, repudiandae quidem quas quis saepe in hic provident! Saepe provident hic pariatur, totam quis placeat architecto reprehenderit harum? Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima pariatur iste, mollitia quidem ducimus vitae! Commodi amet molestiae laboriosam doloremque dolorem delectus dolores, quam provident ullam iste? Hic, explicabo veniam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti quas molestias rerum saepe mollitia laboriosam voluptatibus minus dolorem excepturi ab reiciendis quasi libero, assumenda error temporibus possimus odio ipsam enim? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde aperiam pariatur corrupti, doloremque sequi sapiente delectus dolorum, architecto a ad natus sed nobis accusamus ducimus velit! Rerum quo eveniet maxime. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, amet optio soluta dolor quam sit deleniti error explicabo veniam fugit, eius ea ullam aperiam totam dolorum quos itaque aut tempore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ratione adipisci unde cum veniam eius nihil excepturi, quam, explicabo perspiciatis dicta. Possimus numquam deserunt quisquam ipsum voluptas, suscipit hic eveniet?
+                            </p>
+                        </div>
+                        <div class="post-ima">
+                            <img src="" alt="imagen-post">
+                        </div>
+                        <div class="opciones-botton">
+                            <a class="check" href=""></a>
+                            <button class="kudos"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+      <footer id="main-foot">
+        <p>
+          <a href="https://validator.w3.org/#validate_by_input" target="_blank">
+            <img style="border:0;width:88px;height:31px"
+              src="{% static 'media/w3c-html.png' %}" 
+              alt="Valid HTML!">
+          </a>
+        </p>
+        <p>
+          <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">
+            <img style="border:0;width:88px;height:31px"
+              src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
+              alt="Valid CSS!">
+          </a>
+        </p>
+      </footer>
+    </main>
+
+    <aside id="aside-der">
+      <button id="fle-der" >
+        <img src="{% static 'media/flecha-der.svg' %}" alt="Menu-der" class="fle-ico">
+      </button>  
+      <article id="cont-der">
+        <h3>Tablones</h3>
+        <input type="text" id="busqueda-tablon" placeholder="Buscar tablón..." name="buscar">
+        <ul id="list-der">
+          <li><a href="#">General</a></li>
+          <li><a href="#">Anime</a></li>
+          <li><a href="#">Animales</a></li>
+          <li><a href="#">Video Juegos</a></li>
+          <li><a href="#">Política</a></li>
+          <li><a href="#">Paranormal</a></li>
+          <li><a href="#">Cocina</a></li>
+          <li><a href="#">Deporte</a></li>
+          <li><a href="#">Arte</a></li>
+          <li><a href="#">MLP</a></li>
+          <li><a href="#">Literatura</a></li>
+          <li><a href="#">Programación</a></li>  
+          <li><a href="#">Música</a></li>
+          <li><a href="#">Comics</a></li>
+          <li><a href="#">Cultura</a></li>
+          <li><a href="#">Historia</a></li>
+          <li><a href="#">Manualidades</a></li>  
+        </ul>
+        <!-- <button id="add-der">
+          <i class="bi bi-file-plus"></i>
+        </button> -->
+      </article>
+    </aside>
+
+    <footer id="foot-base">
+      <ul>
+        <li><a href="#">Acerca de</a> |</li>
+        <li><a href="#">Reglas</a> |</li>
+        <li><a href="#">Términos y condiciones</a> |</li>
+        <li><a href="#">Privacidad</a> |</li>
+        <li><a href="#">Contacto</a> |</li>
+      </ul>
+      <p>&copy;2025 - MySpace.com Todos los derechos reservados</p>
+    </footer>
+  </div>
+
+</body>
+</html>
