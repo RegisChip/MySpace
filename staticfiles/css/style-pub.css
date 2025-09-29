@@ -377,6 +377,7 @@ footer {
   cursor: pointer;
 }
 
+
 .menu-perf li img{
     width: 45px;
     height: 45px;
@@ -466,12 +467,29 @@ footer {
     align-items: center;
 }
 
+.post-dropdown {
+  display: none;
+  position: absolute; /* Puedes ajustar esto según tu diseño */
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 100;
+}
+
+.crear-post-item:hover .post-dropdown {
+  display: block;
+}
+
 .navbar-ul {
     display: flex;
     list-style: none;
     gap: 8px;
     padding: 0;
     margin: 0;
+}
+
+.navbar-ul .post-dropdown{
+  display: none;
 }
 
 .navbar-ul li a {

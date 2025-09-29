@@ -41,7 +41,7 @@
           </button>
         </div>
         <div id="cont-izq">
-            <h3>Siguinedo</h3>
+            <h3>Siguiendo</h3>
             <div class="izq-perf">
                 <article id="izq-arti">
                     <!-- esta parte va acmbiar por que se ocupara la base de datos -->
@@ -62,73 +62,115 @@
     </aside>
 
     <header id="head-base">
-      <h1>MySpace | <a href="#">{% block ubicacion %}Perfil{% endblock %}</a></h1>
+      <h1><a href="#">MySpace</a> <p>{% block ubicacion %}Perfil{% endblock %}</p></h1>
     </header>
 
     <main id="main-base">
         <!-- aqui va mas codigo -->
+
         <div class="main-content">
             <div class="main-ima-perf">
                 <img src="{% static 'media/user.svg' %}" alt="foto de perfil">
             </div>
             <div class="descrip-perf">
                 <h2>Nombre</h2>
-                <p>Descripcion Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, eveniet? Sapiente autem quasi id quo provident natus quia, non recusandae quae odio accusantium ut cupiditate. Amet repudiandae ratione ipsa accusamus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore deserunt officia ducimus accusantium tempora recusandae nemo ea. Sequi eligendi quam tenetur ullam tempora placeat. Facilis est repellendus dolores animi ea! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi quam pariatur quod adipisci, fuga nisi a expedita temporibus modi nostrum suscipit, id quis distinctio odio magni, omnis similique! Quas, architecto. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate aliquid quaerat quidem eius officiis nulla et minima impedit! Perspiciatis atque voluptas eos ex laudantium aperiam saepe tempora cum tempore nihil!</p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptas accusantium itaque molestias commodi culpa voluptatum quia vel? Et, nesciunt! Modi aut architecto officiis quidem. Similique adipisci aliquid omnis esse!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate inventore consequuntur fugiat repudiandae molestiae, maiores laboriosam rerum voluptas eos velit. Voluptatem quas voluptate eveniet ex quibusdam, molestias quos sint inventore.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis fugiat autem incidunt vel sit nisi fugit iusto, eligendi unde magni eos iure distinctio aspernatur obcaecati qui quisquam alias nam aliquid.
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse sapiente accusamus quo, eum quia nemo ullam vel labore, enim soluta quod. Natus vitae, omnis voluptates unde quaerat voluptatem vero repellendus.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus eveniet blanditiis beatae hic eaque quasi facere nobis rerum corporis, ea veniam, alias delectus quam atque inventore laudantium nesciunt iure sapiente?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, ipsam minus non perspiciatis eos voluptate, molestiae perferendis totam quia, neque laborum cumque esse eaque harum consectetur dolorem. Necessitatibus, dignissimos similique?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, fugit. Dignissimos sapiente placeat illum eos ipsa maxime? Iusto ipsum laborum libero accusamus, nisi laudantium, reprehenderit ullam, optio quo doloremque placeat!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet odit, labore temporibus blanditiis delectus corporis, earum quis minima quo itaque odio officiis veniam unde dolore doloribus neque id fugit error!
+                </p>
             </div>
-            <div class="main-blog">
-                <hr>
+        </div>
+
+        <!-- Sección separada debajo de main-content -->
+        <div class="main-blog">
+            <hr>
+            <div class="blog-area">
                 <div class="main-navbar">
-                    <nav class="nav-option">
+                    <div class="navbar-left">
                         <ul class="navbar-ul">
-                            <li><a href="">[Hashtags]</a></li>
-                            <li><a href=""></a>[Imágenes]</li>
+                            <li><a href="#">[Hashtags]</a></li>
+                            <li><a href="#">[Imágenes]</a></li>
                         </ul>
+                    </div>
+                    <div class="navbar-right">
                         <button><i class="bi bi-pencil-square"></i></button>
                         <button><i class="bi bi-trash3"></i></button>
-                    </nav>
+                    </div>
                 </div>
-                <div class="blog-post">
-                    <div class="post-perf">
-                        <div class="info-main">
-                            <img src="" alt="foto perfil">
-                            <h6>Nombre</h6>
-                            <h6>Publicó</h6>
-                            <h6>fecha :</h6>
-                            <button class="crear-coment"><i class="bi bi-caret-right-fill"></i></button>
+
+                <div class="all-post">
+                    <div class="blog-post">
+                        <div class="post-perf">
+                            <div class="info-main">
+                                <img class="ima-inf" src="{% static 'media/user.svg' %}" alt="foto perfil">
+                                <h6 id="nombre">Nombre</h6>
+                                <h6 id="public" >Publicó</h6>
+                                <h6 id="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
+                                <button class="crear-coment"><i class="bi bi-caret-right-fill"></i></button>
+                            </div>
+                            <div class="post">
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum esse reiciendis ab culpa repellendus non voluptate quo possimus, dolorum, quidem est. Architecto dolorum iure modi veniam perspiciatis error expedita eligendi!
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo amet quod harum ullam corporis perspiciatis repellat commodi id, facere cum maiores consectetur aliquam voluptates officia a excepturi mollitia! Tempora, expedita.
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio vel itaque sit molestiae accusantium dignissimos assumenda rem quidem voluptatibus, ut aut quasi a tempora, corrupti ea quia est excepturi placeat.
+                                </p>
+                            </div>
+                            <div class="post-ima">
+                                <img class="ima-pub" src="{% static 'media/hollow.jpg' %}" alt="imagen-post">
+                            </div>
+                            <div class="opciones-botton">
+                                <a class="check" href="#">[check]</a>
+                                <button class="kudos"><i class="bi bi-bug-fill"></i></button>
+                            </div>
                         </div>
-                        <div class="post">
-                            <p>
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat distinctio voluptate facere animi exercitationem culpa quisquam vitae quod numquam quos est iste saepe necessitatibus iusto, obcaecati voluptatum sint molestias ullam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis nulla aperiam animi, repudiandae quidem quas quis saepe in hic provident! Saepe provident hic pariatur, totam quis placeat architecto reprehenderit harum? Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima pariatur iste, mollitia quidem ducimus vitae! Commodi amet molestiae laboriosam doloremque dolorem delectus dolores, quam provident ullam iste? Hic, explicabo veniam? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti quas molestias rerum saepe mollitia laboriosam voluptatibus minus dolorem excepturi ab reiciendis quasi libero, assumenda error temporibus possimus odio ipsam enim? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde aperiam pariatur corrupti, doloremque sequi sapiente delectus dolorum, architecto a ad natus sed nobis accusamus ducimus velit! Rerum quo eveniet maxime. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, amet optio soluta dolor quam sit deleniti error explicabo veniam fugit, eius ea ullam aperiam totam dolorum quos itaque aut tempore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ratione adipisci unde cum veniam eius nihil excepturi, quam, explicabo perspiciatis dicta. Possimus numquam deserunt quisquam ipsum voluptas, suscipit hic eveniet?
-                            </p>
-                        </div>
-                        <div class="post-ima">
-                            <img src="" alt="imagen-post">
-                        </div>
-                        <div class="opciones-botton">
-                            <a class="check" href=""></a>
-                            <button class="kudos"></button>
+                    </div>
+                    
+                    <div class="blog-post">
+                        <div class="post-perf">
+                            <div class="info-main">
+                                <img class="ima-inf" src="{% static 'media/user.svg' %}" alt="foto perfil">
+                                <h6 id="nombre">Nombre</h6>
+                                <h6 id="public" >Publicó</h6>
+                                <h6 id="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
+                                <button class="crear-coment"><i class="bi bi-caret-right-fill"></i></button>
+                            </div>
+                            <div class="post">
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum esse reiciendis ab culpa repellendus non voluptate quo possimus, dolorum, quidem est. Architecto dolorum iure modi veniam perspiciatis error expedita eligendi!
+                                </p>
+                            </div>
+                            <div class="opciones-botton">
+                                <a class="check" href="#">[check]</a>
+                                <button class="kudos"><i class="bi bi-bug-fill"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      
-      <footer id="main-foot">
-        <p>
-          <a href="https://validator.w3.org/#validate_by_input" target="_blank">
-            <img style="border:0;width:88px;height:31px"
-              src="{% static 'media/w3c-html.png' %}" 
-              alt="Valid HTML!">
-          </a>
-        </p>
-        <p>
-          <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">
-            <img style="border:0;width:88px;height:31px"
-              src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
-              alt="Valid CSS!">
-          </a>
-        </p>
-      </footer>
+
+        <footer id="main-foot">
+            <p>
+            <a href="https://validator.w3.org/#validate_by_input" target="_blank">
+                <img style="border:0;width:88px;height:31px"
+                src="{% static 'media/w3c-html.png' %}" 
+                alt="Valid HTML!">
+            </a>
+            </p>
+            <p>
+            <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">
+                <img style="border:0;width:88px;height:31px"
+                src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
+                alt="Valid CSS!">
+            </a>
+            </p>
+        </footer>
     </main>
 
     <aside id="aside-der">
@@ -139,7 +181,7 @@
         <h3>Tablones</h3>
         <input type="text" id="busqueda-tablon" placeholder="Buscar tablón..." name="buscar">
         <ul id="list-der">
-          <li><a href="#">General</a></li>
+          <li><a href="{% url 'general' %}">General</a></li>
           <li><a href="#">Anime</a></li>
           <li><a href="#">Animales</a></li>
           <li><a href="#">Video Juegos</a></li>

@@ -15,3 +15,6 @@ def index_user(request):
 
 def perfil(request):
     return render(request, 'user/perfil.html')
+
+def general(request):
+    return render(request, 'publi/index.html')

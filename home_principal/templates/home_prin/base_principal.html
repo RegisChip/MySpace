@@ -47,7 +47,7 @@
     </aside>
 
     <header id="head-base">
-      <h1>MySpace | <a href="#">{% block ubicacion %}Principal{% endblock %}</a></h1>
+      <h1><a href="#">MySpace</a> <p> {% block ubicacion %}Principal{% endblock %}</p></h1>
     </header>
 
     <main id="main-base">
@@ -93,7 +93,7 @@
         <input type="text" id="busqueda-tablon" placeholder="Buscar tablón..." name="buscar">
         <ul id="list-der">
           <li><a href="{% url 'perfil' %}">Perfil</a></li>
-          <li><a href="#">General</a></li>
+          <li><a href="{% url 'general' %}">General</a></li>
           <li><a href="#">Anime</a></li>
           <li><a href="#">Animales</a></li>
           <li><a href="#">Video Juegos</a></li>

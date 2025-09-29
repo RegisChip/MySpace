@@ -226,7 +226,7 @@ header {
   background: #bfd5f1;
   border: 1px solid #609ffa;
   font-family: "Bree Serif", serif;
-  color: #ffffff;
+  color: white;
   height: 120px;
   width: auto;
   display: flex;
@@ -236,16 +236,25 @@ header {
 
 header h1 {
   margin: 1rem;
-  font-size: 3.5rem;
+  font-size: 1.5rem;
   font-weight: 200;
   font-style: normal;
+  float: left;
+}
+
+header h1 p{
+  float: right;
+  padding-left: 10px;
+  margin-top: 30px;
 }
 
 header h1 a {
   text-decoration: none;
   color: inherit;
-  font-size: 1.5rem;
+  font-size: 3.5rem;
   vertical-align: middle;
+  padding-right: 20px;
+  border-right: 3px solid white;
 }
 
 header h1 a:hover {

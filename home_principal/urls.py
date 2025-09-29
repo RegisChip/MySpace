@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.principal),  # Ruta para la vista principal
     path('user/', views.index_user, name='user_index'),
     path('user/perfil/', views.perfil, name='perfil'),
+    path('publi/', views.general, name='general'),
 ]
