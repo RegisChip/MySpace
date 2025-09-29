@@ -467,6 +467,10 @@ footer {
     align-items: center;
 }
 
+.coment-dropdown{
+  display: none;
+}
+
 .post-dropdown {
   display: none;
   position: absolute; /* Puedes ajustar esto según tu diseño */
@@ -476,8 +480,32 @@ footer {
   z-index: 100;
 }
 
-.crear-post-item:hover .post-dropdown {
+.crear-post-item:hover .post-dropdown{
   display: block;
+}
+
+.coment-container {
+  position: relative;
+}
+
+.coment-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.coment-container:hover .coment-dropdown {
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
 .navbar-ul {
