@@ -183,7 +183,7 @@ body, html {
   list-style: none;
   color: #1a4f9d;
 
-  max-height: 380px; /* Ajusta a la altura que quieras limitar */
+  max-height: 320px; /* Ajusta a la altura que quieras limitar */
   overflow: hidden; /* Oculta el contenido que se sale */
   padding-left: 0; /* Quita indentación si quieres */
   margin: 0;
@@ -206,7 +206,7 @@ body, html {
 
 #cont-der ul::-webkit-scrollbar-thumb {
   background-color: #bfd5f1;
-  border: 1px solid #609ffa;
+  border: 1px solid #1a4f9d;
   border-radius: 4px;
 }
 

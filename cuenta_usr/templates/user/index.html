@@ -10,6 +10,25 @@ Iniciar Seción
 {% endblock %}
 
 <!-- contenido de la clase main -->
-<!-- {% block content %}
+{% block content %}
 
-{% endblock %} -->
+<form class="form-cuenta">
+    <table>
+        <tr>
+            <td>Correo</td>
+            <td><input type="email" name="correo" required></td>
+        </tr>
+        <tr>
+            <td>Contraseña</td>
+            <td><input type="password" name="pass" required></td>
+        </tr>
+    </table>
+
+    <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+    <button type="submit" class="btn">Iniciar Sesión</button>
+    <p class="login">¿Aun no tienes cuenta?</p>
+    <a href="{% url 'user_register' %}">Registrarse</a>
+
+</form>
+
+{% endblock %}

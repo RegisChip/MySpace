@@ -5,16 +5,5 @@ from django.templatetags.static import static
 # Create your views here.
 
 def principal(request):
-    # return render(request, 'index.html') 
-    # Render de paginaPrin.html de templates
     imagen_url = static('media/myspace.svg')
     return render(request, 'home_prin/index.html', {'imagen_url': imagen_url})
-    
-def index_user(request):
-    return render(request, 'user/index.html')
-
-def perfil(request):
-    return render(request, 'user/perfil.html')
-
-def general(request):
-    return render(request, 'publi/index.html')

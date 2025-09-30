@@ -1,0 +1,50 @@
+{% extends "user/base_user.html" %}
+
+<!-- titulo de cada pagina -->
+{% block title %}Registro{% endblock %}
+
+
+<!-- ubicacion de la pagina en la que nos encontramos -->
+{% block ubicacion %}
+Registro
+{% endblock %}
+
+<!-- contenido de la clase main -->
+{% block content %}
+
+<form class="form-cuenta">
+    <table>
+        <tr>
+            <td>Nombre</td>
+            <td><input type="text" name="nombre"></td>
+        </tr>
+        <tr>
+            <td>Apellido Paterno</td>
+            <td><input type="text" name="apaterno"></td>
+        </tr>
+        <tr>
+            <td>Apellido Materno</td>
+            <td><input type="text" name="amaterno"></td>
+        </tr>
+        <tr>
+            <td>Correo</td>
+            <td><input type="email" name="correo"></td>
+        </tr>
+        <tr>
+            <td>Contraseña</td>
+            <td><input type="password" name="pass1"></td>
+        </tr>
+        <tr>
+            <td>Contraseña</td>
+            <td><input type="password" name="pass2"></td>
+        </tr>
+    </table>
+
+    <button type="submit" class="btn">Registrarse</button>
+    
+    <p class="login">¿Ya tienes cuenta?</p>
+    <a href="{% url 'user_index' %}">Iniciar sesión</a>
+
+</form>
+
+{% endblock %}

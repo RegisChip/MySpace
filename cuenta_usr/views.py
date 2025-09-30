@@ -3,5 +3,11 @@ from cuenta_usr.models import Usuario
 from django.templatetags.static import static
 
 # Create your views here.
-def general(request):
-    return render(request, 'publi/index.html')
+def index(request):
+    return render(request, 'user/index.html')
+
+def register(request):
+    return render(request, 'user/register.html')
+
+def perfil(request):
+    return render(request, 'user/perfil.html')

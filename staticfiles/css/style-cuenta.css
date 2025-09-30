@@ -1,9 +1,13 @@
+/* Estilos para la página de cuenta */
+
+/* Estilos generales */
 *{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
 
+/* Estilos para el cuerpo y html */
 body, html {
   margin: 0;
   padding: 0;
@@ -13,6 +17,7 @@ body, html {
   background-color: #e3eaf4;
 }
 
+/* Estilos para la cuadrícula de contenido */
 .content-grid {
   display: grid;
   grid-template-columns: 15% 68% 15%;
@@ -41,6 +46,7 @@ header {
    margin-bottom: 0;
 }
 
+/* Estilos para el títulos */
 header h1 {
   margin: 1rem;
   font-size: 1.5rem;
@@ -68,6 +74,7 @@ header h1 a:hover {
   text-decoration: underline;
 }
 
+/* Estilos para el contenido principal */
 main {
   grid-area: main-base;
   display: flex;
@@ -82,6 +89,7 @@ main {
   margin-top: 0;
 }
 
+/* Estilos para el pie de página */
 #main-foot{
   background: #bfd5f1;
   border-top: 1px solid #609ffa;
@@ -135,4 +143,48 @@ footer {
   font-size: 14px;
   font-weight: 600;
   color: #000;
+}
+
+/* Estilos para el formulario (Iniciar Sesion y Registro) */
+.form-cuenta {
+  padding: 20px;
+  text-align: center;
+}
+
+.form-cuenta table {
+  margin: 1em auto;
+  border: 2px solid #6b8ebf;
+  border-collapse: collapse;
+}
+
+.form-cuenta td {
+  padding: 8px;
+  font-weight: bold;
+  color: #2a4a77;
+}
+
+.form-cuenta input[type="text"],
+.form-cuenta input[type="email"],
+.form-cuenta input[type="password"] {
+  width: 250px;
+  padding: 5px;
+  border: 1px solid #6b8ebf;
+}
+
+.form-cuenta .btn {
+  margin-top: 15px;
+  padding: 8px 20px;
+  background: #6b8ebf;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.form-cuenta .btn:hover {
+  background: #4d6ea5;
+}
+
+.form-cuenta .login {
+  text-align: center;
+  margin: 10px 0;
 }
