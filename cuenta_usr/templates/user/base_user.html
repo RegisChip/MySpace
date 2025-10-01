@@ -29,7 +29,8 @@
 <body>
   <div class="content-grid">
     <header id="head-base">
-      <h1><a href="#">MySpace</a> <p>{% block ubicacion %}Principal{% endblock %}</p></h1>
+            <h1><a href="{% url 'principal' %}">MySpace</a></h1>
+      <p>{% block ubicacion %}{% endblock %}</p>
     </header>
 
     <main id="main-base">

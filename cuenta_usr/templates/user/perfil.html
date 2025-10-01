@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es">
+<!-- <html lang="es"> -->
+<html lang="zxx">
 <head>
     <!-- metadatos -->
     <meta charset="UTF-8">
@@ -43,7 +44,7 @@
         <div id="cont-izq">
             <h3>Siguiendo</h3>
             <div class="izq-perf">
-                <article id="izq-arti">
+                <div id="izq-arti">
                     <!-- esta parte va acmbiar por que se ocupara la base de datos -->
                     <ul class="menu-perf">
                         <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 1</a></li>
@@ -55,14 +56,15 @@
                         <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 7</a></li>
                         <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 8</a></li>
                     </ul>
-                </article>
+                </div>
             </div>
         </div>
       </div>
     </aside>
 
     <header id="head-base">
-      <h1><a href="#">MySpace</a> <p>{% block ubicacion %}Perfil{% endblock %}</p></h1>
+      <h1><a href="{% url 'principal' %}">MySpace</a></h1>
+      <p>{% block ubicacion %}Perfil{% endblock %}</p>
     </header>
 
     <main id="main-base">
@@ -109,9 +111,9 @@
                         <div class="post-perf">
                             <div class="info-main">
                                 <img class="ima-inf" src="{% static 'media/user.svg' %}" alt="foto perfil">
-                                <h6 id="nombre">Nombre</h6>
-                                <h6 id="public" >Publicó</h6>
-                                <h6 id="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
+                                <h6 class="nombre">Nombre</h6>
+                                <h6 class="public">Publicó</h6>
+                                <h6 class="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
                                 <button class="crear-coment"><i class="bi bi-caret-right-fill"></i></button>
                             </div>
                             <div class="post">
@@ -135,9 +137,9 @@
                         <div class="post-perf">
                             <div class="info-main">
                                 <img class="ima-inf" src="{% static 'media/user.svg' %}" alt="foto perfil">
-                                <h6 id="nombre">Nombre</h6>
-                                <h6 id="public" >Publicó</h6>
-                                <h6 id="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
+                                <h6 class="nombre">Nombre</h6>
+                                <h6 class="public">Publicó</h6>
+                                <h6 class="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
                                 <button class="crear-coment"><i class="bi bi-caret-right-fill"></i></button>
                             </div>
                             <div class="post">
