@@ -4,10 +4,17 @@ from django.templatetags.static import static
 
 # Create your views here.
 def index(request):
-    return render(request, 'user/index.html')
+    imagen_url = static('media/myspace.svg')
+    return render(request, 'user/index.html', {'imagen_url': imagen_url})
 
 def register(request):
-    return render(request, 'user/register.html')
+    imagen_url = static('media/myspace.svg')
+    return render(request, 'user/register.html', {'imagen_url': imagen_url})
 
 def perfil(request):
-    return render(request, 'user/perfil.html')
+    imagen_url = static('media/myspace.svg')
+    return render(request, 'user/perfil.html', {'imagen_url': imagen_url})
+
+def editar(request):
+    imagen_url = static('media/myspace.svg')
+    return render(request, 'user/mod_perfil.html', {'imagen_url': imagen_url})

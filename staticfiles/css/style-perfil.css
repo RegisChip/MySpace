@@ -489,14 +489,17 @@ footer {
 
 .navbar-right i{
     color: #1a4f9d;
+    padding-left: 10px;
     font-size: 20px;
 }
 
-.navbar-right button {
+.navbar-right ul {
+   list-style: none;
     background: none;
     border: none;
     cursor: pointer;
     font-size: 18px;
+    display: flex;
 }
 
 /* --- POSTS --- */

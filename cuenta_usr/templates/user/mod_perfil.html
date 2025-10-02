@@ -1,0 +1,206 @@
+{% extends "home_prin/base_principal.html" %}
+{% load static %}
+
+{% block extra_css %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/style-prin-home.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/editar.css' %}">
+{% endblock %}
+
+{% block ubicacion %}
+Edicion Perfil
+{% endblock %}
+
+{% block sidebar-izq %}
+<div id="cont-izq">
+    <h3>Perfiles</h3>
+    <div class="izq-perf">
+        <div id="izq-arti">
+          <!-- esta parte va acmbiar por que se ocupara la base de datos -->
+          <ul class="menu-perf">
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 1</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 2</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 3</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 4</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 5</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 6</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 7</a></li>
+              <li><img src="{% static 'media/user.svg' %}" alt="user"><a href="#">Usuario 8</a></li>
+          </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="edit-main-content">
+    <div class="edit-cont-perfil">
+        <div class="edit-ima-perf">
+            <img src="{% static 'media/user.svg' %}" alt="foto de perfil">
+            <button class="edit"><i class="bi bi-pencil-square"></i></button>
+            <button class="delet"><i class="bi bi-trash3"></i></button>
+        </div>
+        <div class="edit-descrip-perf">
+            <div class="edit-nom">
+                <h2>Nombre</h2>
+                <button class="edit"><i class="bi bi-pencil-square"></i></button>
+            </div>
+            <div class="edit-desc">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptas accusantium itaque molestias commodi culpa voluptatum quia vel? Et, nesciunt! Modi aut architecto officiis quidem. Similique adipisci aliquid omnis esse!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate inventore consequuntur fugiat repudiandae molestiae, maiores laboriosam rerum voluptas eos velit. Voluptatem quas voluptate eveniet ex quibusdam, molestias quos sint inventore.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis fugiat autem incidunt vel sit nisi fugit iusto, eligendi unde magni eos iure distinctio aspernatur obcaecati qui quisquam alias nam aliquid.
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse sapiente accusamus quo, eum quia nemo ullam vel labore, enim soluta quod. Natus vitae, omnis voluptates unde quaerat voluptatem vero repellendus.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus eveniet blanditiis beatae hic eaque quasi facere nobis rerum corporis, ea veniam, alias delectus quam atque inventore laudantium nesciunt iure sapiente?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, ipsam minus non perspiciatis eos voluptate, molestiae perferendis totam quia, neque laborum cumque esse eaque harum consectetur dolorem. Necessitatibus, dignissimos similique?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, fugit. Dignissimos sapiente placeat illum eos ipsa maxime? Iusto ipsum laborum libero accusamus, nisi laudantium, reprehenderit ullam, optio quo doloremque placeat!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet odit, labore temporibus blanditiis delectus corporis, earum quis minima quo itaque odio officiis veniam unde dolore doloribus neque id fugit error!
+                </p>
+                <div class="edit-desc-buttons">
+                    <button class="edit"><i class="bi bi-pencil-square"></i></button>
+                    <button class="delet"><i class="bi bi-trash3"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="edit-page">
+        <h5>Pagina</h5>
+        <div class="edit-color-page">
+            <label>Color de pagina: </label>
+            <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+            </div>
+        </div>
+        <div class="edit-color-fondo">
+            <label>Color de fondo: </label>
+            <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+            </div>
+        </div>
+        <div class="edit-image-fondo">
+            <label>Imagen de fondo: </label>
+            <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+            </div>
+        </div>
+        <div class="edit-tipo-font">
+            <label>Tipo de letra: </label>
+            <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+            </div>
+        </div>
+        <div class="edit-tam">
+            <label>Tamaño de letra: </label>
+            <input type="range" id="tam-font" name="tam-font" min="0" max="40" value="13"> 
+        </div>
+    </div>
+    <hr>
+    <div class="edit-com-post">
+        <h5>Post / Comentario</h5>
+        <div class="edit-tap">
+            <!-- <label for="opcion-tab">Lista de Tablones</label> -->
+            <select name="opcion-tab" id="opcion-tab">
+                <option value="" disabled selected>Seleccione un tablón...</option>
+                <option value="General">General</option>
+                <option value="Anime">Anime</option>
+                <option value="Animales">Animales</option>
+                <option value="Video Juegos">Video Juegos</option>
+                <option value="Politica">Politica</option>
+                <option value="Paranormal">Paranormal</option>
+                <option value="Cocina">Cocina</option>
+                <option value="Deporte">Deporte</option>
+                <option value="Arte">Arte</option>
+                <option value="MLP">MLP</option>
+                <option value="Literatura">Literatura</option>
+                <option value="Programacion">Programacion</option>
+                <option value="Musica">Musica</option>
+                <option value="Comics">Comics</option>
+                <option value="Cultura">Cultura</option>
+                <option value="Historia">Historia</option>
+                <option value="Manualidades">Manualidades</option>
+            </select>
+            <input type="date" id="fecha" name="fecha" min="2025-01-01" max="2030-12-31">
+        </div>
+
+        <div class="edit-pest">
+            <button data-tab="comentarios" class="active">Comentario</button>
+            <button data-tab="publicaciones">Publicaciones</button>
+            <button data-tab="todo">Todo</button>
+        </div>
+
+        <div class="content-edit"> 
+            <div class="tab-content comentarios activate">
+                
+                <div class="all-post">
+                    <div class="blog-post">
+                        <div class="post-perf">
+                            <div class="info-main">
+                                <img class="ima-inf" src="{% static 'media/user.svg' %}" alt="foto perfil">
+                                <h6 class="nombre">Nombre</h6>
+                                <h6 class="public">Publicó</h6>
+                                <h6 class="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
+                            </div>
+                            <div class="post">
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum esse reiciendis ab culpa repellendus non voluptate quo possimus, dolorum, quidem est. Architecto dolorum iure modi veniam perspiciatis error expedita eligendi!
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo amet quod harum ullam corporis perspiciatis repellat commodi id, facere cum maiores consectetur aliquam voluptates officia a excepturi mollitia! Tempora, expedita.
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio vel itaque sit molestiae accusantium dignissimos assumenda rem quidem voluptatibus, ut aut quasi a tempora, corrupti ea quia est excepturi placeat.
+                                </p>
+                            </div>
+                            <div class="post-ima">
+                                <img class="ima-pub" src="{% static 'media/hollow.jpg' %}" alt="imagen-post">
+                            </div>
+                            <div class="opciones-botton">
+                                <a class="check" href="#">[check]</a>
+                                <button class="kudos"><i class="bi bi-bug-fill"></i></button>
+                                <div class="edit-buttons">
+                                    <button class="edit"><i class="bi bi-pencil-square"></i></button>
+                                    <button class="delet"><i class="bi bi-trash3"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content publicaciones">
+                <div class="all-post">
+                    <div class="blog-post">
+                        <div class="post-perf">
+                            <div class="info-main">
+                                <img class="ima-inf" src="{% static 'media/user.svg' %}" alt="foto perfil">
+                                <h6 class="nombre">Nombre</h6>
+                                <h6 class="public">Publicó</h6>
+                                <h6 class="fecha">[dd/mm/aaaa - hh/mm/ss] :</h6>
+                            </div>
+                            <div class="post">
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum esse reiciendis ab culpa repellendus non voluptate quo possimus, dolorum, quidem est. Architecto dolorum iure modi veniam perspiciatis error expedita eligendi!
+                                </p>
+                            </div>
+                            <div class="opciones-botton">
+                                <a class="check" href="#">[check]</a>
+                                <button class="kudos"><i class="bi bi-bug-fill"></i></button>
+                                <div class="edit-buttons">
+                                    <button class="edit"><i class="bi bi-pencil-square"></i></button>
+                                    <button class="delet"><i class="bi bi-trash3"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-content todo">
+                <!-- aquí pondrías ambos o un mix -->
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

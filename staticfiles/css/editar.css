@@ -1,0 +1,398 @@
+*{
+    padding: 0px;
+    margin: 0px;
+
+}
+
+.edit-main-content{
+    margin: 10px;
+} 
+
+.edit-cont-perfil {
+    display: flex;
+    align-items: flex-start; /* alinea arriba */
+    gap: 20px; /* espacio entre la imagen y la info */
+    margin-bottom: 15px;
+}
+
+/* Imagen de perfil */
+.edit-ima-perf {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    overflow: hidden;
+    background: #bac6d5;
+}
+
+.edit-ima-perf img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Botones flotantes de la imagen */
+.edit-ima-perf button {
+    position: absolute;
+    bottom: 8px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 5px;
+    background: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.edit-ima-perf button:hover {
+    background: #6c8ec2;
+}
+
+.edit-ima-perf .edit { right: 40px; }
+.edit-ima-perf .delet { right: 8px; }
+
+/* Descripción y nombre */
+.edit-descrip-perf {
+    flex: 1; /* ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit-nom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #bac6d5;
+}
+
+.edit-nom h2 {
+    margin: 5px;
+    font-size: 22px;
+}
+
+.edit-nom button{
+    background: none;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    transition: background 0.3s;
+}
+
+.edit-nom button:hover {
+    background: #6c8ec2;
+}
+
+.edit-desc {
+    display: flex;
+    gap: 10px;
+    border: 1px solid #ddd;
+    background: #bac6d5;
+    padding: 10px;
+    height: 120px;
+}
+
+.edit-desc p {
+    flex: 1;                /* ocupa todo el espacio */
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.edit-desc-buttons button {
+    width: 28px;   /* ancho fijo */
+    height: 28px;  /* alto fijo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.edit-desc-buttons button:hover {
+    background: #6c8ec2;
+}
+
+
+.edit-desc p::-webkit-scrollbar {
+    width: 6px;
+}
+
+.edit-desc p::-webkit-scrollbar-thumb {
+    background: #8fb3e6;
+    border-radius: 4px;
+    border: 1px solid #072c6b;
+}
+
+/* .edit-desc p::-webkit-scrollbar-thumb:hover {
+    background: #777;
+    permite cambiar el olor cunado se presiona
+} */
+
+.edit-desc .delet {
+    right: 40px;
+}
+
+hr{
+    margin: 5px;
+}
+
+.edit-page{
+    margin: 5px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.edit-page h5{
+    margin: 5px;
+}
+
+.edit-page div{
+    display: flex;
+}
+
+.edit-page label{
+    width: 200px;
+    color: #1a4f9d;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 50px 10px 70px;
+}
+
+.edit-page button{
+    border-radius: 15px;
+    padding: 5px 25px;
+    background: #bfd5f1;
+    border: none;
+    color: #072c6b;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+
+
+/* ==== CONTENEDOR PRINCIPAL ==== */
+.edit-com-post {
+    background: #072c6b; /* azul oscuro fondo */
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    color: #000;
+}
+
+/* ==== TITULO ==== */
+.edit-com-post h5 {
+    color: #fff;
+    margin: 5px 0 10px;
+}
+
+/* ==== BARRA SUPERIOR (Lista de Tablones + Fecha) ==== */
+.edit-tap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.edit-tap label {
+    background: #8aaddf;
+    padding: 6px 12px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.edit-tap select,
+.edit-tap input[type="date"] {
+    padding: 5px;
+    border: none;
+    background: #f6f6f6;
+    border-radius: 3px;
+}
+
+/* ==== PESTAÑAS ==== */
+.edit-pest {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* 👈 esto los manda a la derecha */
+    gap: 4px;
+}
+
+.edit-pest button {
+    background: #8fb3e6;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+}
+
+.edit-pest button:last-child {
+    background: #609ffa;
+    color: #fff;
+}
+
+/* ==== CONTENIDO ==== */
+/* ==== CONTENIDO DE POSTS ==== */
+.content-edit {
+    background: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 400px;       /* asegura espacio inicial */
+    height: auto;            /* crece libre */
+    overflow-y: visible;     /* sin scroll interno */
+}
+
+/* Cada post */
+.blog-post {
+    border: 1px solid #609ffa;
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Grid del post */
+.post-perf {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+        "info-main info-main"
+        "post post-ima"
+        "opciones opciones";
+    gap: 10px;
+}
+
+/* ========== OVERRIDE ESPECÍFICO PARA INFO-MAIN ========== */
+/* Pegar estas reglas AL FINAL de editar.css para que tengan prioridad */
+.content-edit .blog-post .post-perf > .info-main {
+  grid-area: info-main;
+  display: flex !important;        /* forzar layout flex */
+  flex-direction: row !important;  /* fila horizontal */
+  align-items: center !important;  /* centrar vertical */
+  gap: 8px !important;
+  flex-wrap: nowrap !important;    /* que nunca salte a otra línea */
+  overflow: visible !important;    /* visible para depuración; ver nota abajo */
+  border: none !important;
+}
+
+/* imagen (no se comprime) */
+.content-edit .blog-post .post-perf > .info-main img.ima-inf {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px; /* no crece ni se encoje */
+  min-width: 35px;
+}
+
+/* textos: permitir que se encojan y corten con "..." si es necesario */
+.content-edit .blog-post .post-perf > .info-main h6 {
+  margin: 0;
+  font-size: 12px;
+  white-space: nowrap;      /* una sola línea por h6 */
+  overflow: hidden;         /* necesario para text-overflow */
+  text-overflow: ellipsis;  /* muestra "..." si falta espacio */
+  min-width: 0;             /* CRUCIAL dentro de flex para que se encoja */
+  flex: 0 1 auto;           /* puede reducirse si hace falta */
+}
+
+/* opcionales: limitar ancho relativo para evitar que un solo elemento coma todo */
+.content-edit .blog-post .post-perf > .info-main .nombre  { color:#60abba; max-width:36%; }
+.content-edit .blog-post .post-perf > .info-main .public  { color:#0c1c33; max-width:30%; }
+.content-edit .blog-post .post-perf > .info-main .fecha   { color:#ba3708; max-width:34%; }
+
+/* --- reglas de depuración (activar si todavía ves problemas) --- */
+.content-edit .blog-post .post-perf > .info-main.debug {
+  outline: 2px dashed red;
+  background: rgba(255,0,0,0.02);
+}
+
+.content-edit .blog-post .post-perf > .info-main h6.debug {
+  outline: 1px dotted blue;
+}
+
+/* Texto del post */
+.post {
+    grid-area: post;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: justify;
+    margin: 0;
+}
+
+/* Imagen del post */
+.post-ima {
+    grid-area: post-ima;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-ima img.ima-pub {
+    width: 140px;
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+/* Opciones */
+.opciones-botton {
+    grid-area: opciones;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.opciones-botton .check {
+    font-size: 12px;
+    color: #1a4f9d;
+    text-decoration: none;
+}
+
+.kudos {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    color: rgb(70, 138, 155);
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-buttons button{
+    width: 28px;   /* ancho fijo */
+    height: 28px;  /* alto fijo */
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: rgb(70, 138, 155);
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.edit-buttons button:hover {
+    background: #bfd5f1;
+}
+
+
