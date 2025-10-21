@@ -1,0 +1,441 @@
+/* Home.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  min-height: 100%;
+  font-family: "Anaheim", sans-serif;
+  background-color: #e3eaf4;
+}
+
+/* === GRID BASE === */
+.content-grid {
+  display: grid;
+  grid-template-rows: 120px auto 80px;
+  grid-template-areas:
+    "izq header der"
+    "izq main der"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 0 13px;
+  transition: all 0.3s ease;
+}
+
+.content-grid.both-open {
+  grid-template-columns: 200px 1fr 200px;
+}
+.content-grid.one-open-left {
+  grid-template-columns: 200px 1fr 35px;
+}
+.content-grid.one-open-right {
+  grid-template-columns: 35px 1fr 200px;
+}
+.content-grid.none-open {
+  grid-template-columns: 35px 1fr 35px;
+}
+
+/* === ASIDE IZQUIERDO === */
+#aside-izq {
+  grid-area: izq;
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  margin-left: 13px;
+  margin-top: 3rem;
+  padding: 5px;
+  height: 500px;
+}
+
+#aside-izq.open {
+  width: 165px !important;
+  transition: width 0.3s ease;
+}
+
+#aside-izq.closed {
+  width: 35px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+.contenedor {
+  height: 100%;
+}
+
+.boton-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+#fle-izq {
+  background: none;
+  border: none;
+  color: #bfd5f1;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#fle-izq img {
+  height: 22px;
+}
+
+/* === ASIDE DERECHO === */
+#aside-der {
+  grid-area: der;
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  margin-right: 13px;
+  margin-top: 3rem;
+  padding: 5px;
+  height: 500px;
+}
+
+#aside-der.open {
+  width: 144px;
+  transition: width 0.3s ease;
+}
+
+#aside-der.closed {
+  width: 35px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  justify-self: end;
+}
+
+#fle-der {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#fle-der img {
+  height: 22px;
+}
+
+#ima-perfil {
+  position: relative;
+}
+
+#btn-perfil {
+  height: 50px;
+}
+
+#cont-dropdown {
+  opacity: 1;
+  visibility: visible;
+  position: absolute;
+  background-color: #f4fbfd;
+  box-shadow: 0 4px 8px #bfd5f1;
+  border: 2px solid #bfd5f1;
+  padding: 10px;
+  z-index: 100;
+  top: 0;
+  right: 100%;
+  margin-right: 10px;
+  width: max-content;
+}
+
+#cont-dropdown ul {
+  list-style: none;
+}
+
+#cont-dropdown ul li {
+  color: #1a4f9d;
+}
+
+#cont-dropdown ul li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 5px 0;
+}
+
+#cont-dropdown ul li a:hover,
+#cont-der ul li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* === CONT DER === */
+#cont-der h3 {
+  background: #bfd5f1;
+  color: #3c77cb;
+  margin-bottom: 5px;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+}
+
+#cont-der input {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #609ffa;
+  color: #3c77cb;
+}
+
+#cont-der input::placeholder {
+  color: #bfd5f1;
+}
+
+#cont-der input:focus {
+  outline: none;
+}
+
+#cont-der ul {
+  list-style: none;
+  color: #1a4f9d;
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#cont-der ul li {
+  padding: 2px 0;
+  word-wrap: break-word;
+}
+
+#cont-der ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* === SCROLLBARS === */
+#cont-der ul::-webkit-scrollbar,
+#cont-izq .izq-perf::-webkit-scrollbar {
+  width: 8px;
+}
+
+#cont-der ul::-webkit-scrollbar-thumb,
+#cont-izq .izq-perf::-webkit-scrollbar-thumb {
+  background-color: #bfd5f1;
+  border: 1px solid #1a4f9d;
+  border-radius: 4px;
+}
+
+/* === HEADER === */
+header {
+  grid-area: header;
+  background: #bfd5f1;
+  border: 1px solid #609ffa;
+  font-family: "Bree Serif", serif;
+  color: white;
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+header h1 {
+  margin: 1rem;
+}
+
+header p {
+  font-size: 1.3rem;
+  margin-top: 20px;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 3.5rem;
+  padding-right: 20px;
+  border-right: 3px solid white;
+}
+
+header h1 a:hover {
+  text-decoration: underline;
+}
+
+/* === MAIN === */
+main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #609ffa;
+  border-top: none;
+  background: #f4fbfd;
+}
+
+/* === FOOTER (dentro de main) === */
+#main-foot {
+  background: #bfd5f1;
+  border-top: 1px solid #609ffa;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  /* No uses float ni absolute */
+}
+
+/* === FOOTER BASE === */
+footer {
+  grid-area: footer;
+  padding: 20px;
+  text-align: center;
+}
+
+#foot-base ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+#foot-base ul li {
+  margin: 0 3px;
+}
+
+#foot-base ul li a {
+  text-decoration: none;
+  color: #1a4f9d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#foot-base ul li a:hover {
+  text-decoration: underline;
+}
+
+#foot-base p {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* === ASIDE IZQ PERFILES === */
+#cont-izq {
+  background: #bfd5f1;
+  height: 88%;
+  border: 1px solid #609ffa;
+  display: flex;
+  flex-direction: column;
+}
+
+#cont-izq h3 {
+  margin: 5px;
+  color: #3c77cb;
+}
+
+#cont-izq .izq-perf {
+  overflow-y: auto;
+  max-height: 390px;
+  color: #1a4f9d;
+}
+
+/* === PERFILES === */
+.menu-perf li {
+  background: #e3eaf4;
+  margin-bottom: 5px;
+  border: 3px solid #f4fbfd;
+  padding: 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.menu-perf li img {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #e3eaf4;
+}
+
+.menu-perf li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+/* === CONTENIDO PRINCIPAL === */
+.main-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espaciado entre elementos */
+}
+
+.info-main {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #609ffa;
+  margin-bottom: 1rem;
+  background: white;
+}
+
+.info-main h4 {
+  margin: 0;
+  padding: 10px;
+  background: #98bdf1;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-bottom: 1px solid #609ffa;
+}
+
+.text-main {
+  display: flex;
+  gap: 1rem;
+  padding: 10px;
+  align-items: center;
+}
+
+.text-main p {
+  flex: 1;
+  margin: 0;
+  text-align: justify;
+}
+
+.text-main img,
+.info-main img {
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.text-main img {
+  width: 60px;
+}
+
+.info-main img {
+  width: 150px;
+}
+
+/* === ICONOS === */
+.fle-ico:hover {
+  filter: invert(53%) sepia(40%) saturate(438%) hue-rotate(177deg) brightness(96%) contrast(90%);
+}
+
+/* === RESPONSIVE (opcional, ajusta a 60% en pantallas muy grandes) === */
+@media (min-width: 1200px) {
+  #head-base {
+    max-width: 60%;
+    margin: 0 auto;   /* margen automático para centrar */
+    width: 100%;
+  }
+
+  #main-base {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #aside-der.open {
+    width: 144px;
+    transition: width 0.3s ease;
+  }
+
+  #aside-der.closed {
+    width: 35px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+    justify-self: flex-start;
+  }
+
+}
+
