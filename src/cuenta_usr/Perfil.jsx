@@ -1,52 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Perfil.css';
+import ComentarioFlotante from './ventanas/ComentarioFlotante';
 
 import usersData from '../data/userData';
 import menuItems from '../data/menuItems';
+import postsData from '../data/postData';
+import perfilData from '../data/perfilData'; 
 
 const Perfil = () => {
+  const [isLeftOpen, setIsLeftOpen] = useState(true);
+  const [isRightOpen, setIsRightOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
+
+  const toggleComentario = (postId) => {
+    setComentarioVisibleId(prev => (prev === postId ? null : postId));
+  };
+  
+  const toggleLeft = () => {
+    setIsLeftOpen((prev) => {
+      if (!prev) setIsRightOpen(false);
+      return !prev;
+    });
+  };
+
+  const toggleRight = () => {
+    setIsRightOpen((prev) => {
+      if (!prev) setIsLeftOpen(false);
+      return !prev;
+    });
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(prev => !prev);
+  };
+
   return (
     <div className="perfil-content-grid">
-      <aside className="perfil-aside-izq">
+      {/* ASIDE IZQUIERDO */}
+      <aside className={`perfil-aside-izq ${isLeftOpen ? 'open' : 'closed'}`}>
         <div className="perfil-contenedor">
           <div className="perfil-boton-container">
-            <button className="perfil-fle-izq">
-              <img src="/flecha-izq.svg" alt="Menu-izq" className="perfil-fle-ico" />
+            <button className="perfil-fle-izq" onClick={toggleLeft}>
+              <img
+                src={isLeftOpen ? "/flecha-izq.svg" : "/flecha-der.svg"}
+                alt="Toggle menú izquierdo"
+                className="perfil-fle-ico"
+              />
             </button>
           </div>
-          <div className="perfil-cont-izq">
-            <h3>Siguiendo</h3>
-            <div className="perfil-izq-perf">
-              <div className="perfil-izq-arti">
-                <ul className="perfil-menu-perf">
-                  {usersData.map(user => (
-                    <li key={user.id}>
-                      <img src={user.avatar} alt={`Avatar de ${user.name}`} />
-                      <a href="#">{user.name}</a>
-                    </li>
-                  ))}
-                </ul>
+
+          {isLeftOpen && (
+            <div className="perfil-cont-izq">
+              <h3>Siguiendo</h3>
+              <div className="perfil-izq-perf">
+                <div className="perfil-izq-arti">
+                  <ul className="perfil-menu-perf">
+                    {usersData.map(user => (
+                      <li key={user.id}>
+                        <img src={user.avatar} alt={`Avatar de ${user.name}`} />
+                        <a href="#">{user.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </aside>
 
+      {/* HEADER */}
       <header className="perfil-head-base">
         <h1><a href="/">MySpace</a></h1>
         <p>Perfil</p>
       </header>
 
+      {/* MAIN - SE MANTIENE INTACTO */}
       <main className="perfil-main-base">
         <div className="perfil-main-content">
           <div className="perfil-main-ima-perf">
-            <img src="/user.svg" alt="foto de perfil" />
+            <img src={perfilData.imagen} alt="Imagen de perfil" />
           </div>
           <div className="perfil-descrip-perf">
-            <h2>Nombre</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptas accusantium...
-            </p>
+            <h2>{perfilData.nombre}</h2>
+            <p>{perfilData.descripcion}</p>
           </div>
         </div>
 
@@ -63,38 +101,44 @@ const Perfil = () => {
               <div className="perfil-navbar-right">
                 <ul className="perfil-mod">
                   <li>
-                    <a href="#">
-                      <i className="bi bi-pencil-square"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-trash"></i>
+                    <a href="/editar">
+                      <i className="bi bi-pencil-square"></i><i className="bi bi-trash"></i>
                     </a>
                   </li>
                 </ul>
               </div>
             </div>
 
+
             <div className="perfil-all-post">
-              {[1, 2].map((post, index) => (
-                <div className="perfil-blog-post" key={index}>
+              {postsData.map((post) => (
+                <div className="perfil-blog-post" key={post.id}>
                   <div className="perfil-post-perf">
                     <div className="perfil-info-main">
-                      <img className="perfil-ima-inf" src="/user.svg" alt="foto perfil" />
-                      <h6 className="perfil-nombre">Nombre</h6>
+                      <img className="perfil-ima-inf" src={post.avatar} alt="foto perfil" />
+                      <h6 className="perfil-nombre">{post.author}</h6>
                       <h6 className="perfil-public">Publicó</h6>
-                      <h6 className="perfil-fecha">[dd/mm/aaaa - hh/mm/ss]</h6>
-                      <button className="perfil-crear-coment">
-                        <i className="bi bi-caret-right-fill"></i>
-                      </button>
+                      <h6 className="perfil-fecha">{post.date}</h6>
+                      <div className="perfil-opciones-botton">
+                        <button
+                          className="perfil-crear-coment"
+                          onClick={() => toggleComentario(post.id)}
+                        >
+                          <i className="bi bi-caret-right-fill"></i>
+                        </button>
+
+                        {comentarioVisibleId === post.id && (
+                          <ComentarioFlotante onClose={() => setComentarioVisibleId(null)} />
+                        )}
+                      </div>
+
                     </div>
                     <div className="perfil-post">
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+                      <p>{post.content}</p>
                     </div>
-                    {index === 0 && (
+                    {post.image && (
                       <div className="perfil-post-ima">
-                        <img className="perfil-ima-pub" src="/hollow.jpg" alt="imagen-post" />
+                        <img className="perfil-ima-pub" src={post.image} alt="imagen-post" />
                       </div>
                     )}
                     <div className="perfil-opciones-botton">
@@ -107,6 +151,7 @@ const Perfil = () => {
                 </div>
               ))}
             </div>
+
           </div>
         </div>
 
@@ -124,21 +169,37 @@ const Perfil = () => {
         </footer>
       </main>
 
-      <aside className="perfil-aside-der">
-        <button className="perfil-fle-der">
-          <img src="/flecha-der.svg" alt="Menu-der" className="perfil-fle-ico" />
+      {/* ASIDE DERECHO */}
+      <aside className={`perfil-aside-der ${isRightOpen ? 'open' : 'closed'}`}>
+        <button className="perfil-fle-der" onClick={toggleRight}>
+          <img
+            src={isRightOpen ? "/flecha-der.svg" : "/flecha-izq.svg"}
+            alt="Toggle menú derecho"
+            className="perfil-fle-ico"
+          />
         </button>
-        <article className="perfil-cont-der">
-          <h3>Tablones</h3>
-          <input type="text" placeholder="Buscar tablón..." name="buscar" />
-          <ul className="perfil-list-der">
-            {menuItems.map(item => (
-              <li key={item.id}><a href={item.link}>{item.label}</a></li>
-            ))}
-          </ul>
-        </article>
+
+        {isRightOpen && (
+          <>
+            <article className="perfil-cont-der">
+              <h3>Tablones</h3>
+              <input
+                type="text"
+                placeholder="Buscar tablón..."
+                name="buscar"
+                className="perfil-input-buscar"
+              />
+              <ul className="perfil-list-der">
+                {menuItems.map(item => (
+                  <li key={item.id}><a href={item.link}>{item.label}</a></li>
+                ))}
+              </ul>
+            </article>
+          </>
+        )}
       </aside>
 
+      {/* FOOTER BASE */}
       <footer className="perfil-foot-base">
         <ul>
           <li><a href="#">Acerca de</a> |</li>

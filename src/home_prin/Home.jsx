@@ -152,7 +152,7 @@ export default function Home() {
 
         {isRightOpen && (
           <>
-            <div id="ima-perfil">
+            <div id="ima-perfil"> {/*hacer que tome la imagen de perfildata*/}
               <img
                 id="btn-perfil"
                 src="myspace.svg"

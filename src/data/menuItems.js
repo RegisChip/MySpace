@@ -1,7 +1,7 @@
 // menuItems.js
 const menuItems = [
   { id: 1, label: "Perfil", link: "/perfil"},
-  { id: 2, label: "General", link: "#" },
+  { id: 2, label: "General", link: "/general" },
   { id: 3, label: "Anime", link: "#" },
   { id: 4, label: "Animales", link: "#" },
   { id: 5, label: "Video Juegos", link: "#" },
