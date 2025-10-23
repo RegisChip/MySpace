@@ -6,12 +6,8 @@ export default function Registro() {
     <div className="registro-grid">
       {/* HEADER */}
       <header id="registro-header">
-        <h1>
-          <a href="/" onClick={() => window.location.reload()}>
-            MySpace
-          </a>
-        </h1>
-        <p>Registro</p>
+        <h1><a href="/">MySpace</a></h1>
+        <p>Editar</p>
       </header>
 
       {/* MAIN */}

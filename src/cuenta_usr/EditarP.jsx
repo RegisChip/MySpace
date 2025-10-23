@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Perfil.css';
+import './EditarP.css';
 import ComentarioFlotante from './ventanas/ComentarioFlotante';
 
 import usersData from '../data/userData';
@@ -7,7 +7,7 @@ import menuItems from '../data/menuItems';
 import postsData from '../data/postData';
 import perfilData from '../data/perfilData'; 
 
-const Perfil = () => {
+const Edit = () => {
   const [isLeftOpen, setIsLeftOpen] = useState(true);
   const [isRightOpen, setIsRightOpen] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -36,26 +36,26 @@ const Perfil = () => {
   };
 
   return (
-    <div className="perfil-content-grid">
+    <div className="edit-content-grid">
       {/* ASIDE IZQUIERDO */}
-      <aside className={`perfil-aside-izq ${isLeftOpen ? 'open' : 'closed'}`}>
-        <div className="perfil-contenedor">
-          <div className="perfil-boton-container">
-            <button className="perfil-fle-izq" onClick={toggleLeft}>
+      <aside className={`edit-aside-izq ${isLeftOpen ? 'open' : 'closed'}`}>
+        <div className="edit-contenedor">
+          <div className="edit-boton-container">
+            <button className="edit-fle-izq" onClick={toggleLeft}>
               <img
                 src={isLeftOpen ? "/flecha-izq.svg" : "/flecha-der.svg"}
                 alt="Toggle menú izquierdo"
-                className="perfil-fle-ico"
+                className="edit-fle-ico"
               />
             </button>
           </div>
 
           {isLeftOpen && (
-            <div className="perfil-cont-izq">
+            <div className="edit-cont-izq">
               <h3>Siguiendo</h3>
-              <div className="perfil-izq-perf">
-                <div className="perfil-izq-arti">
-                  <ul className="perfil-menu-perf">
+              <div className="edit-izq-perf">
+                <div className="edit-izq-arti">
+                  <ul className="edit-menu-perf">
                     {usersData.map(user => (
                       <li key={user.id}>
                         <img src={user.avatar} alt={`Avatar de ${user.name}`} />
@@ -71,19 +71,194 @@ const Perfil = () => {
       </aside>
 
       {/* HEADER */}
-      <header className="perfil-head-base">
+      <header className="edit-head-base">
         <h1><a href="/">MySpace</a></h1>
-        <p>Perfil</p>
+        <p>Editar</p>
       </header>
 
-      {/* MAIN - SE MANTIENE INTACTO */}
-      <main className="perfil-main-base">
+      {/* MAIN */}
+      <main className="edit-main-base">
+        <div className="edit-main-content">
+          {/* === PERFIL === */}
+          <div className="edit-cont-perfil">
+            <div className="edit-ima-perf">
+              <img src={perfilData.imagen} alt="foto de perfil" />
+              <button className="edit">
+                <i className="bi bi-pencil-square"></i>
+              </button>
+              <button className="delet">
+                <i className="bi bi-trash3"></i>
+              </button>
+            </div>
 
+            <div className="edit-descrip-perf">
+              <div className="edit-nom">
+                <h2>{perfilData.nombre}</h2>
+                <button className="edit">
+                  <i className="bi bi-pencil-square"></i>
+                </button>
+              </div>
 
-          
-        
+              <div className="edit-desc">
+                <p>{perfilData.descripcion}</p>
+                <div className="edit-desc-buttons">
+                  <button className="edit">
+                    <i className="bi bi-pencil-square"></i>
+                  </button>
+                  <button className="delet">
+                    <i className="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <footer className="perfil-main-foot">
+          <hr />
+
+          {/* === CONFIGURACIÓN DE PÁGINA === */}
+          <div className="edit-page">
+            <h5>Página</h5>
+
+            <div className="edit-color-page">
+              <label>Color de página: </label>
+              <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+              </div>
+            </div>
+
+            <div className="edit-color-fondo">
+              <label>Color de fondo: </label>
+              <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+              </div>
+            </div>
+
+            <div className="edit-image-fondo">
+              <label>Imagen de fondo: </label>
+              <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+              </div>
+            </div>
+
+            <div className="edit-tipo-font">
+              <label>Tipo de letra: </label>
+              <div>
+                <button>Editar</button>
+                <button>Borrar</button>
+              </div>
+            </div>
+
+            <div className="edit-tam">
+              <label>Tamaño de letra: </label>
+              <input
+                type="range"
+                id="tam-font"
+                name="tam-font"
+                min="0"
+                max="40"
+                defaultValue="13"
+              />
+            </div>
+          </div>
+
+          <hr />
+
+          {/* === POSTS / COMENTARIOS === */}
+          <div className="edit-com-post">
+            <h5>Post / Comentario</h5>
+
+            {/* Select dinámico */}
+            <div className="edit-tap">
+              <select name="opcion-tab" id="opcion-tab" defaultValue="">
+                <option value="" disabled>
+                  Seleccione un tablón...
+                </option>
+                {menuItems.map((item) => (
+                  <option key={item.id} value={item.label}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                min="2025-01-01"
+                max="2030-12-31"
+              />
+            </div>
+
+            <div className="edit-pest">
+              <button data-tab="comentarios" className="active">
+                Comentario
+              </button>
+              <button data-tab="publicaciones">Publicaciones</button>
+              <button data-tab="todo">Todo</button>
+            </div>
+
+            {/* Render dinámico de posts */}
+            <div className="content-edit">
+              <div className="tab-content comentarios activate">
+                <div className="all-post">
+                  {postsData.map((post) => (
+                    <div key={post.id} className="blog-post">
+                      <div className="post-perf">
+                        <div className="info-main">
+                          <img
+                            className="ima-inf"
+                            src={post.avatar}
+                            alt={`avatar de ${post.author}`}
+                          />
+                          <h6 className="nombre">{post.author}</h6>
+                          <h6 className="public">Publicó</h6>
+                          <h6 className="fecha">{post.date}</h6>
+                        </div>
+
+                        <div className="post">
+                          <p>{post.content}</p>
+                        </div>
+
+                        {post.image && (
+                          <div className="post-ima">
+                            <img
+                              className="ima-pub"
+                              src={post.image}
+                              alt="imagen del post"
+                            />
+                          </div>
+                        )}
+
+                        <div className="opciones-botton">
+                          <a className="check" href="#">
+                            [check]
+                          </a>
+                          <button className="kudos">
+                            <i className="bi bi-bug-fill"></i>
+                          </button>
+                          <div className="edit-buttons">
+                            <button className="edit">
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
+                            <button className="delet">
+                              <i className="bi bi-trash3"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <footer className="edit-main-foot">
           <p>
             <a href="https://validator.w3.org/#validate_by_input" target="_blank" rel="noreferrer">
               <img style={{ border: 0, width: '88px', height: '31px' }} src="/w3c-html.png" alt="Valid HTML!" />
@@ -98,37 +273,35 @@ const Perfil = () => {
       </main>
 
       {/* ASIDE DERECHO */}
-      <aside className={`perfil-aside-der ${isRightOpen ? 'open' : 'closed'}`}>
-        <button className="perfil-fle-der" onClick={toggleRight}>
+      <aside className={`edit-aside-der ${isRightOpen ? 'open' : 'closed'}`}>
+        <button className="edit-fle-der" onClick={toggleRight}>
           <img
             src={isRightOpen ? "/flecha-der.svg" : "/flecha-izq.svg"}
             alt="Toggle menú derecho"
-            className="perfil-fle-ico"
+            className="edit-fle-ico"
           />
         </button>
 
         {isRightOpen && (
-          <>
-            <article className="perfil-cont-der">
-              <h3>Tablones</h3>
-              <input
-                type="text"
-                placeholder="Buscar tablón..."
-                name="buscar"
-                className="perfil-input-buscar"
-              />
-              <ul className="perfil-list-der">
-                {menuItems.map(item => (
-                  <li key={item.id}><a href={item.link}>{item.label}</a></li>
-                ))}
-              </ul>
-            </article>
-          </>
+          <article className="edit-cont-der">
+            <h3>Tablones</h3>
+            <input
+              type="text"
+              placeholder="Buscar tablón..."
+              name="buscar"
+              className="edit-input-buscar"
+            />
+            <ul className="edit-list-der">
+              {menuItems.map(item => (
+                <li key={item.id}><a href={item.link}>{item.label}</a></li>
+              ))}
+            </ul>
+          </article>
         )}
       </aside>
 
       {/* FOOTER BASE */}
-      <footer className="perfil-foot-base">
+      <footer className="edit-foot-base">
         <ul>
           <li><a href="#">Acerca de</a> |</li>
           <li><a href="#">Reglas</a> |</li>
@@ -142,4 +315,4 @@ const Perfil = () => {
   );
 };
 
-export default Perfil;
+export default Edit;
