@@ -1,0 +1,89 @@
+.comentario-flotante {
+  position: fixed;
+  width: 320px;
+  background: rgba(244, 251, 253, 0.9); /* transparente */
+  border: 2px solid #bfd5f1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  padding: 10px;
+  z-index: 9999;
+  border-radius: 8px;
+  cursor: grab;
+}
+
+.comentario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #bfd5f1;
+  padding: 6px 8px;
+  cursor: move;
+  user-select: none;
+  border-radius: 5px 5px 0 0;
+}
+
+.comentario-header h5 {
+  margin: 0;
+  color: #3c77cb;
+  font-size: 1rem;
+}
+
+.btn-x-coment {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #1a4f9d;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-x-coment:active {
+  transform: scale(1.2);
+}
+
+.comentario-body {
+  margin-top: 10px;
+}
+
+.text-coment h5,
+.imagen-coment h5 {
+  margin: 5px 0;
+  color: #3c77cb;
+}
+
+.coment-area textarea {
+  width: 100%;
+  height: 90px; /* más grande */
+  resize: none;
+  border: 1px solid #609ffa;
+  padding: 6px;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.imagen-coment input {
+  width: 100%;
+  border: 1px solid #609ffa;
+  padding: 6px;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.comentario-body button {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background-color: #609ffa;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.comentario-body button:hover {
+  background-color: #3c77cb;
+}
+
+.comentario-body button:active {
+  transform: scale(1.05);
+}

@@ -1,0 +1,89 @@
+.post-flotante {
+  position: fixed;
+  width: 340px; /* un poco más grande */
+  background: rgba(244, 251, 253, 0.9); /* ligeramente transparente */
+  border: 2px solid #bfd5f1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  padding: 10px;
+  z-index: 9999;
+  border-radius: 8px;
+  cursor: grab;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #bfd5f1;
+  padding: 6px 8px;
+  cursor: move;
+  user-select: none;
+  border-radius: 5px 5px 0 0;
+}
+
+.post-header h5 {
+  margin: 0;
+  color: #3c77cb;
+  font-size: 1rem;
+}
+
+.btn-x-post {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #1a4f9d;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-x-post:active {
+  transform: scale(1.2);
+}
+
+.post-body {
+  margin-top: 10px;
+}
+
+.text-post h5,
+.imagen-post h5 {
+  margin: 5px 0;
+  color: #3c77cb;
+}
+
+.post-area textarea {
+  width: 100%;
+  height: 90px; /* un poco más grande */
+  resize: none;
+  border: 1px solid #609ffa;
+  padding: 6px;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.imagen-post input {
+  width: 100%;
+  border: 1px solid #609ffa;
+  padding: 6px;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.post-body button {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background-color: #609ffa;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.post-body button:hover {
+  background-color: #3c77cb;
+}
+
+.post-body button:active {
+  transform: scale(1.05);
+}
