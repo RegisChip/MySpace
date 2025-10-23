@@ -39,6 +39,7 @@ body, html {
 
 /* === ASIDE IZQUIERDO === */
 #aside-izq {
+  /*
   grid-area: izq;
   background: #f4fbfd;
   border: 1px solid #609ffa;
@@ -46,11 +47,23 @@ body, html {
   margin-top: 3rem;
   padding: 5px;
   height: 500px;
+  */
+  position: fixed;
+  top: 120px; /* altura del header */
+  left: 0;
+  height: 500px;
+  width: 35px; /* cerrado por defecto */
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  padding: 5px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  z-index: 10;
 }
 
 #aside-izq.open {
   width: 165px !important;
-  transition: width 0.3s ease;
+  /* transition: width 0.3s ease; */
 }
 
 #aside-izq.closed {
@@ -83,6 +96,7 @@ body, html {
 
 /* === ASIDE DERECHO === */
 #aside-der {
+  /*
   grid-area: der;
   background: #f4fbfd;
   border: 1px solid #609ffa;
@@ -90,11 +104,23 @@ body, html {
   margin-top: 3rem;
   padding: 5px;
   height: 500px;
+  */
+  position: fixed;
+  top: 120px;
+  right: 0;
+  height: 500px;
+  width: 35px; /* cerrado por defecto */
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  padding: 5px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  z-index: 10;
 }
 
 #aside-der.open {
   width: 144px;
-  transition: width 0.3s ease;
+  /* transition: width 0.3s ease; */
 }
 
 #aside-der.closed {
@@ -351,6 +377,7 @@ footer {
 
 /* === CONTENIDO PRINCIPAL === */
 .main-content {
+  /*
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -359,6 +386,12 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1rem; /* Espaciado entre elementos */
+  margin: 0 auto; /* centrado siempre */
+  max-width: 800px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .info-main {

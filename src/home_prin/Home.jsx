@@ -4,8 +4,8 @@ import menuItems from "../data/menuItems";
 import "./Home.css";
 
 export default function Home() {
-  const [isLeftOpen, setIsLeftOpen] = useState(true);
-  const [isRightOpen, setIsRightOpen] = useState(true);
+  const [isLeftOpen, setIsLeftOpen] = useState(false);
+  const [isRightOpen, setIsRightOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -32,15 +32,18 @@ export default function Home() {
       <aside id="aside-izq" className={isLeftOpen ? "open" : "closed"}>
         <div className="contenedor">
           <div className="boton-container">
+            {/* 
             <button id="fle-izq" onClick={toggleLeft}>
               <img
                 src={isLeftOpen ? "/flecha-izq.svg" : "/flecha-der.svg"}
                 alt="Toggle menú izquierdo"
                 className="fle-ico"
               />
+            </button>*/}
+            <button id="fle-izq" onClick={() => setIsLeftOpen(prev => !prev)}>
+              <img src="/flecha-izq.svg" alt="Toggle" />
             </button>
           </div>
-
           {isLeftOpen && (
             <div id="cont-izq">
               <h3>Perfiles</h3>
@@ -142,16 +145,20 @@ export default function Home() {
 
       {/* ASIDE DERECHO */}
       <aside id="aside-der" className={isRightOpen ? "open" : "closed"}>
+        {/*
         <button id="fle-der" onClick={toggleRight}>
           <img
             src={isRightOpen ? "/flecha-der.svg" : "/flecha-izq.svg"}
             alt="Toggle menú derecho"
             className="fle-ico"
           />
+        </button>*/}
+        <button id="fle-der" onClick={() => setIsRightOpen(prev => !prev)}>
+          <img src="/flecha-der.svg" alt="Toggle" />
         </button>
 
         {isRightOpen && (
-          <>
+          <div id="cont-der">
             <div id="ima-perfil"> {/*hacer que tome la imagen de perfildata*/}
               <img
                 id="btn-perfil"
@@ -187,7 +194,7 @@ export default function Home() {
                 ))}
               </ul>
             </article>
-          </>
+          </div>
         )}
       </aside>
 
