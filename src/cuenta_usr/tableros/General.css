@@ -116,7 +116,7 @@ body, html {
   border: none;
   cursor: pointer;
   align-self: flex-start;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .general-fle-der img {
@@ -132,48 +132,66 @@ body, html {
   margin-bottom: 1rem;
 }
 
-#btn-general {
+#general-btn-perfil {
   height: 50px;
-  cursor: pointer;
 }
 
-#cont-dropdown {
-  opacity: 1;
-  visibility: visible;
+#general-ima-perfil {
+  position: relative; /* Padre para el dropdown */
+}
+
+#general-cont-dropdown {
   position: absolute;
-  background-color: #f4fbfd;
-  box-shadow: 0 4px 8px #bfd5f1;
-  border: 2px solid #bfd5f1;
-  padding: 10px;
-  z-index: 100;
-  top: 0;
-  right: 100%;
-  margin-right: 10px;
-  width: max-content;
-}
-
-#cont-dropdown ul {
-  list-style: none;
+  top: 50px; /* ajusta según el botón */
+  right: 0px;
+  margin: 35px 150px 0;
   padding: 0;
-  margin: 0;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  background: #f4fbfd;
+  border: 1px solid #609ffa;
+  width: 210px;
+  z-index: 1000;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-#cont-dropdown ul li {
-  color: #1a4f9d;
+#general-cont-dropdown ul {
+  list-style: none;
+  padding: 10px 0px;
+  margin: 0px;
 }
 
-#cont-dropdown ul li a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  padding: 5px 0;
+#general-cont-dropdown ul li {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-#cont-dropdown ul li a:hover,
+#general-dropdown ul li a:hover,
 .general-cont-der ul li:hover {
-  text-decoration: underline;
   cursor: pointer;
 }
+
+#general-cont-dropdown ul li a {
+  text-decoration: none;
+  display: block;
+  color: #0c3876 !important;
+}
+
+/* Para animación suave al aparecer */
+#general-cont-dropdown.enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+#general-cont-dropdown.enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
 
 /* === CONTENEDOR DERECHO === */
 .general-cont-der h3 {
@@ -508,7 +526,6 @@ body, html {
   cursor: pointer;
 }
 
-
 .general-post {
   grid-area: post;
   font-size: 13px;
@@ -552,6 +569,8 @@ body, html {
     font-size: 12px;
     color: #1a4f9d;
     text-decoration: none;
+    border: none;
+    background: none;
 }
 
 .general-kudos {
@@ -568,6 +587,25 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.general-kudos {
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.general-kudos:hover {
+  transform: scale(1.05);
+}
+
+.general-kudos.clicked {
+  animation: kudosClick 0.3s forwards;
+}
+
+@keyframes kudosClick {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 /* === FOOTER MAIN === */

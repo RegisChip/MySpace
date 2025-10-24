@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Cuenta.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import perfilData from "../data/perfilData";
+
 
 export default function CuentaPage() {
+
+  const navigate = useNavigate();
+  const [correo, setCorreo] = useState("");
+  const [pass, setPass] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (correo === perfilData.correo && pass === perfilData.password) {
+      // Guarda el usuario en localStorage si quieres mantener la sesión
+      localStorage.setItem("usuarioLogeado", JSON.stringify(perfilData));
+
+      alert(`¡Bienvenido ${perfilData.nombre}!`);
+      navigate("/perfil");
+    } else {
+      alert("Correo o contraseña incorrectos");
+    }
+  };
+
+
+  const handleOlvide = () => {
+    if (!correo) {
+      alert("Ingresa tu correo para recuperar la contraseña");
+    } else {
+      alert(`Se ha enviado un correo de recuperación a ${correo}`);
+    }
+  };
+
+
+
   return (
     <div className="cuenta-grid">
       {/* HEADER */}
@@ -16,26 +48,26 @@ export default function CuentaPage() {
       {/* MAIN */}
       <main id="cuenta-main">
         <div className="cuenta-content">
-          <form className="cuenta-form">
+          <form className="cuenta-form" onSubmit={handleLogin}>
             <table>
               <tbody>
                 <tr>
                   <td>Correo</td>
                   <td>
-                    <input type="email" name="correo" required />
+                    <input type="email" name="correo" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
                   </td>
                 </tr>
                 <tr>
                   <td>Contraseña</td>
                   <td>
-                    <input type="password" name="pass" required />
+                    <input type="password" name="pass" value={pass} onChange={(e) => setPass(e.target.value)} required />
                   </td>
                 </tr>
               </tbody>
             </table>
 
             <p>
-              <a href="#">¿Olvidaste tu contraseña?</a>
+              <a href="#" onClick={handleOlvide}>¿Olvidaste tu contraseña?</a>
             </p>
             <button type="submit" className="cuenta-btn">Iniciar Sesión</button>
             <p className="cuenta-login-text">¿Aún no tienes cuenta?</p>

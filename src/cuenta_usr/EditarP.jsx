@@ -8,8 +8,8 @@ import postsData from '../data/postData';
 import perfilData from '../data/perfilData'; 
 
 const Edit = () => {
-  const [isLeftOpen, setIsLeftOpen] = useState(true);
-  const [isRightOpen, setIsRightOpen] = useState(true);
+  const [isLeftOpen, setIsLeftOpen] = useState(false);
+  const [isRightOpen, setIsRightOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
 
@@ -176,11 +176,11 @@ const Edit = () => {
                 <option value="" disabled>
                   Seleccione un tablón...
                 </option>
-                {menuItems.map((item) => (
-                  <option key={item.id} value={item.label}>
-                    {item.label}
-                  </option>
-                ))}
+            {menuItems.slice(1).map((item, index) => (
+              <li key={item.id}>
+                <a href={item.link}>{item.label}</a>
+              </li>
+              ))}
               </select>
 
               <input

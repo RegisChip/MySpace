@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Perfil.css';
+import { Link, useNavigate } from "react-router-dom";
 import ComentarioFlotante from './ventanas/ComentarioFlotante';
 
 import usersData from '../data/userData';
@@ -8,10 +9,48 @@ import postsData from '../data/postData';
 import perfilData from '../data/perfilData'; 
 
 const Perfil = () => {
-  const [isLeftOpen, setIsLeftOpen] = useState(true);
-  const [isRightOpen, setIsRightOpen] = useState(true);
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogeado"));
+  const navigate = useNavigate();
+  const [kudosCounts, setKudosCounts] = useState(
+    postsData.reduce((acc, post) => {
+      acc[post.id] = post.kudos || 0; // si post.kudos existe, lo usa; sino 0
+      return acc;
+    }, {})
+  );
+  const [clickedKudos, setClickedKudos] = useState(null);
+  const [clickedEdit, setClickedEdit] = useState(false);
+  const [clickedDelete, setClickedDelete] = useState(false);
+  const [isLeftOpen, setIsLeftOpen] = useState(false);
+  const [isRightOpen, setIsRightOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // elimina usuario logueado
+    navigate("/cuenta"); // redirige a login
+  };
+
+  const handleKudosClick = (postId) => {
+    setKudosCounts(prev => ({
+      ...prev,
+      [postId]: prev[postId] + 1,
+    }));
+    setClickedKudos(postId);
+    // Quitar animación después de 300ms
+    setTimeout(() => setClickedKudos(null), 300);
+  };
+
+  // Funciones para manejar click
+  const handleEditClick = () => {
+    setClickedEdit(true);
+    setTimeout(() => setClickedEdit(false), 300); // quita efecto después de 300ms
+  };
+
+  const handleDeleteClick = () => {
+    setClickedDelete(true);
+    setTimeout(() => setClickedDelete(false), 300);
+  };
+
 
   const toggleComentario = (postId) => {
     setComentarioVisibleId(prev => (prev === postId ? null : postId));
@@ -74,6 +113,10 @@ const Perfil = () => {
       <header className="perfil-head-base">
         <h1><a href="/">MySpace</a></h1>
         <p>Perfil</p>
+        <button onClick={handleLogout}>
+          Cerrar sesión
+        </button>
+
       </header>
 
       {/* MAIN - SE MANTIENE INTACTO */}
@@ -190,8 +233,10 @@ const Perfil = () => {
                 className="perfil-input-buscar"
               />
               <ul className="perfil-list-der">
-                {menuItems.map(item => (
-                  <li key={item.id}><a href={item.link}>{item.label}</a></li>
+              {menuItems.slice(1).map((item, index) => (
+                <li key={item.id}>
+                  <a href={item.link}>{item.label}</a>
+                </li>
                 ))}
               </ul>
             </article>

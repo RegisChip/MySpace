@@ -167,7 +167,6 @@ body, html {
 
 #cont-dropdown ul li a:hover,
 .perfil-cont-der ul li:hover {
-  text-decoration: underline;
   cursor: pointer;
 }
 
@@ -262,6 +261,24 @@ body, html {
 .perfil-head-base h1 a:hover {
   text-decoration: underline;
 }
+
+.perfil-head-base button {
+  padding: 5px 10px;
+  background: #6b8ebf;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  margin-left: auto;
+  margin-right: 20px; 
+}
+
+.perfil-head-base button:hover {
+  background: #4a6b9a;
+}
+
 
 /* === MAIN === */
 .perfil-main-base {
