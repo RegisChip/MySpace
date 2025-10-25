@@ -9,11 +9,12 @@ export default function CuentaPage() {
   const navigate = useNavigate();
   const [correo, setCorreo] = useState("");
   const [pass, setPass] = useState("");
+  const usuarios = perfilData; // importa datos de usuarios desde perfilData.js
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const usuario = usuarios.find((u) => u.correo === correo && u.pass === pass); // busca en el arreglo de usuarios
+    const usuario = usuarios.find((u) => u.correo === correo && u.password === pass); // busca en el arreglo de usuarios
 
     if (usuario) {
       // Guarda la sesión del usuario

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Perfil.css';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ComentarioFlotante from './ventanas/ComentarioFlotante';
 
 import usersData from '../data/userData';
@@ -9,14 +9,16 @@ import postsData from '../data/postData';
 import perfilData from '../data/perfilData'; 
 
 const Perfil = () => {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogeado"));
+
   const navigate = useNavigate();
+  const [usuario, setUsuario] = useState(null);
   const [kudosCounts, setKudosCounts] = useState(
     postsData.reduce((acc, post) => {
-      acc[post.id] = post.kudos || 0; // si post.kudos existe, lo usa; sino 0
+      acc[post.id] = post.kudos || 0;
       return acc;
     }, {})
   );
+
   const [clickedKudos, setClickedKudos] = useState(null);
   const [clickedEdit, setClickedEdit] = useState(false);
   const [clickedDelete, setClickedDelete] = useState(false);
@@ -25,9 +27,20 @@ const Perfil = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
 
+  useEffect(() => {
+    const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
+    if (!usuarioLogeado) {
+      navigate("/"); // redirige al inicio si no hay usuario logueado
+      return;
+    }
+
+    const usuarioEncontrado = perfilData.find((u) => u.correo === usuarioLogeado.correo); // busca datos del usuario
+    setUsuario(usuarioEncontrado);
+  }, [navigate]);
+
   const handleLogout = () => {
-    localStorage.removeItem("user"); // elimina usuario logueado
-    navigate("/cuenta"); // redirige a login
+    localStorage.removeItem("usuarioLogeado"); // elimina usuario logueado
+    navigate("/");
   };
 
   const handleKudosClick = (postId) => {
@@ -51,7 +64,6 @@ const Perfil = () => {
     setTimeout(() => setClickedDelete(false), 300);
   };
 
-
   const toggleComentario = (postId) => {
     setComentarioVisibleId(prev => (prev === postId ? null : postId));
   };
@@ -73,6 +85,8 @@ const Perfil = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(prev => !prev);
   };
+
+  if (!usuario) return null; //espera a cargar el usuario
 
   return (
     <div className="perfil-content-grid">
@@ -116,18 +130,17 @@ const Perfil = () => {
         <button onClick={handleLogout}>
           Cerrar sesión
         </button>
-
       </header>
 
       {/* MAIN - SE MANTIENE INTACTO */}
       <main className="perfil-main-base">
         <div className="perfil-main-content">
           <div className="perfil-main-ima-perf">
-            <img src={perfilData.imagen} alt="Imagen de perfil" />
+            <img src={usuario.imagen} alt="Imagen de perfil" />
           </div>
           <div className="perfil-descrip-perf">
-            <h2>{perfilData.nombre}</h2>
-            <p>{perfilData.descripcion}</p>
+            <h2>{usuario.nombre}</h2>
+            <p>{usuario.descripcion}</p>
           </div>
         </div>
 
@@ -186,7 +199,11 @@ const Perfil = () => {
                     )}
                     <div className="perfil-opciones-botton">
                       <a className="perfil-check" href="#">[check]</a>
-                      <button className="perfil-kudos">
+                      <button
+                        className={`perfil-kudos ${clickedKudos === post.id ? 'clicked' : ''}`}
+                        onClick={() => handleKudosClick(post.id)}
+                        title={`${kudosCounts[post.id] || 0} kudos`}
+                      >
                         <i className="bi bi-bug-fill"></i>
                       </button>
                     </div>

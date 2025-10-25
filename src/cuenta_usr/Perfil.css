@@ -701,3 +701,35 @@ body, html {
     justify-self: flex-start;
   }
 }
+
+/* === Kudos clicked animation === */
+.perfil-kudos {
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+    color: rgb(70, 138, 155);
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.perfil-kudos:hover {
+    transform: scale(1.05);
+}
+
+.perfil-kudos.clicked {
+    animation: kudosClick 0.3s forwards;
+}
+
+@keyframes kudosClick {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
