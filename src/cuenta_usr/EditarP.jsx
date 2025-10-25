@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './EditarP.css';
 import ComentarioFlotante from './ventanas/ComentarioFlotante';
+
+import { useNavigate } from 'react-router';
 
 import usersData from '../data/userData';
 import menuItems from '../data/menuItems';
@@ -8,10 +10,25 @@ import postsData from '../data/postData';
 import perfilData from '../data/perfilData'; 
 
 const Edit = () => {
+
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState(null);
+
   const [isLeftOpen, setIsLeftOpen] = useState(false);
   const [isRightOpen, setIsRightOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
+
+  useEffect(() => {
+    const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
+    if (!usuarioLogeado) {
+      navigate("/"); // redirige al inicio si no hay usuario logueado
+      return;
+    }
+
+    const usuarioEncontrado = perfilData.find((u) => u.correo === usuarioLogeado.correo); // busca datos del usuario
+    setUsuario(usuarioEncontrado);
+  }, [navigate]);
 
   const toggleComentario = (postId) => {
     setComentarioVisibleId(prev => (prev === postId ? null : postId));
@@ -34,6 +51,8 @@ const Edit = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(prev => !prev);
   };
+
+  if (!usuario) return null; //espera a cargar el usuario
 
   return (
     <div className="edit-content-grid">
@@ -82,7 +101,7 @@ const Edit = () => {
           {/* === PERFIL === */}
           <div className="edit-cont-perfil">
             <div className="edit-ima-perf">
-              <img src={perfilData.imagen} alt="foto de perfil" />
+              <img src={usuario.imagen} alt="foto de perfil" />
               <button className="edit">
                 <i className="bi bi-pencil-square"></i>
               </button>
@@ -92,15 +111,16 @@ const Edit = () => {
             </div>
 
             <div className="edit-descrip-perf">
+
               <div className="edit-nom">
-                <h2>{perfilData.nombre}</h2>
+                <h2>{usuario.nombre}</h2>
                 <button className="edit">
                   <i className="bi bi-pencil-square"></i>
                 </button>
               </div>
 
               <div className="edit-desc">
-                <p>{perfilData.descripcion}</p>
+                <p>{usuario.descripcion}</p>
                 <div className="edit-desc-buttons">
                   <button className="edit">
                     <i className="bi bi-pencil-square"></i>
@@ -110,6 +130,7 @@ const Edit = () => {
                   </button>
                 </div>
               </div>
+              
             </div>
           </div>
 

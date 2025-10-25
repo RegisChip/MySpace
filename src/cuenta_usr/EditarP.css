@@ -91,7 +91,9 @@ body, html {
   height: 120px;
   display: flex;
   align-items: center;
-  padding-left: 1rem;
+  /* quitar padding-left extra */
+  padding-left: 0; 
+  margin: 0; /* asegurar que no haya margen extra */
 }
 .edit-head-base h1 a { text-decoration: none; color: inherit; font-size: 3.5rem; padding-right: 20px; border-right: 3px solid white; }
 .edit-head-base h1 a:hover { text-decoration: underline; }
@@ -101,7 +103,9 @@ body, html {
   grid-area: main;
   background: #f4fbfd;
   border: 1px solid #609ffa;
-  margin-top: 3rem;
+  margin-top: 0; /* quitar espacio extra */
+  display: flex;
+  flex-direction: column;
 }
 
 .edit-main-content {
@@ -442,6 +446,7 @@ hr { margin: 5px; }
   padding: 10px 15px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px;
 }
 
@@ -568,3 +573,19 @@ hr { margin: 5px; }
     justify-self: flex-start;
   }
 }
+
+/* === Efecto zoom al presionar los botones de editar y borrar === */
+.edit-buttons button,
+.edit-desc-buttons button,
+.edit-ima-perf button,
+.edit-page button {
+  transition: transform 0.1s ease, background 0.3s ease;
+}
+
+.edit-buttons button:active,
+.edit-desc-buttons button:active,
+.edit-ima-perf button:active,
+.edit-page button:active {
+  transform: scale(1.2); /* aumenta un poquito el tamaño al presionar */
+}
+

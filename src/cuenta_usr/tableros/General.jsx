@@ -298,15 +298,9 @@ const General = () => {
               {isDropdownOpen && (
                 <div id="cont-dropdown">
                   <ul>
-                    {usuarioLogeado ? (
-                      <li>
-                        <a href="/perfil">Mi Perfil</a>
-                      </li>
-                    ) : (
-                      <li>
-                        <a href="/cuenta">Iniciar Sesión / Registrarse</a>
-                      </li>
-                    )}
+                    <li>
+                      <a href="/perfil">Mi Perfil</a>
+                    </li>
                   </ul>
                 </div>
               )}

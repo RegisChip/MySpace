@@ -187,7 +187,7 @@ export default function Home() {
                 placeholder="Buscar tablón..."
               />
             <ul id="list-der">
-            {menuItems.slice(1).map((item, index) => (
+            {menuItems.slice(1).map((item) => (
               <li key={item.id}>
                 <a href={item.link}>{item.label}</a>
               </li>
