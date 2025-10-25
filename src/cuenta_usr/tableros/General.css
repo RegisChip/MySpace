@@ -140,9 +140,10 @@ body, html {
   position: relative; /* Padre para el dropdown */
 }
 
+/*
 #general-cont-dropdown {
   position: absolute;
-  top: 50px; /* ajusta según el botón */
+  top: 50px;
   right: 0px;
   margin: 35px 150px 0;
   padding: 0;
@@ -157,6 +158,23 @@ body, html {
   opacity: 1;
   transform: translateY(0);
 }
+*/
+
+#general-cont-dropdown {
+  opacity: 1;
+  visibility: visible;
+  position: absolute;
+  background-color: #f4fbfd;
+  box-shadow: 0 4px 8px #bfd5f1;
+  border: 2px solid #bfd5f1;
+  padding: 10px;
+  z-index: 100;
+  top: 0;
+  right: 100%;
+  margin-right: 10px;
+  width: max-content;
+}
+
 
 #general-cont-dropdown ul {
   list-style: none;

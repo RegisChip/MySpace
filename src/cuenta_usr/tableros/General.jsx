@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './General.css'; // Si tienes un nuevo CSS para general, cámbialo aquí
+import '../../home_prin/Home.css';
 import ComentarioFlotante from '../ventanas/ComentarioFlotante';
 import PostFlotante from '../ventanas/PostFlotante';
 import { Link } from 'react-router-dom';
@@ -10,6 +11,7 @@ import postsData from '../../data/postData';
 import perfilData from '../../data/perfilData';
 
 const General = () => {
+
   const [posts, setPosts] = useState(() => {
     const saved = localStorage.getItem("posts");
     return saved ? JSON.parse(saved) : postsData;
@@ -22,6 +24,8 @@ const General = () => {
       return acc;
     }, {});
   });
+
+  const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) || null; // Solo se lee el usuario logeado
 
   const [clickedKudos, setClickedKudos] = useState(null);
   const [isLeftOpen, setIsLeftOpen] = useState(false);
@@ -271,47 +275,53 @@ const General = () => {
       </main>
 
       {/* ASIDE DERECHO */}
-      
-      <aside className={`general-aside-der ${isRightOpen ? 'open' : 'closed'}`}>
-        <button className="general-fle-der" onClick={toggleRight} aria-label="Toggle menú derecho">
+      <aside id="aside-der" className={isRightOpen ? "open" : "closed"}>
+        <button id="fle-der" onClick={toggleRight}>
           <img
             src={isRightOpen ? "/flecha-der.svg" : "/flecha-izq.svg"}
             alt="Toggle menú derecho"
-            className="general-fle-ico"
+            className="fle-ico"
           />
         </button>
 
         {isRightOpen && (
           <>
-            <div id="general-ima-perfil">
+            <div id="ima-perfil">
               <img
-                id="general-btn-perfil"
+                id="btn-perfil"
                 src="myspace.svg"
                 alt="Foto de perfil"
                 onClick={toggleDropdown}
-                style={{ cursor: 'pointer' }}
+                //style={{ cursor: 'pointer' }}
               />
  
               {isDropdownOpen && (
-              <div id="general-cont-dropdown" style={{ position: 'fixed', top: '50px', right: '10px', zIndex: 1000 }}>
-                <ul>
-                  <li>
-                    <Link to="/perfil">Perfil</Link>
-                  </li>
-                </ul>
-              </div>
+                <div id="cont-dropdown">
+                  <ul>
+                    {usuarioLogeado ? (
+                      <li>
+                        <a href="/perfil">Mi Perfil</a>
+                      </li>
+                    ) : (
+                      <li>
+                        <a href="/cuenta">Iniciar Sesión / Registrarse</a>
+                      </li>
+                    )}
+                  </ul>
+                </div>
               )}
             </div>
 
-            <article className="general-cont-der">
+            <article id="cont-der">
               <h3>Tablones</h3>
               <input
                 type="text"
+                id="busqueda-tablon"
                 placeholder="Buscar tablón..."
-                name="buscar"
-                className="general-input-buscar"
+                //name="buscar"
+                //className="general-input-buscar"
               />
-              <ul className="general-list-der">
+              <ul id="ist-der">
             {menuItems.slice(1).map((item, index) => (
               <li key={item.id}>
                 <a href={item.link}>{item.label}</a>

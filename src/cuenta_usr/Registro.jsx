@@ -28,6 +28,7 @@ export default function Registro() {
     const nuevoUsuario = { nombre, apaterno, amaterno, correo, pass: pass1 };
     usuarios.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("usuarioActual", JSON.stringify(nuevoUsuario)); // Guardar usuario actual
     alert("Usuario registrado correctamente");
     navigate("/cuenta");
   };

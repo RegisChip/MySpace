@@ -4,6 +4,7 @@ import menuItems from "../data/menuItems";
 import "./Home.css";
 
 export default function Home() {
+  const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
   const [isLeftOpen, setIsLeftOpen] = useState(false);
   const [isRightOpen, setIsRightOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -163,9 +164,15 @@ export default function Home() {
               {isDropdownOpen && (
                 <div id="cont-dropdown">
                   <ul>
-                    <li>
-                      <a href="Cuenta">Iniciar Sesión / Registrarse</a>
-                    </li>
+                    {usuarioLogeado ? (
+                      <li>
+                        <a href="/perfil">Mi Perfil</a>
+                      </li>
+                    ) : (
+                      <li>
+                        <a href="/cuenta">Iniciar Sesión / Registrarse</a>
+                      </li>
+                    )}
                   </ul>
                 </div>
               )}

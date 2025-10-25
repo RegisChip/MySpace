@@ -13,11 +13,13 @@ export default function CuentaPage() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (correo === perfilData.correo && pass === perfilData.password) {
-      // Guarda el usuario en localStorage si quieres mantener la sesión
-      localStorage.setItem("usuarioLogeado", JSON.stringify(perfilData));
+    const usuario = usuarios.find((u) => u.correo === correo && u.pass === pass); // busca en el arreglo de usuarios
 
-      alert(`¡Bienvenido ${perfilData.nombre}!`);
+    if (usuario) {
+      // Guarda la sesión del usuario
+      localStorage.setItem("usuarioLogeado", JSON.stringify(usuario));
+
+      alert(`¡Bienvenido ${usuario.nombre}!`);
       navigate("/perfil");
     } else {
       alert("Correo o contraseña incorrectos");
@@ -32,8 +34,6 @@ export default function CuentaPage() {
       alert(`Se ha enviado un correo de recuperación a ${correo}`);
     }
   };
-
-
 
   return (
     <div className="cuenta-grid">
