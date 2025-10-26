@@ -250,7 +250,7 @@ const Perfil = () => {
                 className="perfil-input-buscar"
               />
               <ul className="perfil-list-der">
-              {menuItems.slice(1).map((item, index) => (
+              {menuItems.slice(1).map((item) => (
                 <li key={item.id}>
                   <a href={item.link}>{item.label}</a>
                 </li>

@@ -1,3 +1,5 @@
+/* === EditarP.css === */
+
 /* === BASE GENERAL === */
 * {
   margin: 0;
@@ -23,11 +25,12 @@ body, html {
   gap: 0 13px;
   transition: all 0.3s ease;
 }
-
+/*
 .edit-content-grid.both-open { grid-template-columns: 200px 1fr 200px; }
 .edit-content-grid.one-open-left { grid-template-columns: 200px 1fr 35px; }
 .edit-content-grid.one-open-right { grid-template-columns: 35px 1fr 200px; }
 .edit-content-grid.none-open { grid-template-columns: 35px 1fr 35px; }
+*/
 
 /* === ASIDE IZQUIERDO === */
 .edit-aside-izq {
@@ -40,6 +43,9 @@ body, html {
   height: 500px;
   transition: width 0.3s ease;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .edit-aside-izq.open {
@@ -488,7 +494,9 @@ hr { margin: 5px; }
   align-items: flex-start;
 }
 
-.edit-aside-der.open { width: 144px; }
+.edit-aside-der.open {
+  width: 144px !important;
+}
 
 .edit-aside-der.closed {
   width: 35px;
@@ -500,7 +508,7 @@ hr { margin: 5px; }
   border: none;
   cursor: pointer;
   align-self: flex-start;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px;*/
 }
 
 .edit-fle-der img { height: 22px; }

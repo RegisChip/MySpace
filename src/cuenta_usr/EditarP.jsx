@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditarP.css';
+import './Perfil.css';
 import ComentarioFlotante from './ventanas/ComentarioFlotante';
 
 import { useNavigate } from 'react-router';
@@ -316,30 +317,34 @@ const Edit = () => {
       </main>
 
       {/* ASIDE DERECHO */}
-      <aside className={`edit-aside-der ${isRightOpen ? 'open' : 'closed'}`}>
-        <button className="edit-fle-der" onClick={toggleRight}>
+      <aside className={`perfil-aside-der ${isRightOpen ? 'open' : 'closed'}`}>
+        <button className="perfil-fle-der" onClick={toggleRight}>
           <img
             src={isRightOpen ? "/flecha-der.svg" : "/flecha-izq.svg"}
             alt="Toggle menú derecho"
-            className="edit-fle-ico"
+            className="perfil-fle-ico"
           />
         </button>
 
         {isRightOpen && (
-          <article className="edit-cont-der">
-            <h3>Tablones</h3>
-            <input
-              type="text"
-              placeholder="Buscar tablón..."
-              name="buscar"
-              className="edit-input-buscar"
-            />
-            <ul className="edit-list-der">
-              {menuItems.map(item => (
-                <li key={item.id}><a href={item.link}>{item.label}</a></li>
-              ))}
-            </ul>
-          </article>
+          <>
+            <article className="perfil-cont-der">
+              <h3>Tablones</h3>
+              <input
+                type="text"
+                placeholder="Buscar tablón..."
+                name="buscar"
+                className="perfil-input-buscar"
+              />
+              <ul className="perfil-list-der">
+                {menuItems.slice(1).map((item) => (
+                  <li key={item.id}>
+                    <a href={item.link}>{item.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </>
         )}
       </aside>
 
