@@ -166,6 +166,8 @@ body, html {
   align-items: center;
   gap: 10px;
   background: #bac6d5;
+  position: relative;
+  z-index: 1;
 }
 
 .edit-nom h2 { margin: 5px; font-size: 22px; }
@@ -179,6 +181,9 @@ body, html {
   width: 28px;
   height: 28px;
   transition: background 0.3s;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .edit-nom button:hover { background: #6c8ec2; }
@@ -298,11 +303,7 @@ hr { margin: 5px; }
   cursor: pointer;
   color: #000;
   font-weight: bold;
-}
-
-.edit-pest button:last-child {
-  background: #609ffa;
-  color: #fff;
+  transition: background 0.3s ease; /* Transición suave */
 }
 
 /* === Botón activo === */
@@ -578,14 +579,16 @@ hr { margin: 5px; }
 .edit-buttons button,
 .edit-desc-buttons button,
 .edit-ima-perf button,
-.edit-page button {
+.edit-page button,
+.edit-nom button {
   transition: transform 0.1s ease, background 0.3s ease;
 }
 
 .edit-buttons button:active,
 .edit-desc-buttons button:active,
 .edit-ima-perf button:active,
-.edit-page button:active {
+.edit-page button:active,
+.edit-nom button:active {
   transform: scale(1.2); /* aumenta un poquito el tamaño al presionar */
 }
 

@@ -19,6 +19,8 @@ const Edit = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
 
+  const [activeTab, setActiveTab] = useState('comentarios');
+
   useEffect(() => {
     const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
     if (!usuarioLogeado) {
@@ -198,9 +200,9 @@ const Edit = () => {
                   Seleccione un tablón...
                 </option>
             {menuItems.slice(1).map((item, index) => (
-              <li key={item.id}>
-                <a href={item.link}>{item.label}</a>
-              </li>
+              <option key={item.id} value={item.id}>
+                {item.label} {/* se usa option para el select, no li */}
+              </option>
               ))}
               </select>
 
@@ -214,11 +216,31 @@ const Edit = () => {
             </div>
 
             <div className="edit-pest">
-              <button data-tab="comentarios" className="active">
+
+              <button 
+                data-tab="comentarios" 
+                className={activeTab === 'comentarios' ? 'active' : ''}
+                onClick={() => setActiveTab('comentarios')}
+              >
                 Comentario
               </button>
-              <button data-tab="publicaciones">Publicaciones</button>
-              <button data-tab="todo">Todo</button>
+
+              <button 
+                data-tab="publicaciones"
+                className={activeTab === 'publicaciones' ? 'active' : ''}
+                onClick={() => setActiveTab('publicaciones')}
+              >
+                Publicaciones
+              </button>
+
+              <button 
+                data-tab="todo"
+                className={activeTab === 'todo' ? 'active' : ''}
+                onClick={() => setActiveTab('todo')}
+              >
+                Todo
+              </button>
+
             </div>
 
             {/* Render dinámico de posts */}
