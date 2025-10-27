@@ -283,11 +283,11 @@ const General = () => {
                           
                           {/* BOTONES DE KUDOS Y CHECK PARA CADA COMENTARIO */}
                           <div className="general-opciones-comentario">
-                            <button className="general-check" type="button">
+                            <button className="general-check-comentario" type="button">
                               [check]
                             </button>
                             <button
-                              className={`general-kudos ${clickedKudos === c.id ? 'clicked' : ''}`}
+                              className={`general-kudos-comentario ${clickedKudos === c.id ? 'clicked' : ''}`}
                               onClick={() => handleComentarioKudosClick(c.id, post.id)}
                               title={`${kudosCountsComentarios[c.id] || 0} kudos`}
                             >

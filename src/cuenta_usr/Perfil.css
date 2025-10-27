@@ -599,6 +599,8 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
 }
 
 /* === FOOTER MAIN === */
@@ -728,23 +730,6 @@ body, html {
 }
 
 /* === Kudos clicked animation === */
-.perfil-kudos {
-    width: 30px;
-    height: 30px;
-    font-size: 25px;
-    margin: 0;
-    padding: 0;
-    color: rgb(70, 138, 155);
-    border: none;
-    background: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-    position: relative;
-}
-
 .perfil-kudos:hover {
     transform: scale(1.05);
 }
@@ -813,3 +798,46 @@ body, html {
   text-align: justify;
 }
 
+/* === Botones de comentario === */
+.perfil-opciones-comentario {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  align-items: center;       /* Alinea verticalmente */
+  gap: 10px;                 /* Espacio entre los elementos */
+  margin-top: 4px;
+}
+
+.perfil-check-comentario {
+    font-size: 12px;
+    color: #1a4f9d;
+    text-decoration: none;
+    border: none;
+    background: none;
+}
+
+.perfil-kudos-comentario {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    margin: 0;
+    padding: 0px;
+    font-size: 25px;
+    color: rgb(70, 138, 155);
+    border: none;
+    background: none;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.perfil-kudos-comentario:hover {
+    transform: scale(1.05);
+}
+
+.perfil-kudos-comentario.clicked {
+    animation: kudosClick 0.3s forwards;
+}

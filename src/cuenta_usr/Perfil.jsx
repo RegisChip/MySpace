@@ -306,11 +306,11 @@ const Perfil = () => {
 
                           {/* BOTONES DE KUDOS Y CHECK PARA CADA COMENTARIO */}
                           <div className="perfil-opciones-comentario">
-                            <button className="perfil-check" type="button">
+                            <button className="perfil-check-comentario" type="button">
                               [check]
                             </button>
                             <button
-                              className={`perfil-kudos ${clickedKudos === c.id ? 'clicked' : ''}`}
+                              className={`perfil-kudos-comentario ${clickedKudos === c.id ? 'clicked' : ''}`}
                               onClick={() => handleComentarioKudosClick(c.id, post.id)}
                               title={`${kudosCountsComentarios[c.id] || 0} kudos`}
                             >

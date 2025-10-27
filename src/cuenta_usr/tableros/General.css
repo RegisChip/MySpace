@@ -629,11 +629,8 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.general-kudos {
-  transition: transform 0.2s ease;
-  position: relative;
+    transition: transform 0.2s ease;
+    position: relative;
 }
 
 .general-kudos:hover {
@@ -833,4 +830,48 @@ body, html {
   line-height: 1.5;
   color: #000000;
   text-align: justify;
+}
+
+/* === Botones de comentario === */
+.general-opciones-comentario {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  align-items: center;       /* Alinea verticalmente */
+  gap: 10px;                 /* Espacio entre los elementos */
+  margin-top: 4px;
+}
+
+.general-check-comentario {
+    font-size: 12px;
+    color: #1a4f9d;
+    text-decoration: none;
+    border: none;
+    background: none;
+}
+
+.general-kudos-comentario {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    margin: 0;
+    padding: 0px;
+    font-size: 25px;
+    color: rgb(70, 138, 155);
+    border: none;
+    background: none;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.general-kudos-comentario:hover {
+  transform: scale(1.05);
+}
+
+.general-kudos-comentario.clicked {
+  animation: kudosClick 0.3s forwards;
 }
