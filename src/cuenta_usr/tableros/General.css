@@ -1,4 +1,4 @@
-/* Home.css adaptado para general.jsx */
+/* General.css */
 * {
   margin: 0;
   padding: 0;
@@ -428,14 +428,38 @@ body, html {
   margin-top: 1rem;
 }
 
+/*
 .general-blog-post {
   border: 1px solid #609ffa;
   background: #fff;
   padding: 10px;
   margin-bottom: 10px;
 }
+*/
+
+.general-blog-post {
+  border: none;  /* Quita el borde del contenedor principal */
+  background: transparent;  /* Sin fondo */
+  padding: 0;  /* Sin padding */
+  margin-bottom: 10px;
+}
+
+/*
+.general-post-perf {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "info-main info-main"
+    "post post-ima"
+    "opciones opciones";
+  gap: 10px;
+}
+*/
 
 .general-post-perf {
+  border: 1px solid #609ffa;  /* Mueve el borde aquí */
+  background: #fff;  /* Mueve el fondo aquí */
+  padding: 10px;  /* Mueve el padding aquí */
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
@@ -750,4 +774,63 @@ body, html {
     overflow: hidden;
     justify-self: flex-start;
   }
+}
+
+
+
+/* === ESTILOS PARA COMENTARIOS === */
+.general-comentarios-lista {
+  margin-top: 15px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.general-comentario-item {
+  background: #ffffff;
+  border: 1px solid #609ffa;
+  padding: 10px;
+}
+
+.general-comentario-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.general-comentario-avatar {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #999;
+  flex-shrink: 0;
+}
+
+.general-comentario-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.general-comentario-autor {
+  color: #60abba;
+  font-weight: 500;
+}
+
+.general-comentario-texto {
+  color: #0c1c33;
+}
+
+.general-comentario-contenido {
+  margin-left: 48px;
+}
+
+.general-comentario-contenido p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #000000;
+  text-align: justify;
 }

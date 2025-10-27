@@ -1,4 +1,4 @@
-/* Home.css adaptado para Perfil.jsx */
+/* Perfil.css */
 * {
   margin: 0;
   padding: 0;
@@ -399,13 +399,36 @@ body, html {
 }
 
 .perfil-blog-post {
-  border: 1px solid #609ffa;
-  background: #fff;
-  padding: 10px;
+  /* border: 1px solid #609ffa; */
+  border: none;  /* Quita el borde del contenedor principal */
+  background: transparent;
+  padding: 0;
   margin-bottom: 10px;
 }
 
+/*
 .perfil-post-perf {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "info-main info-main"
+    "post post-ima"
+    "opciones opciones";
+  gap: 10px;
+}
+
+.perfil-info-main {
+  grid-area: info-main;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+*/
+
+.perfil-post-perf {
+  border: 1px solid #609ffa;  /* Mueve el borde aquí */
+  background: #fff;  /* Mueve el fondo aquí */
+  padding: 10px;  /* Mueve el padding aquí */
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
@@ -540,8 +563,8 @@ body, html {
 .perfil-post-ima img {
   width: 140px;
   border: 1px solid #c6c6c6;
-  display: block;
-  margin: 0 auto;
+  /* display: block;
+  margin: 0 auto; */
   object-fit: cover;
 }
 
@@ -558,6 +581,8 @@ body, html {
     font-size: 12px;
     color: #1a4f9d;
     text-decoration: none;
+    border: none;
+    background: none;
 }
 
 .perfil-kudos {
@@ -733,3 +758,58 @@ body, html {
     50%  { transform: scale(1.2); }
     100% { transform: scale(1); }
 }
+
+/* === ESTILOS PARA COMENTARIOS === */
+
+.perfil-comentarios-lista {
+  margin-top: 15px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.perfil-comentario-item {
+  background: #ffffff;
+  border: 1px solid #609ffa;
+  padding: 10px;
+}
+
+.perfil-comentario-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.perfil-comentario-avatar {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #999;
+  flex-shrink: 0;
+}
+
+.perfil-comentario-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.perfil-comentario-autor {
+  color: #60abba;
+  font-weight: 500;
+}
+
+.perfil-comentario-contenido {
+  margin-left: 48px; /* separa del avatar */
+}
+
+.perfil-comentario-contenido p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #000;
+  text-align: justify;
+}
+

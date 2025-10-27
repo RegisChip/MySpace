@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './General.css'; // Si tienes un nuevo CSS para general, cámbialo aquí
+import './General.css';
 import '../../home_prin/Home.css';
 import ComentarioFlotante from '../ventanas/ComentarioFlotante';
 import PostFlotante from '../ventanas/PostFlotante';
@@ -76,9 +76,15 @@ const General = () => {
 
     const newPost = {
       id: newId,
-      author: perfilData.nombre,
-      avatar: perfilData.imagen,
-      date: new Date().toLocaleString(),
+      author: usuarioLogeado?.nombre || 'Anónimo',
+      avatar: usuarioLogeado?.imagen || '/default-avatar.png',
+      date: new Date().toLocaleString('es-MX', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      }),
       content: nuevoPost.content,
       image: nuevoPost.image || null,
       comments: [],
@@ -87,7 +93,6 @@ const General = () => {
 
     setPosts([newPost, ...posts]);
     setShowPostFlotante(false);
-
     // Actualiza kudosCounts con el nuevo post
     setKudosCounts(prev => ({ ...prev, [newId]: 0 }));
   };
@@ -102,8 +107,8 @@ const General = () => {
                 ...(post.comments || []),
                 {
                   id: Date.now(),
-                  author: perfilData.nombre,
-                  avatar: perfilData.imagen,
+                  author: usuarioLogeado?.nombre || 'Anónimo',
+                  avatar: usuarioLogeado?.imagen || '/default-avatar.png',
                   text: nuevoComentario,
                 },
               ],
@@ -204,14 +209,21 @@ const General = () => {
                         )}
                       </div>
                     </div>
+
+                    {/* Contenido del post */}
+
                     <div className="general-post">
                       <p>{post.content}</p>
                     </div>
+
                     {post.image && (
                       <div className="general-post-ima">
                         <img className="general-ima-pub" src={post.image} alt="imagen-post" />
                       </div>
                     )}
+
+                    {/* Botones de opciones */}
+                    
                     <div className="general-opciones-botton">
                       {/* Cambiar estos links con propósito real si tienes */}
                       <button className="general-check" type="button">[check]</button>
@@ -223,20 +235,44 @@ const General = () => {
                         <i className="bi bi-bug-fill"></i>
                       </button>
                     </div>
+                  </div>
 
-                    {/* Mostrar comentarios */}
-                    {post.comments && post.comments.length > 0 && (
-                      <div className="general-comentarios">
-                        {post.comments.map(c => (
-                          <div key={c.id} className="comentario-item">
-                            <img src={c.avatar} alt="avatar" />
-                            <strong>{c.author}</strong>
+                  {/* Mostrar comentarios */}
+
+                  {/*{post.comments && post.comments.length > 0 && (
+                    <div className="general-comentarios">
+                      {post.comments.map(c => (
+                        <div key={c.id} className="comentario-item">
+                          <img src={c.avatar} alt="avatar" />
+                          <strong>{c.author}:</strong>
+                          <p>{c.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}*/}
+
+                  {post.comments && post.comments.length > 0 && (
+                    <div className="general-comentarios-lista">
+                      {post.comments.map(c => (
+                        <div key={c.id} className="general-comentario-item">
+                          <div className="general-comentario-header">
+                            <img 
+                              className="general-comentario-avatar" 
+                              src={c.avatar} 
+                              alt={`Avatar de ${c.author}`} 
+                            />
+                            <div className="general-comentario-info">
+                              <span className="general-comentario-autor">{c.author}</span>
+                              <span className="general-comentario-texto"> respondió</span>
+                            </div>
+                          </div>
+                          <div className="general-comentario-contenido">
                             <p>{c.text}</p>
                           </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

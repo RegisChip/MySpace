@@ -12,6 +12,11 @@ const Perfil = () => {
 
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
+
+  // Estados para posts y comentarios
+  const [posts, setPosts] = useState([]);
+  const [comentarios, setComentarios] = useState([]);
+
   const [kudosCounts, setKudosCounts] = useState(
     postsData.reduce((acc, post) => {
       acc[post.id] = post.kudos || 0;
@@ -30,12 +35,19 @@ const Perfil = () => {
   useEffect(() => {
     const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
     if (!usuarioLogeado) {
-      navigate("/"); // redirige al inicio si no hay usuario logueado
+      // redirige al inicio si no hay usuario logueado
+      navigate("/");
       return;
     }
 
     const usuarioEncontrado = perfilData.find((u) => u.correo === usuarioLogeado.correo); // busca datos del usuario
     setUsuario(usuarioEncontrado);
+
+    // Filtra posts del usuario
+    const savedPosts = JSON.parse(localStorage.getItem("posts") || "[]");
+    const userPosts = savedPosts.filter(p => p.author === usuarioEncontrado.nombre);
+    setPosts(userPosts);
+
   }, [navigate]);
 
   const handleLogout = () => {
@@ -67,7 +79,46 @@ const Perfil = () => {
   const toggleComentario = (postId) => {
     setComentarioVisibleId(prev => (prev === postId ? null : postId));
   };
-  
+
+  const handleAgregarComentario = (postId, texto) => {
+    const newPosts = posts.map(post => {
+      if (post.id === postId) {
+        const nuevoComentario = {
+          id: Date.now(),
+          author: usuario.nombre,
+          text: texto,
+          avatar: usuario.imagen,
+        };
+        return {
+          ...post,
+          comments: [...(post.comments || []), nuevoComentario]
+        };
+      }
+      return post;
+    });
+
+    setPosts(newPosts);
+    // Actualizamos el localStorage
+    const savedPosts = JSON.parse(localStorage.getItem("post") || "[]");
+    const updatedPostsLS = savedPosts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          comments: [...(post.comments || []), {
+            id: Date.now(),
+            author: usuario.nombre,
+            text: texto,
+            avatar: usuario.imagen,
+          }]
+        };
+      }
+      return post;
+    });
+    localStorage.setItem("post", JSON.stringify(updatedPostsLS));
+
+    setComentarioVisibleId(null);
+  };
+
   const toggleLeft = () => {
     setIsLeftOpen((prev) => {
       if (!prev) setIsRightOpen(false);
@@ -132,7 +183,7 @@ const Perfil = () => {
         </button>
       </header>
 
-      {/* MAIN - SE MANTIENE INTACTO */}
+      {/* MAIN */}
       <main className="perfil-main-base">
         <div className="perfil-main-content">
           <div className="perfil-main-ima-perf">
@@ -165,11 +216,12 @@ const Perfil = () => {
               </div>
             </div>
 
-
             <div className="perfil-all-post">
-              {postsData.map((post) => (
+              {posts.map((post) => (
                 <div className="perfil-blog-post" key={post.id}>
                   <div className="perfil-post-perf">
+
+                    {/* --- Info del autor --- */}
                     <div className="perfil-info-main">
                       <img className="perfil-ima-inf" src={post.avatar} alt="foto perfil" />
                       <h6 className="perfil-nombre">{post.author}</h6>
@@ -184,21 +236,29 @@ const Perfil = () => {
                         </button>
 
                         {comentarioVisibleId === post.id && (
-                          <ComentarioFlotante onClose={() => setComentarioVisibleId(null)} />
+                          <ComentarioFlotante
+                            onClose={() => setComentarioVisibleId(null)}
+                            onSubmit={(texto) => handleAgregarComentario(post.id, texto)}
+                          />
                         )}
                       </div>
-
                     </div>
+
+                    {/* --- Contenido del post --- */}
                     <div className="perfil-post">
                       <p>{post.content}</p>
                     </div>
+
+                    {/* --- Imagen del post si existe --- */}
                     {post.image && (
                       <div className="perfil-post-ima">
                         <img className="perfil-ima-pub" src={post.image} alt="imagen-post" />
                       </div>
                     )}
+
+                    {/* --- Botones de interacción (check/kudos) --- */}
                     <div className="perfil-opciones-botton">
-                      <a className="perfil-check" href="#">[check]</a>
+                      <button className="perfil-check" type="button">[check]</button>
                       <button
                         className={`perfil-kudos ${clickedKudos === post.id ? 'clicked' : ''}`}
                         onClick={() => handleKudosClick(post.id)}
@@ -208,10 +268,38 @@ const Perfil = () => {
                       </button>
                     </div>
                   </div>
+
+                  {/* --- Comentarios --- */}
+                  {post.comments && post.comments.length > 0 && (
+                    <div className="perfil-comentarios-lista">
+                      {post.comments.map(c => (
+                        <div key={c.id} className="perfil-comentario-item">
+
+                          {/* Cabecera del comentario */}
+                          <div className="perfil-comentario-header">
+                            <img 
+                              className="perfil-comentario-avatar" 
+                              src={c.avatar} 
+                              alt={`Avatar de ${c.author}`} 
+                            />
+                            <div className="perfil-comentario-info">
+                              <span className="perfil-comentario-autor">{c.author}</span>
+                              <span className="perfil-comentario-texto"> respondió</span>
+                            </div>
+                          </div>
+
+                          {/* Contenido del comentario */}
+                          <div className="perfil-comentario-contenido">
+                            <p>{c.text}</p>
+                          </div>
+
+                        </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
-
           </div>
         </div>
 

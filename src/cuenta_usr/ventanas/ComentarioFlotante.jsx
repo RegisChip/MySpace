@@ -1,11 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './ComentarioFlotante.css'; // Creamos el estilo después
 
-const ComentarioFlotante = ({ onClose }) => {
+const ComentarioFlotante = ({ onClose, onSubmit}) => {
   const modalRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 100, y: 100 });
   const offset = useRef({ x: 0, y: 0 });
+
+  //Estados para el formulario
+  const [textComent, setTextComent] = useState('');
+  const [imageComent, setImageComent] = useState('');
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -35,6 +39,16 @@ const ComentarioFlotante = ({ onClose }) => {
     setIsDragging(true);
   };
 
+    // Manejo del envio del comentario
+  const handleSubmit = () => {
+    if (!textComent.trim()) {
+      alert('El texto del comentario no puede estar vacío.');
+      return;
+    }
+
+    onSubmit(textComent); // Envía el comentario al componente padre
+  };
+
   return (
     <div
       className="comentario-flotante"
@@ -52,13 +66,23 @@ const ComentarioFlotante = ({ onClose }) => {
           <h5>Texto</h5>
         </div>
         <div className="coment-area">
-          <textarea name="text-comen" />
+          <textarea
+            name="text-coment"
+            value={textComent}
+            onChange={(e) => setTextComent(e.target.value)}
+            placeholder="Escribe tu comentario aquí"
+          />
         </div>
         <div className="imagen-coment">
           <h5>Imagen</h5>
-          <input type="text" />
+          <input
+            type="text"
+            value={imageComent}
+            onChange={(e) => setImageComent(e.target.value)}
+            placeholder="URL de la imagen"
+          />
         </div>
-        <button>Post</button>
+        <button onClick={handleSubmit}>Post</button>
       </div>
     </div>
   );

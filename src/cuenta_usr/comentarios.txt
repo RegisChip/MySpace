@@ -1,0 +1,10 @@
+/* === ESTILOS PARA COMENTARIOS === */
+.general-comentarios-lista { ... }
+.general-comentario-item { ... }
+.general-comentario-header { ... }
+.general-comentario-avatar { ... }
+.general-comentario-info { ... }
+.general-comentario-autor { ... }
+.general-comentario-texto { ... }
+.general-comentario-contenido { ... }
+.general-comentario-contenido p { ... }

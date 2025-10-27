@@ -1,11 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './PostFlotante.css'; // Crea el CSS con las clases adaptadas para post
 
-const PostFlotante = ({ onClose }) => {
+const PostFlotante = ({ onClose, onAddPost }) => {
   const modalRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 100, y: 100 });
   const offset = useRef({ x: 0, y: 0 });
+
+  //Estados para el formulario
+  const [textPost, setTextPost] = useState('');
+  const [imagePost, setImagePost] = useState('');
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -35,6 +39,21 @@ const PostFlotante = ({ onClose }) => {
     setIsDragging(true);
   };
 
+  const handleSubmit = () => {
+    if (!textPost.trim()) {
+      alert('El texto del post no puede estar vacío.');
+      return;
+    }
+
+    const nuevoPost = {
+      content: textPost,
+      image: imagePost.trim() || null,
+    };
+
+    onAddPost(nuevoPost); // Envía el post al componente padre
+
+  };
+
   return (
     <div
       className="post-flotante"
@@ -52,13 +71,24 @@ const PostFlotante = ({ onClose }) => {
           <h5>Texto</h5>
         </div>
         <div className="post-area">
-          <textarea name="text-post" />
+          <textarea
+            name="text-post"
+            value={textPost}
+            onChange={(e) => setTextPost(e.target.value)}
+            placeholder="Escribe tu post aquí"
+          />
         </div>
+
         <div className="imagen-post">
           <h5>Imagen</h5>
-          <input type="text" />
+          <input
+            type="text"
+            value={imagePost}
+            onChange={(e) => setImagePost(e.target.value)}
+            placeholder="URL de la imagen"
+          />
         </div>
-        <button>Post</button>
+        <button onClick={handleSubmit}>Post</button>
       </div>
     </div>
   );
