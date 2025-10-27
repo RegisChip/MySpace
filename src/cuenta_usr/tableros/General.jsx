@@ -25,6 +25,17 @@ const General = () => {
     }, {});
   });
 
+  const [kudosCountsComentarios, setKudosCountsComentarios] = useState({});
+
+  const handleComentarioKudosClick = (comentarioId, postId) => {
+    setKudosCountsComentarios(prev => ({
+      ...prev,
+      [comentarioId]: (prev[comentarioId] || 0) + 1
+    }));
+    setClickedKudos(comentarioId);
+    setTimeout(() => setClickedKudos(null), 300);
+  };
+
   const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) || null; // Solo se lee el usuario logeado
 
   const [clickedKudos, setClickedKudos] = useState(null);
@@ -269,6 +280,21 @@ const General = () => {
                           <div className="general-comentario-contenido">
                             <p>{c.text}</p>
                           </div>
+                          
+                          {/* BOTONES DE KUDOS Y CHECK PARA CADA COMENTARIO */}
+                          <div className="general-opciones-comentario">
+                            <button className="general-check" type="button">
+                              [check]
+                            </button>
+                            <button
+                              className={`general-kudos ${clickedKudos === c.id ? 'clicked' : ''}`}
+                              onClick={() => handleComentarioKudosClick(c.id, post.id)}
+                              title={`${kudosCountsComentarios[c.id] || 0} kudos`}
+                            >
+                              <i className="bi bi-bug-fill"></i>
+                            </button>
+                          </div>
+
                         </div>
                       ))}
                     </div>
