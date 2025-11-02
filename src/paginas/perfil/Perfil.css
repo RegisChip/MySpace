@@ -1,0 +1,17 @@
+/* Perfil.css */
+
+/* ========================================
+   GRID PRINCIPAL DE PERFIL
+======================================== */
+.perfil-grid {
+  display: grid;
+  grid-template-rows: 120px auto 80px;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "izq header der"
+    "izq main der"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 0 13px;
+  transition: all 0.3s ease;
+}

@@ -1,0 +1,326 @@
+/* Base_Aside.css
+CSS compartido para ambos asides */
+
+/* ========================================
+   VARIABLES CSS
+======================================== */
+:root {
+  --color-primary: #609ffa;
+  --color-secondary: #bfd5f1;
+  --color-tertiary: #3c77cb;
+  --color-bg-light: #f4fbfd;
+  --color-bg-medium: #e3eaf4;
+  --color-text-dark: #1a4f9d;
+  --color-text-medium: #333;
+  --transition-speed: 0.3s;
+  --aside-width-open: 165px;
+  --aside-width-closed: 35px;
+}
+
+/* ========================================
+   BASE COMÚN PARA AMBOS ASIDES
+======================================== */
+.aside-base {
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-primary);
+  margin-top: 3rem;
+  padding: 5px;
+  height: 500px;
+}
+
+.aside-base.open {
+  transition: width var(--transition-speed) ease;
+}
+
+.aside-base.closed {
+  width: var(--aside-width-closed);
+  overflow: hidden;
+  transition: width var(--transition-speed) ease;
+}
+
+/* === POSICIONAMIENTO ESPECÍFICO === */
+.aside-izquierdo {
+  grid-area: izq;
+  margin-left: 13px;
+}
+
+.aside-izquierdo.open {
+  width: var(--aside-width-open) !important;
+}
+
+.aside-derecho {
+  grid-area: der;
+  margin-right: 13px;
+}
+
+.aside-derecho.open {
+  width: var(--aside-width-open) !important;
+}
+
+.aside-derecho.closed {
+  justify-self: end;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.aside-contenedor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.aside-cuerpo {
+  background: var(--color-secondary);
+  height: 88%;
+  border: 1px solid var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* === BOTÓN DE TOGGLE === */
+.aside-boton-contenedor {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.aside-boton-contenedor.izq {
+  justify-content: flex-end;
+}
+
+.aside-boton-contenedor.der {
+  justify-content: flex-start;
+}
+
+.aside-boton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.aside-boton:hover {
+  transform: scale(1.05);
+}
+
+.aside-icono {
+  width: 22px;
+  height: 22px;
+  transition: filter 0.2s ease;
+}
+
+.aside-icono:hover {
+  filter: invert(53%) sepia(40%) saturate(438%) hue-rotate(177deg)
+    brightness(96%) contrast(90%);
+}
+
+/* ========================================
+   CONTENIDO DEL ASIDE IZQUIERDO
+======================================== */
+
+.aside-titulo {
+  margin: 5px;
+  color: var(--color-tertiary);
+  font-size: 1rem;
+}
+
+/* === LISTA DE USUARIOS === */
+.aside-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  max-height: 390px;
+}
+
+.aside-item {
+  background: var(--color-bg-medium);
+  margin-bottom: 5px;
+  border: 3px solid var(--color-bg-light);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+
+.aside-item:hover {
+  background: #dce7f5;
+}
+
+.aside-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid var(--color-bg-medium);
+  object-fit: cover;
+}
+
+.aside-nombre {
+  text-decoration: none;
+  color: #000;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.aside-nombre:hover {
+  text-decoration: underline;
+}
+
+/* ========================================
+   CONTENIDO DEL ASIDE DERECHO
+======================================== */
+
+/* === IMAGEN DE PERFIL ==== */
+
+.perfil-imagen {
+  position: relative;
+}
+
+.perfil-boton {
+  height: 50px;
+  cursor: pointer;
+}
+
+/* ========================================
+   DROPDOWN DEL PERFIL
+======================================== */
+.drop-contenido {
+  opacity: 1;
+  visibility: visible;
+  position: absolute;
+  background-color: var(--color-bg-light);
+  box-shadow: 0 4px 8px var(--color-secondary);
+  border: 2px solid var(--color-secondary);
+  padding: 10px;
+  z-index: 100;
+  top: 0;
+  right: 100%;
+  margin-right: 10px;
+  width: max-content;
+}
+
+.drop-contenido ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drop-contenido li {
+  color: var(--color-text-dark);
+  margin: 0;
+}
+
+.drop-contenido link,
+.boton-cerrar {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 5px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  width: 100%;
+}
+
+.drop-contenido link:hover,
+.boton-cerrar:hover,
+.list-der li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* === TABLONES === */
+.cont-tablones h3 {
+  background: var(--color-secondary);
+  color: var(--color-tertiary);
+  margin-bottom: 5px;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+}
+
+.cont-tablones input {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-primary);
+  color: var(--color-tertiary);
+  padding: 4px;
+}
+
+.cont-tablones input::placeholder {
+  color: var(--color-secondary);
+}
+
+.cont-tablones input:focus {
+  outline: none;
+}
+
+.lista-tablones {
+  list-style: none;
+  color: var(--color-text-dark);
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-tablones li {
+  padding: 2px 0;
+  word-wrap: break-word;
+}
+
+.lista-tablones link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ========================================
+   SCROLLBAR PERSONALIZADO
+======================================== */
+
+/* Scroll general para ambos asides */
+.scroll-personalizado::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-personalizado::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-text-dark);
+  border-radius: 4px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 768px) {
+  .aside-base.open {
+    width: 200px !important;
+  }
+
+  .perfil-boton {
+    height: 40px;
+  }
+
+  .drop-contenido {
+    min-width: 120px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .aside-derecho.open {
+    width: var(--aside-der-width-open);
+    transition: width var(--transition-speed) ease;
+  }
+
+  .aside-derecho.closed {
+    width: var(--aside-width-closed);
+    overflow: hidden;
+    transition: width var(--transition-speed) ease;
+    justify-self: flex-start;
+  }
+}
