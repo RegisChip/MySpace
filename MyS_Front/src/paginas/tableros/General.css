@@ -1,0 +1,335 @@
+/* MySpace\MyS_Front\src\paginas\tableros\General.css */
+
+/* ========================================
+   GRID PRINCIPAL DE GENERAL
+======================================== */
+.general-grid {
+  display: grid;
+  grid-template-rows: 120px auto 80px;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "izq header der"
+    "izq main der"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 0 13px;
+  transition: all 0.3s ease;
+}
+
+/* === BLOG AREA === */
+.main-blog {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 1rem auto;
+  width: 100%;
+}
+
+.main-navbar {
+  margin-bottom: 8px;
+}
+
+.navbar-list {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  padding: 10px 0 0;
+  margin: 0;
+}
+
+.navbar-list button {
+  font-size: 14px;
+  color: #2d5faa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navbar-list button:hover {
+  text-decoration: underline;
+}
+
+/* ========================================
+   POSTS Y COMENTARIOS
+======================================== */
+
+
+.general-all-post {
+  margin-top: 1rem;
+}
+
+.general-blog-post {
+  border: none;  /* Quita el borde del contenedor principal */
+  background: transparent;  /* Sin fondo */
+  padding: 0;  /* Sin padding */
+  margin-bottom: 10px;
+}
+
+.general-post-perf {
+  border: 1px solid #609ffa;  /* Mueve el borde aquí */
+  background: #fff;  /* Mueve el fondo aquí */
+  padding: 10px;  /* Mueve el padding aquí */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "info-main info-main"
+    "post post-ima"
+    "opciones opciones";
+  gap: 10px;
+}
+
+.general-info-main {
+  grid-area: info-main;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.general-info-main img {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #999;
+  margin-right: 6px;
+}
+
+.general-info-main h6 {
+  margin: 0 2px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.general-ima-inf {
+  width: 40px;
+  height: 40px;
+}
+
+.general-nombre {
+  color: #60abba;
+  margin-right: 5px;
+}
+
+.general-public {
+  color: #0c1c33;
+  margin-right: 5px;
+}
+
+.general-fecha {
+  color: #ba3708;
+  margin-right: 5px;
+}
+
+.general-opciones-botton {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  align-items: center;       /* Alinea verticalmente */
+  gap: 10px;                 /* Espacio entre los elementos */
+  margin-top: 4px;
+}
+
+.general-crear-coment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #072b5d;
+  font-size: 1rem;
+}
+
+.general-post {
+  grid-area: post;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  text-align: justify;
+}
+
+.general-post p {
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: justify;
+  margin: 0;
+}
+
+.general-post-ima {
+  grid-area: post-ima;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.general-post-ima img {
+  width: 140px;
+  border: 1px solid #c6c6c6;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+
+.general-post-ima {
+  grid-area: post-ima;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.general-post-ima img {
+  width: 140px;
+  border: 1px solid #c6c6c6;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+
+.general-opciones-botton {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  align-items: center;       /* Alinea verticalmente */
+  gap: 10px;                 /* Espacio entre los elementos */
+  margin-top: 4px;
+}
+
+
+.general-check {
+    font-size: 12px;
+    color: #1a4f9d;
+    text-decoration: none;
+    border: none;
+    background: none;
+}
+
+.general-kudos {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    margin: 0;
+    padding: 0px;
+    font-size: 25px;
+    color: rgb(70, 138, 155);
+    border: none;
+    background: none;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.general-kudos:hover {
+  transform: scale(1.05);
+}
+
+.general-kudos.clicked {
+  animation: kudosClick 0.3s forwards;
+}
+
+@keyframes kudosClick {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* === ESTILOS PARA COMENTARIOS === */
+.general-comentarios-lista {
+  margin-top: 15px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.general-comentario-item {
+  background: #ffffff;
+  border: 1px solid #609ffa;
+  padding: 10px;
+}
+
+.general-comentario-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.general-comentario-avatar {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #999;
+  flex-shrink: 0;
+}
+
+.general-comentario-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.general-comentario-autor {
+  color: #60abba;
+  font-weight: 500;
+}
+
+.general-comentario-texto {
+  color: #0c1c33;
+}
+
+.general-comentario-contenido {
+  margin-left: 48px;
+}
+
+.general-comentario-contenido p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #000000;
+  text-align: justify;
+}
+
+
+/* === Botones de comentario === */
+.general-opciones-comentario {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  align-items: center;       /* Alinea verticalmente */
+  gap: 10px;                 /* Espacio entre los elementos */
+  margin-top: 4px;
+}
+
+.general-check-comentario {
+    font-size: 12px;
+    color: #1a4f9d;
+    text-decoration: none;
+    border: none;
+    background: none;
+}
+
+.general-kudos-comentario {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    margin: 0;
+    padding: 0px;
+    font-size: 25px;
+    color: rgb(70, 138, 155);
+    border: none;
+    background: none;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.general-kudos-comentario:hover {
+  transform: scale(1.05);
+}
+
+.general-kudos-comentario.clicked {
+  animation: kudosClick 0.3s forwards;
+}

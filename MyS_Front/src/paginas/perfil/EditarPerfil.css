@@ -1,0 +1,381 @@
+/* MySpace\MyS_Front\src\paginas\perfil\EditarPerfil.css */
+
+/* ========================================
+   GRID PRINCIPAL DE EDITAR PERFIL
+======================================== */
+.editar-grid {
+  display: grid;
+  grid-template-rows: 120px auto 80px;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "izq header der"
+    "izq main der"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 0 13px;
+  transition: all 0.3s ease;
+}
+
+/* === contenido === */
+
+.edit-main-content {
+  margin: 10px;
+}
+
+
+/* === PERFIL === */
+.edit-cont-perfil {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.edit-ima-perf {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  overflow: hidden;
+  background: #bac6d5;
+}
+
+.edit-ima-perf img {
+  width: 100%;
+  height: 100%;
+}
+
+.edit-ima-perf button {
+  position: absolute;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.edit-ima-perf button:hover { background: #6c8ec2; }
+.edit-ima-perf .edit { right: 40px; }
+.edit-ima-perf .delet { right: 8px; }
+
+.edit-descrip-perf {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.edit-nom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #bac6d5;
+  position: relative;
+  z-index: 1;
+}
+
+.edit-nom h2 { margin: 5px; font-size: 22px; }
+
+.edit-nom button {
+  background: none;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  transition: background 0.3s;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.edit-nom button:hover { background: #6c8ec2; }
+
+.edit-desc {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #ddd;
+  background: #bac6d5;
+  padding: 10px;
+  height: 120px;
+}
+
+
+.edit-desc p {
+  flex: 1;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.edit-desc-buttons button {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.edit-desc-buttons button:hover { background: #6c8ec2; }
+
+.edit-desc p::-webkit-scrollbar { width: 6px; }
+.edit-desc p::-webkit-scrollbar-thumb {
+  background: #8fb3e6;
+  border-radius: 4px;
+  border: 1px solid #072c6b;
+}
+
+
+/* === CONFIGURACIÓN DE PÁGINA === */
+hr { margin: 5px; }
+
+.edit-page {
+  margin: 5px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.edit-page h5 { margin: 5px; }
+
+.edit-page div { display: flex; align-items: center; }
+
+.edit-page label {
+  width: 200px;
+  color: #1a4f9d;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 50px 10px 70px;
+}
+
+.edit-page button {
+  border-radius: 15px;
+  padding: 5px 25px;
+  background: #bfd5f1;
+  border: none;
+  color: #072c6b;
+  margin-right: 30px;
+  margin-bottom: 10px;
+}
+
+/* === POST / COMENTARIOS === */
+.edit-com-post {
+  background: #072c6b;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  color: #000;
+}
+
+.edit-com-post h5 {
+  color: #fff;
+  margin: 5px 0 10px;
+}
+
+
+.edit-tap {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.edit-tap select,
+.edit-tap input[type="date"] {
+  padding: 5px;
+  border: none;
+  background: #f6f6f6;
+  border-radius: 3px;
+}
+
+
+/* === Pestañas === */
+.edit-pest {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.edit-pest button {
+  background: #8fb3e6;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #000;
+  font-weight: bold;
+  transition: background 0.3s ease; /* Transición suave */
+}
+
+/* === Botón activo === */
+.edit-pest .active {
+  background: #1a4f9d;
+  color: #fff;
+}
+
+/* === CONTENIDO DE POSTS === */
+.content-edit {
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 400px;
+}
+
+
+/* === Tabs dinámicos === */
+.tab-content { display: none; }
+.tab-content.activate { display: block; }
+
+.all-post { display: flex; flex-direction: column; gap: 12px; }
+
+.blog-post {
+  border: 1px solid #609ffa;
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+
+.post-perf {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "info-main info-main"
+    "post post-ima"
+    "opciones opciones";
+  gap: 10px;
+}
+
+.content-edit .blog-post .post-perf > .info-main {
+  grid-area: info-main;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow: visible;
+}
+
+.content-edit .blog-post .post-perf > .info-main img.ima-inf {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px;
+  min-width: 35px;
+}
+
+.content-edit .blog-post .post-perf > .info-main h6 {
+  margin: 0;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.content-edit .blog-post .post-perf > .info-main .nombre { color: #60abba; }
+.content-edit .blog-post .post-perf > .info-main .public { color: #0c1c33; }
+.content-edit .blog-post .post-perf > .info-main .fecha { color: #ba3708; }
+
+
+.post {
+  grid-area: post;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+.post-ima {
+  grid-area: post-ima;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-ima img.ima-pub {
+  width: 140px;
+  border: 1px solid #c6c6c6;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+
+.opciones-botton {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.opciones-botton .check {
+  font-size: 12px;
+  color: #1a4f9d;
+  text-decoration: none;
+}
+
+.kudos {
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
+  color: rgb(70, 138, 155);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.edit-buttons button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: rgb(70, 138, 155);
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.edit-buttons button:hover { background: #bfd5f1; }
+
+/* === Efecto zoom al presionar los botones de editar y borrar === */
+.edit-buttons button,
+.edit-desc-buttons button,
+.edit-ima-perf button,
+.edit-page button,
+.edit-nom button {
+  transition: transform 0.1s ease, background 0.3s ease;
+}
+
+.edit-buttons button:active,
+.edit-desc-buttons button:active,
+.edit-ima-perf button:active,
+.edit-page button:active,
+.edit-nom button:active {
+  transform: scale(1.2); /* aumenta un poquito el tamaño al presionar */
+}
+
+

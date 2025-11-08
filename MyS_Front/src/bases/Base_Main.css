@@ -1,0 +1,199 @@
+/* MySpace\MyS_Front\src\bases\Base_Main.css */
+
+/* ========================================
+   BASE ESTRUCTURA
+======================================== */
+.base {
+  display: grid;
+  grid-template-rows: 120px auto 80px;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+.base-head {
+  grid-area: header;
+  background: #bfd5f1;
+  border: 1px solid #609ffa;
+  font-family: "Bree Serif", serif;
+  color: white;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.base-head h1 {
+  margin: 1rem;
+}
+
+.base-head p {
+  font-size: 1.3rem;
+  margin-top: 20px;
+}
+
+.base-head h1 a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 3.5rem;
+  padding-right: 20px;
+  border-right: 3px solid white;
+  transition: opacity 0.2s ease;
+}
+
+.base-head h1 a:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+/* ========================================
+   MAIN
+======================================== */
+.base-main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #609ffa;
+  border-top: none;
+  background: #f4fbfd;
+}
+
+/* ========================================
+   FOOTER DEL MAIN
+======================================== */
+.base-main-foot {
+  background: #bfd5f1;
+  border-top: 1px solid #609ffa;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.base-main-foot p {
+  margin: 0;
+}
+
+.base-main-foot a {
+  display: flex;
+  align-items: center;
+}
+
+.base-main-foot img {
+  transition: transform 0.2s ease;
+}
+
+.base-main-foot img:hover {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   FOOTER BASE
+======================================== */
+.base-foot {
+  grid-area: footer;
+  padding: 20px;
+  text-align: center;
+  background: transparent;
+}
+
+.base-foot ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.base-foot ul li {
+  margin: 0 3px;
+}
+
+.base-foot ul li a {
+  text-decoration: none;
+  color: #1a4f9d;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.base-foot ul li a:hover {
+  text-decoration: underline;
+  color: #0d2f5d;
+}
+
+.base-foot p {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 768px) {
+  .base-head h1 a {
+    font-size: 2.5rem;
+    padding-right: 15px;
+  }
+
+  .base-head p {
+    font-size: 1.1rem;
+  }
+
+  .base-foot ul {
+    font-size: 12px;
+  }
+
+  .base-foot p {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .base-head {
+    max-width: 60%;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .base-main {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ========================================
+   ENVOLVIENDO HEADER Y MAIN
+======================================== */
+
+/* Contenedor centrado para header y main */
+.base-wrapper {
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .base-wrapper {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+
+  /* quita los max-width de .base-head y .base-main */
+  .base-head,
+  .base-main {
+    max-width: 100%;
+    margin: 0;
+  }
+}

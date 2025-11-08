@@ -1,0 +1,67 @@
+# MySpace\MyS_Back\nginx_conf.txt
+# modifica tu nginx.conf para que pueda actuar como proxy entre Django y React
+
+worker_processes 1;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        # API Backend (Django + Waitress)
+        location /api/ {
+            proxy_pass http://127.0.0.1:8001;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            
+            # CORS headers (adicional por si acaso)
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
+            
+            # Manejar preflight OPTIONS
+            if ($request_method = 'OPTIONS') {
+                return 204;
+            }
+        }
+
+        # Admin de Django
+        location /admin/ {
+            proxy_pass http://127.0.0.1:8001;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        # Archivos estáticos de React (ANTES de Django static)
+        location /static/ {
+            alias C:/MyS_U4/MySpace/MyS_Front/build/static/;
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+
+        # Frontend React (HTML principal)
+        location / {
+            root C:/MyS_U4/MySpace/MyS_Front/build;
+            index index.html;
+            try_files $uri $uri/ /index.html;
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root html;
+        }
+    }
+}
