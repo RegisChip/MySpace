@@ -21,7 +21,6 @@ SECRET_KEY = 'django-insecure-mj3no#%qp_-5^^t)y#c!ezm8iq)j9z1#20tu$2rag5iklv-vkw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['10.31.6.224']
 ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.1.144']
 
 # Application definition
@@ -37,6 +36,7 @@ INSTALLED_APPS = [
     # Conexion con el React
     'rest_framework',
     'rest_framework_simplejwt',
+    #'rest_framework_simplejwt.token_blacklist',  # Para blacklist de tokens
     'corsheaders',
 
     # Apps
@@ -65,11 +65,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    # Dejamos AllowAny por defecto, cada vista define sus propios permisos
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # Cambiar a IsAuthenticated para rutas protegidas
+        'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_PAGINATION_CLASS': 
-    'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
 }
 
@@ -78,9 +78,17 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
+    'BLACKLIST_AFTER_ROTATION': False,
     'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',  # Campo ID de tu modelo Usuario
+    'USER_ID_CLAIM': 'user_id',  # Claim en el token JWT
 }
+
+# Backend de autenticación personalizado
+AUTHENTICATION_BACKENDS = [
+    'cuenta_usr.backends.UsuarioBackend',  # Tu backend personalizado
+    'django.contrib.auth.backends.ModelBackend',  # Backend por defecto (para admin)
+]
 
 ROOT_URLCONF = 'MySpace.urls'
 

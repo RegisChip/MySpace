@@ -12,32 +12,32 @@ import Base_Main from "../../bases/Base_Main";
 
 export default function CuentaPage() {
     
-    const navigate = useNavigate();
-
+const navigate = useNavigate();
+    
     // Datos del usuario
     const [correo, setCorreo] = useState("");
     const [pass, setPass] = useState("");
     const [loading, setLoading] = useState(false);
     
     const logearUsuario = async (e) => {
-
         e.preventDefault();
         setLoading(true);
-
+        
         try {
             const data = await login(correo, pass);
+            console.log("Login exitoso:", data);
             alert(`¡Bienvenido ${data.usuario.nombre}!`);
             navigate("/perfil");
         } catch (error) {
-            alert("Correo o contraseña incorrectos o error de conexión");
-            console.error(error);
+            console.error("Error en login:", error);
+            alert("Correo o contraseña incorrectos");
         } finally {
             setLoading(false);
         }
     };
     
-    const passOlvidada = () => { // No funcional
-        e.preventDefault(); // Importante!
+    const passOlvidada = (e) => {
+        e.preventDefault();
         if (!correo) {
             alert("Ingresa tu correo para recuperar la contraseña");
         } else {
@@ -53,6 +53,7 @@ export default function CuentaPage() {
                         <tbody>
                             <tr>
                                 <td>Correo</td>
+
                                 <td><input
                                 type="email"
                                 name="correo"
@@ -60,9 +61,11 @@ export default function CuentaPage() {
                                 onChange={(e) => setCorreo(e.target.value)}
                                 disabled={loading}
                                 required/></td>
+
                             </tr>
                             <tr>
                                 <td>Contraseña</td>
+
                                 <td><input
                                 type="password"
                                 name="pass"
@@ -70,6 +73,7 @@ export default function CuentaPage() {
                                 onChange={(e) => setPass(e.target.value)}
                                 disabled={loading}
                                 required/></td>
+                                
                             </tr>
                         </tbody>
                     </table>

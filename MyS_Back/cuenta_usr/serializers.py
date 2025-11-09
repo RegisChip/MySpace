@@ -1,24 +1,23 @@
 # MySpace\MyS_Back\cuenta_usr\serializers.py
 
 from rest_framework import serializers
-from .models import Usuario, Perfil
+from .models import Usuario, Perfil, Seguidores
 from django.contrib.auth.hashers import make_password, check_password
+
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ['id', 'nombre', 'apellido_p', 'apellido_m', 'correo', 'contrasena', 'fecha_nacimiento']
         extra_kwargs = {
-            'contrasena': {'write_only': True}  # No devuelve la contraseña en respuestas
+            'contrasena': {'write_only': True}
         }
     
     def create(self, validated_data):
-        # Encripta la contraseña antes de guardar
         validated_data['contrasena'] = make_password(validated_data['contrasena'])
         return super().create(validated_data)
     
     def update(self, instance, validated_data):
-        # Si se actualiza la contraseña, se encripta
         if 'contrasena' in validated_data:
             validated_data['contrasena'] = make_password(validated_data['contrasena'])
         return super().update(instance, validated_data)
@@ -44,26 +43,16 @@ class PerfilSerializer(serializers.ModelSerializer):
     def get_total_siguiendo(self, obj):
         return obj.siguiendo.count()
 
+
 class LoginSerializer(serializers.Serializer):
     correo = serializers.EmailField()
-    contrasena = serializers.CharField(write_only=True)
+    contrasena = serializers.CharField(write_only=True, min_length=6)
     
-    def validate(self, data):
-        correo = data.get('correo')
-        contrasena = data.get('contrasena')
-        
-        # Busca el usuario por su correo
-        try:
-            usuario = Usuario.objects.get(correo=correo)
-        except Usuario.DoesNotExist:
-            raise serializers.ValidationError('Correo o contraseña incorrectos')
-        
-        # Verificar la contraseña
-        if not check_password(contrasena, usuario.contrasena):
-            raise serializers.ValidationError('Correo o contraseña incorrectos')
-        
-        data['usuario'] = usuario
-        return data
+    def validate_correo(self, value):
+        """Validar que el correo exista"""
+        if not Usuario.objects.filter(correo=value).exists():
+            raise serializers.ValidationError('Correo no registrado')
+        return value
 
 
 class RegistroSerializer(serializers.Serializer):
@@ -91,31 +80,38 @@ class RegistroSerializer(serializers.Serializer):
         return value
     
     def create(self, validated_data):
-        # Si no se proporciona un nombre para el perfil, se utiliza el nombre del usuario
+        # Generar nombre de usuario si no se proporciona
         nom_usuario = validated_data.pop('nom_usuario', None)
         if not nom_usuario:
-            # Genera el nombre de perfil basado en el nombre
             base_username = validated_data['nombre'].lower().replace(' ', '')
             nom_usuario = base_username
             
-            # Si ya existe, se agrega un número
             counter = 1
             while Perfil.objects.filter(nom_usuario=nom_usuario).exists():
                 nom_usuario = f"{base_username}{counter}"
                 counter += 1
         
-        # Separa los datos de usuario y perfil
+        # Separar datos de perfil
         perfil_data = {
             'nom_usuario': nom_usuario,
             'descripcion': validated_data.pop('descripcion', ''),
             'foto_perfil': validated_data.pop('foto_perfil', ''),
         }
         
-        # Se crea el usuario
+        # Crear usuario
         validated_data['contrasena'] = make_password(validated_data['contrasena'])
         usuario = Usuario.objects.create(**validated_data)
         
-        # Se crea el perfil
+        # Crear perfil
         perfil = Perfil.objects.create(usuario=usuario, **perfil_data)
         
         return {'usuario': usuario, 'perfil': perfil}
+
+
+class SeguidoresSerializer(serializers.ModelSerializer):
+    seguidor_nombre = serializers.CharField(source='perfil_seguidor.nom_usuario', read_only=True)
+    seguido_nombre = serializers.CharField(source='perfil_seguido.nom_usuario', read_only=True)
+    
+    class Meta:
+        model = Seguidores
+        fields = ['id', 'perfil_seguidor', 'perfil_seguido', 'seguidor_nombre', 'seguido_nombre']

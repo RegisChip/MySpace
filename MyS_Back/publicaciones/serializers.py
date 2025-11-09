@@ -1,7 +1,5 @@
 # MySpace\MyS_Back\publicaciones\serializers.py
 
-## AÚN OCUPAN MODIFICACIONES
-
 from rest_framework import serializers
 from .models import Publicacion, Fotos, Comentario
 from cuenta_usr.serializers import PerfilSerializer

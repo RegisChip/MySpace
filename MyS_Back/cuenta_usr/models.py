@@ -10,8 +10,22 @@ class Usuario(models.Model):
     contrasena = models.CharField(max_length=100)
     fecha_nacimiento = models.DateTimeField()
 
+    # Propiedades requeridas por JWT
+    @property
+    def is_authenticated(self):
+        """Siempre retorna True para usuarios válidos"""
+        return True
+    
+    @property
+    def is_anonymous(self):
+        """Siempre retorna False para usuarios válidos"""
+        return False
+
     def __str__(self):
         return f"{self.nombre} {self.apellido_p}"
+    
+    class Meta:
+        db_table = 'cuenta_usr_usuario'
 
 class Perfil(models.Model):
     nom_usuario = models.CharField(max_length=30, unique=True)
@@ -21,6 +35,9 @@ class Perfil(models.Model):
 
     def __str__(self):
         return self.nom_usuario
+    
+    class Meta:
+        db_table = 'cuenta_usr_perfil'
 
 class Seguidores(models.Model):
     perfil_seguidor = models.ForeignKey(
@@ -31,6 +48,7 @@ class Seguidores(models.Model):
     )
 
     class Meta:
+        db_table = 'cuenta_usr_seguidores' 
         unique_together = ('perfil_seguidor', 'perfil_seguido')
         constraints = [
             models.CheckConstraint(
@@ -41,6 +59,7 @@ class Seguidores(models.Model):
 
     def __str__(self):
         return f"{self.perfil_seguidor} sigue a {self.perfil_seguido}"
+
 
 class ConfiguracionesUsuario(models.Model): # Así está en la base de datos, pero no sé si se va a a modificar después
     MODO_TEMA_CHOICES = [

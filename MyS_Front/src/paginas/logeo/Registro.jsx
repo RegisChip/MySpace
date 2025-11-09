@@ -29,7 +29,7 @@ export default function Registro() {
     e.preventDefault();
     
     console.log("=== INICIO REGISTRO ===");
-
+    
     // Validar contraseñas
     if (pass1 !== pass2) {
       alert("Las contraseñas no coinciden");
@@ -45,9 +45,9 @@ export default function Registro() {
       alert("Por favor ingresa tu fecha de nacimiento");
       return;
     }
-
+    
     setLoading(true);
-
+    
     try {
       // Preparar datos para enviar al backend
       const userData = {
@@ -94,7 +94,6 @@ export default function Registro() {
     } finally {
       setLoading(false);
     }
-
   };
 
   return (
@@ -173,7 +172,6 @@ export default function Registro() {
                     onChange={(e) => setPass1(e.target.value)}
                     required
                     disabled={loading}
-                    minLength={6}
                   />
                 </td>
               </tr>
@@ -186,7 +184,6 @@ export default function Registro() {
                     onChange={(e) => setPass2(e.target.value)}
                     required
                     disabled={loading}
-                    minLength={6}
                   />
                 </td>
               </tr>

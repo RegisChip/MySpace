@@ -22,6 +22,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/cuenta" element={<Cuenta />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/general" element={<General />} />
 
         {/* Sitios privados */}
         <Route path="/perfil" element={
@@ -32,10 +33,7 @@ root.render(
             <PrivateRoute>
               <EditarP />
             </PrivateRoute>}/>
-        <Route path="/general" element={
-            <PrivateRoute>
-              <General />
-            </PrivateRoute>}/>
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
