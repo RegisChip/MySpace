@@ -1,0 +1,509 @@
+/* Importa fuentes de la página */
+@import url('https://fonts.googleapis.com/css2?family=Anaheim&family=Bree+Serif&display=swap');
+
+/* Variables de color basadas en MySpace */
+:root {
+    --myspace-blue: #609ffa;
+    --myspace-light-blue: #bfd5f1;
+    --myspace-lighter-blue: #e3eaf4;
+    --myspace-bg: #f8fbfd;
+    --myspace-dark-blue: #1a4f9d;
+    --myspace-medium-blue: #3c77cb;
+    --soft-shadow: 0 1px 3px rgba(96, 159, 250, 0.08);
+}
+
+/* === ESTILOS GENERALES === */
+body {
+    font-family: 'Anaheim', sans-serif !important;
+    background-color: var(--myspace-lighter-blue) !important;
+}
+
+/* === HEADER === */
+#header {
+    background: linear-gradient(135deg, var(--myspace-light-blue) 0%, #a8c9f0 100%) !important;
+    border: 1px solid var(--myspace-blue) !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.2) !important;
+    color: white !important;
+    height: auto !important;
+    padding: 1.2rem !important;
+    box-shadow: 0 2px 8px rgba(96, 159, 250, 0.1) !important;
+}
+
+#branding h1,
+#site-name a {
+    font-family: 'Bree Serif', serif !important;
+    color: white !important;
+    font-size: 2.5rem !important;
+    margin: 0 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+#site-name a:hover {
+    text-decoration: none !important;
+    opacity: 0.9 !important;
+}
+
+/* === USER TOOLS === */
+#user-tools {
+    background: transparent !important;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+    text-align: right !important;
+}
+
+#user-tools a {
+    color: white !important;
+    text-decoration: none !important;
+    opacity: 0.95 !important;
+}
+
+#user-tools a:hover {
+    opacity: 1 !important;
+    text-decoration: underline !important;
+}
+
+#logout-form button {
+    background: transparent !important;
+    border: none !important;
+    color: white !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    font-family: 'Anaheim', sans-serif !important;
+    opacity: 0.95 !important;
+}
+
+#logout-form button:hover {
+    opacity: 1 !important;
+    text-decoration: underline !important;
+}
+
+/* === BREADCRUMBS === */
+.breadcrumbs {
+    background: white !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.1) !important;
+    color: var(--myspace-medium-blue) !important;
+    padding: 12px 20px !important;
+}
+
+.breadcrumbs a {
+    color: var(--myspace-medium-blue) !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+}
+
+.breadcrumbs a:hover {
+    color: var(--myspace-blue) !important;
+}
+
+/* === SIDEBAR === */
+#nav-sidebar {
+    background: white !important;
+    border: none !important;
+    border-right: 1px solid rgba(96, 159, 250, 0.1) !important;
+}
+
+.module h2,
+.module caption {
+    background: transparent !important;
+    color: var(--myspace-medium-blue) !important;
+    font-weight: 600 !important;
+    padding: 12px 16px !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.1) !important;
+}
+
+#nav-sidebar a {
+    color: #5a6c7d !important;
+    padding: 8px 16px !important;
+    border-left: 3px solid transparent !important;
+    transition: all 0.2s ease !important;
+}
+
+#nav-sidebar a:hover {
+    background: rgba(96, 159, 250, 0.05) !important;
+    color: var(--myspace-medium-blue) !important;
+    border-left-color: var(--myspace-blue) !important;
+}
+
+#nav-sidebar .current-app,
+#nav-sidebar .current-model {
+    background: rgba(96, 159, 250, 0.08) !important;
+    color: var(--myspace-medium-blue) !important;
+    border-left-color: var(--myspace-blue) !important;
+    font-weight: 500 !important;
+}
+
+/* === MAIN CONTENT === */
+.main {
+    background: transparent !important;
+}
+
+#content {
+    background: white !important;
+    border: none !important;
+    padding: 24px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* === TÍTULOS === */
+/*#content h1 {
+    background: transparent !important;
+    color: var(--myspace-dark-blue) !important;
+    padding: 0 0 16px 0 !important;
+    border: none !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.15) !important;
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 1.5rem !important;
+}*/
+
+#content h1 {
+    background: var(--myspace-light-blue) !important;
+    color: white !important;
+    padding: 10px !important;
+    border: 1px solid var(--myspace-blue) !important;
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* === MÓDULOS Y TABLAS === */
+.module {
+    background: white !important;
+    border: 1px solid rgba(96, 159, 250, 0.12) !important;
+    border-radius: 8px !important;
+    margin-bottom: 1.5rem !important;
+    overflow: hidden !important;
+}
+
+/*.module h2 {
+    background: rgba(96, 159, 250, 0.05) !important;
+    color: var(--myspace-medium-blue) !important;
+    padding: 12px 16px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
+}*/
+
+.module h2 {
+    background: var(--myspace-light-blue) !important;
+    border: 1px solid var(--myspace-blue) !important;
+    color: white !important;
+    padding: 10px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
+}
+/*
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}*/
+
+table {
+    border: 1px solid var(--myspace-blue) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+#content table {
+    width: 100% !important;
+}
+
+/* Tablas de datos con contorno azul */
+#result_list,
+.results table,
+#changelist table {
+    border: 2px solid var(--myspace-blue) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+#content th, 
+#content td {
+    border: none !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
+    padding: 12px 16px !important;
+}
+
+/* Bordes internos de las tablas de datos */
+#result_list th,
+#result_list td,
+.results table th,
+.results table td {
+    border-right: 1px solid rgba(96, 159, 250, 0.12) !important;
+}
+
+#result_list th:last-child,
+#result_list td:last-child,
+.results table th:last-child,
+.results table td:last-child {
+    border-right: none !important;
+}
+
+thead th {
+    background: rgba(96, 159, 250, 0.06) !important;
+    color: var(--myspace-medium-blue) !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.15) !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+}
+
+tbody tr {
+    transition: background 0.15s ease !important;
+}
+
+tbody tr:hover {
+    background: rgba(96, 159, 250, 0.03) !important;
+}
+
+tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+.inline-group, .results, .module {
+    border: 1px solid rgba(96, 159, 250, 0.12) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+.results thead th {
+    padding: 12px 16px !important;
+}
+
+.results tbody td {
+    padding: 12px 16px !important;
+}
+
+/* === BOTONES === */
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input {
+    background: white !important;
+    color: var(--myspace-medium-blue) !important;
+    border: 1.5px solid rgba(96, 159, 250, 0.3) !important;
+    font-family: 'Anaheim', sans-serif !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background: rgba(96, 159, 250, 0.08) !important;
+    border-color: var(--myspace-blue) !important;
+    color: var(--myspace-medium-blue) !important;
+    transform: translateY(-1px) !important;
+}
+
+a.addlink, a.deletelink, a.changelink,
+.submit-row input[type="submit"], 
+.button.default {
+    background: var(--myspace-medium-blue) !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 6px !important;
+    padding: 9px 18px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    text-align: center !important;
+    box-shadow: 0 2px 4px rgba(96, 159, 250, 0.2) !important;
+    transition: all 0.2s ease !important;
+}
+
+a.addlink:hover, a.deletelink:hover, a.changelink:hover,
+.submit-row input[type="submit"]:hover, 
+.button.default:hover {
+    background: var(--myspace-blue) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(96, 159, 250, 0.25) !important;
+}
+
+.submit-row {
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: flex-end !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(96, 159, 250, 0.1) !important;
+    margin-top: 16px !important;
+}
+
+/* === BOTONES DEL PANEL OBJECT-TOOLS === */
+#content-main .object-tools,
+#changelist-form .object-tools {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-bottom: 16px !important;
+    gap: 10px !important;
+}
+
+.object-tools li {
+    list-style: none !important;
+}
+
+.object-tools a,
+.object-tools button {
+    background: var(--myspace-medium-blue) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    font-family: 'Anaheim', sans-serif !important;
+    padding: 9px 18px !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px rgba(96, 159, 250, 0.2) !important;
+    background-image: none !important;
+    text-shadow: none !important;
+}
+
+.object-tools a:hover,
+.object-tools button:hover {
+    background: var(--myspace-blue) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(96, 159, 250, 0.25) !important;
+}
+
+.object-tools a.addlink::before {
+    content: "+" !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+}
+
+/* === FORMULARIOS === */
+.form-row {
+    border-bottom: 1px solid rgba(96, 159, 250, 0.08) !important;
+    padding: 12px 0 !important;
+}
+
+.form-row:last-child {
+    border-bottom: none !important;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
+    border: 1.5px solid rgba(96, 159, 250, 0.2) !important;
+    border-radius: 6px !important;
+    color: #4a5568 !important;
+    font-family: 'Anaheim', sans-serif !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--myspace-blue) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(96, 159, 250, 0.1) !important;
+}
+
+/* === FOOTER === */
+#footer {
+    background: white !important;
+    border-top: 1px solid rgba(96, 159, 250, 0.15) !important;
+    color: #6b7280 !important;
+    padding: 16px !important;
+    text-align: center !important;
+    margin-top: 32px !important;
+}
+
+/* === MENSAJES === */
+.messagelist {
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+}
+
+.messagelist li {
+    background: rgba(96, 159, 250, 0.05) !important;
+    border: none !important;
+    border-left: 4px solid var(--myspace-blue) !important;
+    color: var(--myspace-dark-blue) !important;
+    padding: 12px 16px !important;
+    margin-bottom: 10px !important;
+    border-radius: 6px !important;
+}
+
+.messagelist .success {
+    background: rgba(40, 167, 69, 0.05) !important;
+    border-left-color: #28a745 !important;
+    color: #155724 !important;
+}
+
+.messagelist .error {
+    background: rgba(220, 53, 69, 0.05) !important;
+    border-left-color: #dc3545 !important;
+    color: #721c24 !important;
+}
+
+/* === SCROLLBARS === */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(96, 159, 250, 0.3);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(96, 159, 250, 0.5);
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(96, 159, 250, 0.05);
+}
+
+/* === ACCIONES EN TABLA === */
+.actions {
+    background: rgba(96, 159, 250, 0.03) !important;
+    border: none !important;
+    border-top: 1px solid rgba(96, 159, 250, 0.1) !important;
+    padding: 12px 16px !important;
+}
+
+.actions select,
+.actions button {
+    border-radius: 6px !important;
+}
+
+/* === PAGINACIÓN === */
+.paginator {
+    color: #6b7280 !important;
+    padding: 12px 0 !important;
+}
+
+.paginator a {
+    color: var(--myspace-medium-blue) !important;
+    text-decoration: none !important;
+    padding: 6px 10px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+}
+
+.paginator a:hover {
+    background: rgba(96, 159, 250, 0.08) !important;
+    color: var(--myspace-blue) !important;
+}

@@ -150,9 +150,8 @@ CSS compartido para ambos asides */
 }
 
 .aside-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--color-bg-medium);
   object-fit: cover;
 }
@@ -207,24 +206,25 @@ CSS compartido para ambos asides */
   margin: 0;
 }
 
-.drop-contenido li {
+.drop-contenido ul li {
   color: var(--color-text-dark);
   margin: 0;
 }
 
-.drop-contenido link,
+.drop-contenido ul li a,
 .boton-cerrar {
   text-decoration: none;
   color: inherit;
   display: block;
   padding: 5px 0;
+  /*
   background: none;
   border: none;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   text-align: left;
-  width: 100%;
+  width: 100%;*/
 }
 
 .drop-contenido link:hover,
@@ -274,7 +274,7 @@ CSS compartido para ambos asides */
   word-wrap: break-word;
 }
 
-.lista-tablones link {
+.lista-tablones li a {
   text-decoration: none;
   color: inherit;
 }

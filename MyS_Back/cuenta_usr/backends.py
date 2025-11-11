@@ -5,17 +5,15 @@ from django.contrib.auth.hashers import check_password
 from .models import Usuario
 
 class UsuarioBackend(BaseBackend):
-    """
-    Backend de autenticación personalizado para el modelo Usuario
-    """
+    
+    # Backend de autenticación personalizado para el modelo Usuario
+    
     def authenticate(self, request, username=None, password=None, **kwargs):
-        """
-        username será el correo del usuario
-        """
+
+        # username será el correo del usuario
         try:
             # Buscar usuario por correo
             usuario = Usuario.objects.get(correo=username)
-            
             # Verificar contraseña
             if check_password(password, usuario.contrasena):
                 return usuario
@@ -25,9 +23,8 @@ class UsuarioBackend(BaseBackend):
         return None
     
     def get_user(self, user_id):
-        """
-        Obtener usuario por ID (requerido por Django)
-        """
+
+        # Obtener usuario por ID (requerido por Django)
         try:
             return Usuario.objects.get(pk=user_id)
         except Usuario.DoesNotExist:

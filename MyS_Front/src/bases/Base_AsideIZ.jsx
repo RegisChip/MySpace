@@ -56,9 +56,9 @@ const Base_AsideIZ = ({ usuario }) => {
                                     alt={`Avatar de ${name}`}
                                     className="aside-avatar"
                                     />
-                                    <Link to={`/perfil/${id}`} className="aside-nombre">
+                                    <a href="#" className="aside-nombre">
                                         {name}
-                                    </Link>
+                                    </a>
                                 </li>
                             ))}
                         </ul>

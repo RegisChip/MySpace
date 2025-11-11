@@ -1,5 +1,4 @@
 // MySpace\MyS_Front\src\Api.js
-
 const API_URL = "http://localhost/api"; // API de nginx
 
 // ============================================
@@ -192,11 +191,19 @@ export const getFeedPublicaciones = (perfilId = null) => {
 };
 
 // REQUIERE AUTENTICACIÓN - Crear publicación
-export const crearPublicacion = (data) =>
-  fetchConAuth("/publicaciones/publicaciones/", {
+export const crearPublicacion = (data) => {
+  // 🔥 CORREGIDO: Asegurar que solo se envíe el ID del perfil
+  const payload = {
+    texto: data.content || data.texto,
+    perfil: typeof data.perfil === 'object' ? data.perfil.id : data.perfil,
+    fotos_rutas: data.image ? [data.image] : []
+  };
+
+  return fetchConAuth("/publicaciones/publicaciones/", {
     method: "POST",
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   });
+};
 
 // REQUIERE AUTENTICACIÓN - Dar/quitar like
 export const darLikePublicacion = (publicacionId) =>
@@ -217,11 +224,19 @@ export const getComentariosPorPublicacion = (publicacionId) =>
   fetchPublico(`/publicaciones/comentarios/por-publicacion/${publicacionId}/`);
 
 // REQUIERE AUTENTICACIÓN - Crear comentario
-export const crearComentario = (data) =>
-  fetchConAuth("/publicaciones/comentarios/", {
+export const crearComentario = (data) => {
+  // 🔥 CORREGIDO: Asegurar que solo se envíe el ID del perfil y publicación
+  const payload = {
+    texto: data.texto,
+    perfil: typeof data.perfil === 'object' ? data.perfil.id : data.perfil,
+    publicacion: typeof data.publicacion === 'object' ? data.publicacion.id : data.publicacion
+  };
+
+  return fetchConAuth("/publicaciones/comentarios/", {
     method: "POST",
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   });
+};
 
 // REQUIERE AUTENTICACIÓN - Dar/quitar like
 export const darLikeComentario = (comentarioId) =>

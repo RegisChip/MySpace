@@ -26,6 +26,8 @@ class Usuario(models.Model):
     
     class Meta:
         db_table = 'cuenta_usr_usuario'
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios"
 
 class Perfil(models.Model):
     nom_usuario = models.CharField(max_length=30, unique=True)
@@ -38,6 +40,8 @@ class Perfil(models.Model):
     
     class Meta:
         db_table = 'cuenta_usr_perfil'
+        verbose_name = "Perfil"
+        verbose_name_plural = "Perfiles"
 
 class Seguidores(models.Model):
     perfil_seguidor = models.ForeignKey(
@@ -56,12 +60,15 @@ class Seguidores(models.Model):
                 name='no_self_follow'
             )
         ]
+        verbose_name = "Seguimiento"
+        verbose_name_plural = "Seguimientos"
 
     def __str__(self):
         return f"{self.perfil_seguidor} sigue a {self.perfil_seguido}"
 
 
-class ConfiguracionesUsuario(models.Model): # Así está en la base de datos, pero no sé si se va a a modificar después
+class ConfiguracionesUsuario(models.Model):
+    # Así está en la base de datos, pero no sé si se va a a modificar después
     MODO_TEMA_CHOICES = [
         ('claro', 'Claro'),
         ('obscuro', 'Obscuro'),

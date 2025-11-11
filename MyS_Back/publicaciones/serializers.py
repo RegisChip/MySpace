@@ -4,6 +4,8 @@ from rest_framework import serializers
 from .models import Publicacion, Fotos, Comentario
 from cuenta_usr.serializers import PerfilSerializer
 
+# Puede que requieran modificaciones
+
 class FotosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fotos
@@ -17,6 +19,31 @@ class ComentarioSerializer(serializers.ModelSerializer):
         model = Comentario
         fields = ['id', 'texto', 'like_com', 'fecha_com', 'publicacion', 'perfil', 'perfil_info']
         read_only_fields = ['fecha_com', 'like_com']
+
+
+class ComentarioCreateSerializer(serializers.ModelSerializer):
+    """Serializer para CREAR comentarios"""
+    
+    class Meta:
+        model = Comentario
+        fields = ['texto', 'publicacion', 'perfil']
+    
+    def validate_texto(self, value):
+        """Validar que el texto no esté vacío"""
+        if not value or not value.strip():
+            raise serializers.ValidationError("El comentario no puede estar vacío")
+        return value.strip()
+    
+    def validate_publicacion(self, value):
+        """Validar que la publicación exista"""
+        if not Publicacion.objects.filter(id=value.id).exists():
+            raise serializers.ValidationError("La publicación no existe")
+        return value
+    
+    def create(self, validated_data):
+        """Crear el comentario en la base de datos"""
+        comentario = Comentario.objects.create(**validated_data)
+        return comentario
 
 
 class PublicacionSerializer(serializers.ModelSerializer):
@@ -36,22 +63,34 @@ class PublicacionSerializer(serializers.ModelSerializer):
 
 
 class PublicacionCreateSerializer(serializers.ModelSerializer):
+    """Serializer para CREAR publicaciones"""
     fotos_rutas = serializers.ListField(
         child=serializers.CharField(max_length=255),
         write_only=True,
-        required=False
+        required=False,
+        allow_empty=True
     )
     
     class Meta:
         model = Publicacion
         fields = ['texto', 'perfil', 'fotos_rutas']
     
+    def validate_texto(self, value):
+        """Validar que el texto no esté vacío"""
+        if not value or not value.strip():
+            raise serializers.ValidationError("La publicación no puede estar vacía")
+        return value.strip()
+    
     def create(self, validated_data):
+        """Crear la publicación y sus fotos en la base de datos"""
         fotos_rutas = validated_data.pop('fotos_rutas', [])
+        
+        # Crear la publicación
         publicacion = Publicacion.objects.create(**validated_data)
         
-        # Crear fotos asociadas
+        # Crear fotos asociadas (si existen)
         for ruta in fotos_rutas:
-            Fotos.objects.create(ruta_foto=ruta, publicacion=publicacion)
+            if ruta and ruta.strip():  # Solo crear si la ruta no está vacía
+                Fotos.objects.create(ruta_foto=ruta.strip(), publicacion=publicacion)
         
         return publicacion

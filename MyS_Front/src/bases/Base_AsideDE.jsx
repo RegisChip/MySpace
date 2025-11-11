@@ -40,8 +40,8 @@ const Base_AsideDE = () => {
     if (!usuarioLogeado) {
       return (
         <>
-          <li><Link to="/cuenta">Iniciar sesión</Link></li>
-          <li><Link to="/registro">Registrarse</Link></li>
+          <li><a href="/cuenta">Iniciar sesión</a></li>
+          <li><a href="/registro">Registrarse</a></li>
         </>
       );
     }
@@ -55,13 +55,13 @@ const Base_AsideDE = () => {
               Cerrar sesión
             </button>
           </li>
-          <li><Link to="/editar">Editar Perfil</Link></li>
+          <li><a href="/editar">Editar Perfil</a></li>
         </>
       );
     }
 
     // Otro caso general
-    return (<li><Link to="/perfil">Mi Perfil</Link></li>);
+    return (<li><a href="/perfil">Mi Perfil</a></li>);
   };
 
   return (
@@ -80,9 +80,10 @@ const Base_AsideDE = () => {
 
         {/* CONTENIDO */}
         {isOpen && (
-          <div className="aside-cuerpo">
+          <div>
             {/* SECCIÓN PERFIL */}
             <div className="perfil-imagen">
+
               {/* IMAGEN */}
               <img
                 className="perfil-boton"
@@ -90,6 +91,7 @@ const Base_AsideDE = () => {
                 alt="Foto de perfil"
                 onClick={toggleDropdown}
               />
+
               {/* COMPORTAMIENTO */}
               {isDropdownOpen && (
                 <div className="drop-contenido">
@@ -110,7 +112,7 @@ const Base_AsideDE = () => {
               <ul className="lista-tablones scroll-personalizado">
                 {menuItems.slice(1).map((item) => (
                   <li key={item.id}>
-                    <Link to={item.link}>{item.label}</Link>
+                    <a href={item.link}>{item.label}</a>
                   </li>
                 ))}
               </ul>

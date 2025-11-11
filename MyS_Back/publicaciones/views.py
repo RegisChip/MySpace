@@ -1,7 +1,5 @@
 # MySpace\MyS_Back\publicaciones\views.py
 
-## AÚN OCUPAN MODIFICACIONES
-
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,8 +7,12 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Publicacion, Fotos, Comentario
 from .serializers import (
     PublicacionSerializer, PublicacionCreateSerializer,
-    FotosSerializer, ComentarioSerializer
+    FotosSerializer, ComentarioSerializer, ComentarioCreateSerializer
 )
+
+# Create your views here.
+
+# Puede que requieran modificaciones
 
 class PublicacionViewSet(viewsets.ModelViewSet):
     queryset = Publicacion.objects.all().order_by('-fecha_pub')
@@ -25,6 +27,18 @@ class PublicacionViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve', 'por_perfil', 'feed']:
             return [AllowAny()]
         return [IsAuthenticated()]
+    
+    def create(self, request, *args, **kwargs):
+        """Crear nueva publicación"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        # Crear la publicación
+        publicacion = serializer.save()
+        
+        # Retornar con el serializador completo para incluir perfil_info
+        response_serializer = PublicacionSerializer(publicacion)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
     
     @action(detail=False, methods=['get'], url_path='por-perfil/(?P<perfil_id>[^/.]+)')
     def por_perfil(self, request, perfil_id=None):
@@ -58,6 +72,7 @@ class PublicacionViewSet(viewsets.ModelViewSet):
             publicacion.save()
         return Response({'likes': publicacion.like_pub}, status=status.HTTP_200_OK)
 
+
 class FotosViewSet(viewsets.ModelViewSet):
     queryset = Fotos.objects.all()
     serializer_class = FotosSerializer
@@ -73,15 +88,32 @@ class FotosViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(fotos, many=True)
         return Response(serializer.data)
 
+
 class ComentarioViewSet(viewsets.ModelViewSet):
     queryset = Comentario.objects.all().order_by('-fecha_com')
-    serializer_class = ComentarioSerializer
+    
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return ComentarioCreateSerializer
+        return ComentarioSerializer
     
     def get_permissions(self):
         # Lectura pública, escritura requiere autenticación
         if self.action in ['list', 'retrieve', 'por_publicacion']:
             return [AllowAny()]
         return [IsAuthenticated()]
+    
+    def create(self, request, *args, **kwargs):
+        """Crear nuevo comentario"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        # Crear el comentario
+        comentario = serializer.save()
+        
+        # Retornar con el serializador completo para incluir perfil_info
+        response_serializer = ComentarioSerializer(comentario)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
     
     @action(detail=False, methods=['get'], url_path='por-publicacion/(?P<publicacion_id>[^/.]+)')
     def por_publicacion(self, request, publicacion_id=None):

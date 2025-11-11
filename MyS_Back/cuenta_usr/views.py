@@ -14,6 +14,8 @@ from .serializers import (
 
 # Create your views here.
 
+# Puede que requieran modificaciones
+
 # ======= VIEWSETS ======= #
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -90,8 +92,6 @@ class PerfilViewSet(viewsets.ModelViewSet):
 
 
 # ======= APIS ======= #
-
-# ======= AUTENTICACIÓN ======= #
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

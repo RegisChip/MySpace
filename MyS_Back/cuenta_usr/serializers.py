@@ -4,6 +4,7 @@ from rest_framework import serializers
 from .models import Usuario, Perfil, Seguidores
 from django.contrib.auth.hashers import make_password, check_password
 
+# Puede que requieran modificaciones
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
