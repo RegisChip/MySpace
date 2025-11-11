@@ -1,3 +1,5 @@
+/* MySpace\MyS_Back\static\admin\css\custom_admin.css */
+
 /* Importa fuentes de la página */
 @import url('https://fonts.googleapis.com/css2?family=Anaheim&family=Bree+Serif&display=swap');
 
@@ -6,9 +8,10 @@
     --myspace-blue: #609ffa;
     --myspace-light-blue: #bfd5f1;
     --myspace-lighter-blue: #e3eaf4;
-    --myspace-bg: #f4fbfd;
+    --myspace-bg: #f8fbfd;
     --myspace-dark-blue: #1a4f9d;
     --myspace-medium-blue: #3c77cb;
+    --soft-shadow: 0 1px 3px rgba(96, 159, 250, 0.08);
 }
 
 /* === ESTILOS GENERALES === */
@@ -19,11 +22,13 @@ body {
 
 /* === HEADER === */
 #header {
-   /* background: var(--myspace-light-blue) !important;*/
-    /* border: 1px solid var(--myspace-blue) !important; */
+    background: linear-gradient(135deg, var(--myspace-light-blue) 0%, #a8c9f0 100%) !important;
+    border: 1px solid var(--myspace-blue) !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.2) !important;
     color: white !important;
     height: auto !important;
-    padding: 1rem !important;
+    padding: 1.2rem !important;
+    box-shadow: 0 2px 8px rgba(96, 159, 250, 0.1) !important;
 }
 
 #branding h1,
@@ -32,10 +37,12 @@ body {
     color: white !important;
     font-size: 2.5rem !important;
     margin: 0 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 #site-name a:hover {
-    text-decoration: underline !important;
+    text-decoration: none !important;
+    opacity: 0.9 !important;
 }
 
 /* === USER TOOLS === */
@@ -49,9 +56,11 @@ body {
 #user-tools a {
     color: white !important;
     text-decoration: none !important;
+    opacity: 0.95 !important;
 }
 
 #user-tools a:hover {
+    opacity: 1 !important;
     text-decoration: underline !important;
 }
 
@@ -62,132 +71,188 @@ body {
     cursor: pointer !important;
     padding: 0 !important;
     font-family: 'Anaheim', sans-serif !important;
+    opacity: 0.95 !important;
 }
 
 #logout-form button:hover {
+    opacity: 1 !important;
     text-decoration: underline !important;
 }
 
 /* === BREADCRUMBS === */
 .breadcrumbs {
-    background: var(--myspace-bg) !important;
-    border: 1px solid var(--myspace-blue) !important;
-    border-top: none !important;
-    color: var(--myspace-dark-blue) !important;
-    padding: 10px 15px !important;
+    background: white !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.1) !important;
+    color: var(--myspace-medium-blue) !important;
+    padding: 12px 20px !important;
 }
 
 .breadcrumbs a {
-    color: var(--myspace-dark-blue) !important;
-    font-weight: 600 !important;
+    color: var(--myspace-medium-blue) !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
 }
 
 .breadcrumbs a:hover {
-    text-decoration: underline !important;
+    color: var(--myspace-blue) !important;
 }
 
 /* === SIDEBAR === */
 #nav-sidebar {
-    background: var(--myspace-bg) !important;
-    border: 1px solid var(--myspace-blue) !important;
+    background: white !important;
+    border: none !important;
+    border-right: 1px solid rgba(96, 159, 250, 0.1) !important;
 }
 
 .module h2,
 .module caption {
-    background: var(--myspace-light-blue) !important;
+    background: transparent !important;
     color: var(--myspace-medium-blue) !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
+    padding: 12px 16px !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.1) !important;
 }
 
 #nav-sidebar a {
-    color: var(--myspace-dark-blue) !important;
+    color: #5a6c7d !important;
+    padding: 8px 16px !important;
+    border-left: 3px solid transparent !important;
+    transition: all 0.2s ease !important;
 }
 
-#nav-sidebar a:hover,
+#nav-sidebar a:hover {
+    background: rgba(96, 159, 250, 0.05) !important;
+    color: var(--myspace-medium-blue) !important;
+    border-left-color: var(--myspace-blue) !important;
+}
+
 #nav-sidebar .current-app,
 #nav-sidebar .current-model {
-    background: var(--myspace-lighter-blue) !important;
-    color: var(--myspace-dark-blue) !important;
+    background: rgba(96, 159, 250, 0.08) !important;
+    color: var(--myspace-medium-blue) !important;
+    border-left-color: var(--myspace-blue) !important;
+    font-weight: 500 !important;
 }
 
 /* === MAIN CONTENT === */
 .main {
-    background: var(--myspace-bg) !important;
+    background: transparent !important;
 }
 
 #content {
     background: white !important;
-    border: 1px solid var(--myspace-blue) !important;
-    padding: 20px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 24px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* === TÍTULOS === */
 #content h1 {
-    background: #98bdf1 !important;
+    background: var(--myspace-light-blue) !important;
     color: white !important;
     padding: 10px !important;
     border: 1px solid var(--myspace-blue) !important;
-    font-size: 1.3rem !important;
-    font-weight: 500 !important;
-    margin-bottom: 1rem !important;
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 1.5rem !important;
 }
 
 /* === MÓDULOS Y TABLAS === */
 .module {
     background: white !important;
-    border: 1px solid var(--myspace-blue) !important;
-    margin-bottom: 1rem !important;
+    border: 1px solid rgba(96, 159, 250, 0.12) !important;
+    border-radius: 8px !important;
+    margin-bottom: 1.5rem !important;
+    overflow: hidden !important;
 }
 
-.module h2 {
-    background: #98bdf1 !important;
+.module h2,
+.module caption {
+    background: var(--myspace-light-blue) !important;
+    border: 1px solid var(--myspace-blue) !important;
     color: white !important;
     padding: 10px !important;
     font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
 }
 
 table {
     border: 1px solid var(--myspace-blue) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
 }
 
 #content table {
-    border-collapse: collapse !important;
-    border: 1px solid var(--myspace-blue) !important;
+    width: 100% !important;
+}
+
+/* Tablas de datos con contorno azul */
+#result_list,
+.results table,
+#changelist table {
+    border: 2px solid var(--myspace-blue) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
 }
 
 #content th, 
 #content td {
-    border: 1px solid var(--myspace-blue) !important;
-    padding: 6px 8px !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
+    padding: 12px 16px !important;
+}
+
+/* Bordes internos de las tablas de datos */
+#result_list th,
+#result_list td,
+.results table th,
+.results table td {
+    border-right: 1px solid rgba(96, 159, 250, 0.12) !important;
+}
+
+#result_list th:last-child,
+#result_list td:last-child,
+.results table th:last-child,
+.results table td:last-child {
+    border-right: none !important;
 }
 
 thead th {
-    background: var(--myspace-light-blue) !important;
+    background: rgba(96, 159, 250, 0.06) !important;
     color: var(--myspace-medium-blue) !important;
-    border-bottom: 2px solid var(--myspace-blue) !important;
+    border-bottom: 2px solid rgba(96, 159, 250, 0.15) !important;
+    font-weight: 600 !important;
+    text-align: left !important;
 }
 
-tbody tr:nth-child(even) {
-    background: var(--myspace-lighter-blue) !important;
+tbody tr {
+    transition: background 0.15s ease !important;
 }
 
 tbody tr:hover {
-    background: var(--myspace-bg) !important;
+    background: rgba(96, 159, 250, 0.03) !important;
+}
+
+tbody tr:last-child td {
+    border-bottom: none !important;
 }
 
 .inline-group, .results, .module {
-    border: 1px solid var(--myspace-blue) !important;
-    border-radius: 6px !important;
-    box-shadow: 0 0 5px rgba(96,159,250,0.1) !important;
+    border: 1px solid rgba(96, 159, 250, 0.12) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
     overflow: hidden !important;
 }
 
 .results thead th {
-    padding: 10px 8px !important;
+    padding: 12px 16px !important;
 }
 
 .results tbody td {
-    padding: 8px !important;
+    padding: 12px 16px !important;
 }
 
 /* === BOTONES === */
@@ -195,55 +260,71 @@ tbody tr:hover {
 input[type="submit"],
 input[type="button"],
 .submit-row input {
-    background: var(--myspace-light-blue) !important;
-    color: var(--myspace-dark-blue) !important;
-    border: 1px solid var(--myspace-blue) !important;
+    background: white !important;
+    color: var(--myspace-medium-blue) !important;
+    border: 1.5px solid rgba(96, 159, 250, 0.3) !important;
     font-family: 'Anaheim', sans-serif !important;
-    padding: 8px 15px !important;
-    border-radius: 3px !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
 }
 
 .button:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {
-    background: var(--myspace-blue) !important;
-    color: white !important;
+    background: rgba(96, 159, 250, 0.08) !important;
+    border-color: var(--myspace-blue) !important;
+    color: var(--myspace-medium-blue) !important;
+    transform: translateY(-1px) !important;
 }
 
 a.addlink, a.deletelink, a.changelink,
-.submit-row input, .button.default {
-    background: var(--myspace-medium-blue) !important;
-    border: 1px solid var(--myspace-dark-blue) !important;
-    color: white !important;
-    border-radius: 5px !important;
-    padding: 7px 15px !important;
+.submit-row input[type="submit"], 
+.button.default {
+    background: white !important;
+    color: var(--myspace-medium-blue) !important;
+    border: 1.5px solid rgba(96, 159, 250, 0.3) !important;
+    border-radius: 6px !important;
+    padding: 9px 18px !important;
     font-weight: 500 !important;
     text-decoration: none !important;
     display: inline-block !important;
     text-align: center !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+    background-image: none !important;
+    text-shadow: none !important;
 }
 
 a.addlink:hover, a.deletelink:hover, a.changelink:hover,
-.submit-row input:hover, .button.default:hover {
-    background: var(--myspace-blue) !important;
-    color: white !important;
-    transform: scale(1.03);
-    transition: all 0.15s ease-in-out;
+.submit-row input[type="submit"]:hover, 
+.button.default:hover {
+    background: rgba(96, 159, 250, 0.08) !important;
+    border-color: var(--myspace-blue) !important;
+    color: var(--myspace-medium-blue) !important;
+    transform: translateY(-1px) !important;
 }
 
 .submit-row {
     display: flex !important;
     gap: 10px !important;
     justify-content: flex-end !important;
-    padding-top: 10px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(96, 159, 250, 0.1) !important;
+    margin-top: 16px !important;
 }
 
-/* === BOTONES DEL PANEL OBJECT-TOOLS (Agregar, Cambiar, etc.) === */
+/* === BOTONES DEL PANEL OBJECT-TOOLS === */
 #content-main .object-tools,
 #changelist-form .object-tools {
     display: flex !important;
     justify-content: flex-end !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 16px !important;
     gap: 10px !important;
 }
 
@@ -255,36 +336,43 @@ a.addlink:hover, a.deletelink:hover, a.changelink:hover,
 .object-tools button {
     background: var(--myspace-medium-blue) !important;
     color: white !important;
-    border: 1px solid var(--myspace-dark-blue) !important;
+    border: none !important;
     border-radius: 6px !important;
     font-family: 'Anaheim', sans-serif !important;
-    padding: 7px 15px !important;
+    padding: 9px 18px !important;
     text-decoration: none !important;
     font-weight: 500 !important;
     display: inline-flex !important;
     align-items: center !important;
     gap: 6px !important;
-    transition: all 0.2s ease-in-out !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px rgba(96, 159, 250, 0.2) !important;
+    background-image: none !important;
+    text-shadow: none !important;
 }
 
 .object-tools a:hover,
 .object-tools button:hover {
     background: var(--myspace-blue) !important;
     color: white !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(96, 159, 250, 0.25) !important;
 }
 
-/* Ícono de “Add” */
 .object-tools a.addlink::before {
-    content: "➕ " !important;
+    content: "+" !important;
     font-weight: bold !important;
+    font-size: 1.1em !important;
 }
 
 /* === FORMULARIOS === */
 .form-row {
-    border-bottom: 1px solid var(--myspace-lighter-blue) !important;
+    border-bottom: 1px solid rgba(96, 159, 250, 0.08) !important;
+    padding: 12px 0 !important;
+}
+
+.form-row:last-child {
+    border-bottom: none !important;
 }
 
 input[type="text"],
@@ -293,9 +381,12 @@ input[type="email"],
 input[type="number"],
 textarea,
 select {
-    border: 1px solid var(--myspace-blue) !important;
-    color: var(--myspace-medium-blue) !important;
+    border: 1.5px solid rgba(96, 159, 250, 0.2) !important;
+    border-radius: 6px !important;
+    color: #4a5568 !important;
     font-family: 'Anaheim', sans-serif !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease !important;
 }
 
 input[type="text"]:focus,
@@ -303,8 +394,9 @@ input[type="password"]:focus,
 input[type="email"]:focus,
 textarea:focus,
 select:focus {
-    border-color: var(--myspace-dark-blue) !important;
+    border-color: var(--myspace-blue) !important;
     outline: none !important;
+    box-shadow: 0 0 0 3px rgba(96, 159, 250, 0.1) !important;
 }
 
 /* === FOOTER === */
@@ -314,6 +406,7 @@ select:focus {
     color: var(--myspace-dark-blue) !important;
     padding: 15px !important;
     text-align: center !important;
+    margin-top: 32px !important;
 }
 
 /* === MENSAJES === */
@@ -323,38 +416,75 @@ select:focus {
 }
 
 .messagelist li {
-    background: var(--myspace-bg) !important;
-    border: 1px solid var(--myspace-blue) !important;
+    background: rgba(96, 159, 250, 0.05) !important;
+    border: none !important;
+    border-left: 4px solid var(--myspace-blue) !important;
     color: var(--myspace-dark-blue) !important;
-    padding: 10px !important;
+    padding: 12px 16px !important;
     margin-bottom: 10px !important;
+    border-radius: 6px !important;
 }
 
 .messagelist .success {
-    background: #d4edda !important;
-    border-color: #28a745 !important;
+    background: rgba(40, 167, 69, 0.05) !important;
+    border-left-color: #28a745 !important;
+    color: #155724 !important;
 }
 
 .messagelist .error {
-    background: #f8d7da !important;
-    border-color: #dc3545 !important;
+    background: rgba(220, 53, 69, 0.05) !important;
+    border-left-color: #dc3545 !important;
+    color: #721c24 !important;
 }
 
 /* === SCROLLBARS === */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--myspace-light-blue);
-    border: 1px solid var(--myspace-dark-blue);
-    border-radius: 4px;
+    background-color: rgba(96, 159, 250, 0.3);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(96, 159, 250, 0.5);
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--myspace-lighter-blue);
+    background: rgba(96, 159, 250, 0.05);
 }
 
+/* === ACCIONES EN TABLA === */
+.actions {
+    background: rgba(96, 159, 250, 0.03) !important;
+    border: none !important;
+    border-top: 1px solid rgba(96, 159, 250, 0.1) !important;
+    padding: 12px 16px !important;
+}
 
-/* ########################## */
+.actions select,
+.actions button {
+    border-radius: 6px !important;
+}
 
+/* === PAGINACIÓN === */
+.paginator {
+    color: #6b7280 !important;
+    padding: 12px 0 !important;
+}
+
+.paginator a {
+    color: var(--myspace-medium-blue) !important;
+    text-decoration: none !important;
+    padding: 6px 10px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+}
+
+.paginator a:hover {
+    background: rgba(96, 159, 250, 0.08) !important;
+    color: var(--myspace-blue) !important;
+}

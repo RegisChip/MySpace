@@ -1,3 +1,5 @@
+/* MySpace\MyS_Back\static\admin\css\custom_admin.css */
+
 /* Importa fuentes de la página */
 @import url('https://fonts.googleapis.com/css2?family=Anaheim&family=Bree+Serif&display=swap');
 
@@ -141,22 +143,12 @@ body {
 #content {
     background: white !important;
     border: none !important;
+    border-radius: 8px !important;
     padding: 24px !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* === TÍTULOS === */
-/*#content h1 {
-    background: transparent !important;
-    color: var(--myspace-dark-blue) !important;
-    padding: 0 0 16px 0 !important;
-    border: none !important;
-    border-bottom: 2px solid rgba(96, 159, 250, 0.15) !important;
-    font-size: 1.6rem !important;
-    font-weight: 600 !important;
-    margin-bottom: 1.5rem !important;
-}*/
-
 #content h1 {
     background: var(--myspace-light-blue) !important;
     color: white !important;
@@ -176,16 +168,8 @@ body {
     overflow: hidden !important;
 }
 
-/*.module h2 {
-    background: rgba(96, 159, 250, 0.05) !important;
-    color: var(--myspace-medium-blue) !important;
-    padding: 12px 16px !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
-    border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
-}*/
-
-.module h2 {
+.module h2,
+.module caption {
     background: var(--myspace-light-blue) !important;
     border: 1px solid var(--myspace-blue) !important;
     color: white !important;
@@ -194,11 +178,6 @@ body {
     font-weight: 600 !important;
     border-bottom: 1px solid rgba(96, 159, 250, 0.12) !important;
 }
-/*
-table {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-}*/
 
 table {
     border: 1px solid var(--myspace-blue) !important;
@@ -307,26 +286,28 @@ input[type="button"]:hover {
 a.addlink, a.deletelink, a.changelink,
 .submit-row input[type="submit"], 
 .button.default {
-    background: var(--myspace-medium-blue) !important;
-    border: none !important;
-    color: white !important;
+    background: white !important;
+    color: var(--myspace-medium-blue) !important;
+    border: 1.5px solid rgba(96, 159, 250, 0.3) !important;
     border-radius: 6px !important;
     padding: 9px 18px !important;
     font-weight: 500 !important;
     text-decoration: none !important;
     display: inline-block !important;
     text-align: center !important;
-    box-shadow: 0 2px 4px rgba(96, 159, 250, 0.2) !important;
+    box-shadow: none !important;
     transition: all 0.2s ease !important;
+    background-image: none !important;
+    text-shadow: none !important;
 }
 
 a.addlink:hover, a.deletelink:hover, a.changelink:hover,
 .submit-row input[type="submit"]:hover, 
 .button.default:hover {
-    background: var(--myspace-blue) !important;
-    color: white !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 8px rgba(96, 159, 250, 0.25) !important;
+    background: rgba(96, 159, 250, 0.08) !important;
+    border-color: var(--myspace-blue) !important;
+    color: var(--myspace-medium-blue) !important;
+    transform: translateY(-1px) !important;
 }
 
 .submit-row {
@@ -420,10 +401,10 @@ select:focus {
 
 /* === FOOTER === */
 #footer {
-    background: white !important;
-    border-top: 1px solid rgba(96, 159, 250, 0.15) !important;
-    color: #6b7280 !important;
-    padding: 16px !important;
+    background: var(--myspace-light-blue) !important;
+    border-top: 1px solid var(--myspace-blue) !important;
+    color: var(--myspace-dark-blue) !important;
+    padding: 15px !important;
     text-align: center !important;
     margin-top: 32px !important;
 }
