@@ -1,20 +1,15 @@
 // MySpace\MyS_Front\src\paginas\logeo\Cuenta.jsx
 
-// YA ES FUNCIONAL
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Cuenta.css";
 import { login } from "../../Api";
-
-// importe de la base
 import Base_Main from "../../bases/Base_Main";
 
 export default function CuentaPage() {
     
-const navigate = useNavigate();
+    const navigate = useNavigate();
     
-    // Datos del usuario
     const [correo, setCorreo] = useState("");
     const [pass, setPass] = useState("");
     const [loading, setLoading] = useState(false);
@@ -26,8 +21,26 @@ const navigate = useNavigate();
         try {
             const data = await login(correo, pass);
             console.log("Login exitoso:", data);
+            
+            // IMPORTANTE: Guardar la información del usuario en localStorage
+            // para que Perfil.jsx pueda acceder a ella
+            const usuarioLogeado = {
+                correo: data.usuario.correo,
+                nombre: data.usuario.nombre,
+                apellido_p: data.usuario.apellido_p,
+                apellido_m: data.usuario.apellido_m,
+                fecha_nacimiento: data.usuario.fecha_nacimiento,
+                // Datos del perfil
+                nom_usuario: data.perfil?.nom_usuario || data.usuario.nombre,
+                descripcion: data.perfil?.descripcion || "",
+                imagen: data.perfil?.foto_perfil || "https://via.placeholder.com/150"
+            };
+            
+            localStorage.setItem("usuarioLogeado", JSON.stringify(usuarioLogeado));
+            
             alert(`¡Bienvenido ${data.usuario.nombre}!`);
             navigate("/perfil");
+            
         } catch (error) {
             console.error("Error en login:", error);
             alert("Correo o contraseña incorrectos");
@@ -53,27 +66,29 @@ const navigate = useNavigate();
                         <tbody>
                             <tr>
                                 <td>Correo</td>
-
-                                <td><input
-                                type="email"
-                                name="correo"
-                                value={correo}
-                                onChange={(e) => setCorreo(e.target.value)}
-                                disabled={loading}
-                                required/></td>
-
+                                <td>
+                                    <input
+                                        type="email"
+                                        name="correo"
+                                        value={correo}
+                                        onChange={(e) => setCorreo(e.target.value)}
+                                        disabled={loading}
+                                        required
+                                    />
+                                </td>
                             </tr>
                             <tr>
                                 <td>Contraseña</td>
-
-                                <td><input
-                                type="password"
-                                name="pass"
-                                value={pass}
-                                onChange={(e) => setPass(e.target.value)}
-                                disabled={loading}
-                                required/></td>
-                                
+                                <td>
+                                    <input
+                                        type="password"
+                                        name="pass"
+                                        value={pass}
+                                        onChange={(e) => setPass(e.target.value)}
+                                        disabled={loading}
+                                        required
+                                    />
+                                </td>
                             </tr>
                         </tbody>
                     </table>

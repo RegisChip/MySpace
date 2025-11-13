@@ -1,20 +1,15 @@
 // MySpace\MyS_Front\src\paginas\logeo\Registro.jsx
 
-// YA ES FUNCIONAL
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Registro.css";
 import { registro } from "../../Api";
-
-// importe de la base
 import Base_Main from "../../bases/Base_Main"; 
 
 export default function Registro() {
   
   const navigate = useNavigate();
 
-  // Estados
   const [nombre, setNombre] = useState("");
   const [apPaterno, setApPaterno] = useState("");
   const [apMaterno, setApMaterno] = useState("");
@@ -25,7 +20,6 @@ export default function Registro() {
   const [loading, setLoading] = useState(false);
 
   const registrarUsuario = async (e) => {
-
     e.preventDefault();
     
     console.log("=== INICIO REGISTRO ===");
@@ -57,7 +51,6 @@ export default function Registro() {
         correo: correo,
         contrasena: pass1,
         fecha_nacimiento: new Date(fechaNacimiento).toISOString(),
-        // Datos del perfil - usando nombre como nombre de usuario
         nom_usuario: nombre.toLowerCase().replace(/\s+/g, ''),
         descripcion: "",
         foto_perfil: ""
@@ -69,13 +62,26 @@ export default function Registro() {
       
       console.log("Registro exitoso:", data);
       
+      // IMPORTANTE: Guardar usuario en localStorage después del registro
+      const usuarioLogeado = {
+        correo: data.usuario.correo,
+        nombre: data.usuario.nombre,
+        apellido_p: data.usuario.apellido_p,
+        apellido_m: data.usuario.apellido_m,
+        fecha_nacimiento: data.usuario.fecha_nacimiento,
+        nom_usuario: data.perfil?.nom_usuario || data.usuario.nombre,
+        descripcion: data.perfil?.descripcion || "",
+        imagen: data.perfil?.foto_perfil || "https://via.placeholder.com/150"
+      };
+      
+      localStorage.setItem("usuarioLogeado", JSON.stringify(usuarioLogeado));
+      
       alert(`¡Bienvenido ${data.usuario.nombre}! Tu cuenta ha sido creada.`);
       navigate("/perfil");
       
     } catch (error) {
       console.error("Error en registro:", error);
       
-      // Intentar parsear el error para mostrar mensaje específico
       let errorMsg = "Error al registrar usuario";
       try {
         const errorData = JSON.parse(error.message);
@@ -191,9 +197,10 @@ export default function Registro() {
           </table>
 
           <button 
-          type="submit" 
-          className="registro-boton"
-          disabled={loading}>
+            type="submit" 
+            className="registro-boton"
+            disabled={loading}
+          >
             {loading ? "Registrando..." : "Registrarse"}
           </button>
 
@@ -204,5 +211,3 @@ export default function Registro() {
     </Base_Main>
   );
 }
-
-

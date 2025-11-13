@@ -1,5 +1,5 @@
 /* MySpace\MyS_Front\src\bases\Base_Aside.css
-CSS compartido para ambos asides */
+   CSS compartido para ambos asides */
 
 /* ========================================
    VARIABLES CSS
@@ -26,16 +26,16 @@ CSS compartido para ambos asides */
   margin-top: 3rem;
   padding: 5px;
   height: 500px;
+  transition: width var(--transition-speed) ease;
 }
 
 .aside-base.open {
-  transition: width var(--transition-speed) ease;
+  width: var(--aside-width-open);
 }
 
 .aside-base.closed {
   width: var(--aside-width-closed);
   overflow: hidden;
-  transition: width var(--transition-speed) ease;
 }
 
 /* === POSICIONAMIENTO ESPECÍFICO === */
@@ -45,7 +45,7 @@ CSS compartido para ambos asides */
 }
 
 .aside-izquierdo.open {
-  width: var(--aside-width-open) !important;
+  margin-left: 0;
 }
 
 .aside-derecho {
@@ -54,7 +54,7 @@ CSS compartido para ambos asides */
 }
 
 .aside-derecho.open {
-  width: var(--aside-width-open) !important;
+  margin-right: 0;
 }
 
 .aside-derecho.closed {
@@ -66,6 +66,13 @@ CSS compartido para ambos asides */
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.aside-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .aside-cuerpo {
@@ -96,10 +103,15 @@ CSS compartido para ambos asides */
   border: none;
   cursor: pointer;
   padding: 0;
+  transition: transform 0.2s ease;
 }
 
 .aside-boton:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+}
+
+.aside-boton:active {
+  transform: scale(0.95);
 }
 
 .aside-icono {
@@ -116,11 +128,12 @@ CSS compartido para ambos asides */
 /* ========================================
    CONTENIDO DEL ASIDE IZQUIERDO
 ======================================== */
-
 .aside-titulo {
   margin: 5px;
   color: var(--color-tertiary);
   font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 /* === LISTA DE USUARIOS === */
@@ -129,7 +142,9 @@ CSS compartido para ambos asides */
   margin: 0;
   padding: 0;
   overflow-y: auto;
-  max-height: 390px;
+  overflow-x: hidden;
+  max-height: 440px;
+  flex: 1;
 }
 
 .aside-item {
@@ -142,62 +157,137 @@ CSS compartido para ambos asides */
   gap: 10px;
   cursor: pointer;
   font-size: 16px;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .aside-item:hover {
   background: #dce7f5;
+  transform: translateX(2px);
+}
+
+.aside-item:active {
+  transform: scale(0.98);
 }
 
 .aside-avatar {
   width: 40px;
   height: 40px;
   border: 1px solid var(--color-bg-medium);
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .aside-nombre {
   text-decoration: none;
   color: #000;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 300;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .aside-nombre:hover {
   text-decoration: underline;
+  color: var(--color-tertiary);
+}
+
+.aside-sin-datos {
+  padding: 10px;
+  text-align: center;
+  color: var(--color-text-dark);
+  font-size: 14px;
+  font-style: italic;
 }
 
 /* ========================================
    CONTENIDO DEL ASIDE DERECHO
 ======================================== */
 
-/* === IMAGEN DE PERFIL ==== */
-
+/* === IMAGEN DE PERFIL === */
 .perfil-imagen {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .perfil-boton {
-  height: 50px;
+  height: 85px;
+  width: 85px;
   cursor: pointer;
+  object-fit: contain;
+  /* border: 2px solid var(--color-primary); */
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.perfil-boton:hover {
+  transform: scale(1.05);
+  border-color: var(--color-tertiary);
+}
+
+.perfil-boton:active {
+  transform: scale(0.95);
 }
 
 /* ========================================
    DROPDOWN DEL PERFIL
 ======================================== */
-.drop-contenido {
+/* .drop-contenido {
   opacity: 1;
   visibility: visible;
   position: absolute;
   background-color: var(--color-bg-light);
-  box-shadow: 0 4px 8px var(--color-secondary);
+  box-shadow: 0 4px 8px rgba(96, 159, 250, 0.3);
   border: 2px solid var(--color-secondary);
   padding: 10px;
-  z-index: 100;
   top: 0;
-  right: 100%;
+  right: 100px;
+  z-index: 99999999999999999;
   margin-right: 10px;
   width: max-content;
+  min-width: 150px;
+  animation: fadeIn 0.2s ease;
+} */
+
+
+.drop-contenido-portal {
+    position: absolute;
+    background-color: var(--color-bg-light);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 2px solid var(--color-secondary);
+    padding: 10px;
+    z-index: 9999;
+    min-width: 150px;
+    border-radius: 5px;
+
+    /* Posicionar a la izquierda y centrar verticalmente */
+    transform: translate(-110%, -80%);
+}
+
+
+.drop-contenido-portal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.boton-opcion, .boton-cerrar {
+    width: 100%;
+    text-align: left;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .drop-contenido ul {
@@ -209,38 +299,50 @@ CSS compartido para ambos asides */
 .drop-contenido ul li {
   color: var(--color-text-dark);
   margin: 0;
+  padding: 5px 0;
 }
 
 .drop-contenido ul li a,
-.boton-cerrar {
+.boton-cerrar,
+.boton-opcion {
   text-decoration: none;
   color: inherit;
   display: block;
-  padding: 5px 0;
-  /*
+  padding: 5px 10px;
   background: none;
   border: none;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   text-align: left;
-  width: 100%;*/
+  width: 100%;
+  transition: background 0.2s ease;
+  border-radius: 2px;
 }
 
-.drop-contenido link:hover,
+.drop-contenido ul li a:hover,
 .boton-cerrar:hover,
-.list-der li:hover {
-  text-decoration: underline;
-  cursor: pointer;
+.boton-opcion:hover {
+  background: var(--color-bg-medium);
+  /* text-decoration: underline; */
 }
 
 /* === TABLONES === */
+.cont-tablones {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
 .cont-tablones h3 {
   background: var(--color-secondary);
   color: var(--color-tertiary);
-  margin-bottom: 5px;
-  padding: 5px;
+  margin: 0 0 5px 0;
+  padding: 8px;
   font-family: Helvetica, sans-serif;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .cont-tablones input {
@@ -248,7 +350,9 @@ CSS compartido para ambos asides */
   margin-bottom: 10px;
   border: 1px solid var(--color-primary);
   color: var(--color-tertiary);
-  padding: 4px;
+  padding: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cont-tablones input::placeholder {
@@ -257,6 +361,8 @@ CSS compartido para ambos asides */
 
 .cont-tablones input:focus {
   outline: none;
+  border-color: var(--color-tertiary);
+  box-shadow: 0 0 0 2px rgba(96, 159, 250, 0.2);
 }
 
 .lista-tablones {
@@ -267,25 +373,40 @@ CSS compartido para ambos asides */
   overflow-x: hidden;
   padding: 0;
   margin: 0;
+  flex: 1;
 }
 
 .lista-tablones li {
-  padding: 2px 0;
+  padding: 6px 8px;
   word-wrap: break-word;
+  transition: background 0.2s ease;
+}
+
+.lista-tablones li:hover {
+  background: var(--color-bg-medium);
 }
 
 .lista-tablones li a {
   text-decoration: none;
   color: inherit;
+  display: block;
+  font-size: 14px;
+}
+
+.lista-tablones li a:hover {
+  text-decoration: underline;
+  color: var(--color-tertiary);
 }
 
 /* ========================================
    SCROLLBAR PERSONALIZADO
 ======================================== */
-
-/* Scroll general para ambos asides */
 .scroll-personalizado::-webkit-scrollbar {
   width: 8px;
+}
+
+.scroll-personalizado::-webkit-scrollbar-track {
+  background: var(--color-bg-light);
 }
 
 .scroll-personalizado::-webkit-scrollbar-thumb {
@@ -294,33 +415,59 @@ CSS compartido para ambos asides */
   border-radius: 4px;
 }
 
+.scroll-personalizado::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
 /* ========================================
    RESPONSIVE
 ======================================== */
 @media (max-width: 768px) {
+  .aside-base {
+    height: 400px;
+  }
+
   .aside-base.open {
-    width: 200px !important;
+    width: 150px;
   }
 
   .perfil-boton {
     height: 40px;
+    width: 40px;
   }
 
   .drop-contenido {
     min-width: 120px;
   }
+
+  .aside-titulo {
+    font-size: 0.9rem;
+  }
+
+  .aside-nombre {
+    font-size: 13px;
+  }
+
+  .lista-tablones {
+    max-height: 250px;
+  }
 }
 
 @media (min-width: 1200px) {
+  .aside-base {
+    height: 550px;
+  }
+
   .aside-derecho.open {
-    width: var(--aside-der-width-open);
-    transition: width var(--transition-speed) ease;
+    width: var(--aside-width-open);
   }
 
   .aside-derecho.closed {
     width: var(--aside-width-closed);
-    overflow: hidden;
-    transition: width var(--transition-speed) ease;
     justify-self: flex-start;
+  }
+
+  .lista-tablones {
+    max-height: 380px;
   }
 }

@@ -1,7 +1,8 @@
-/* Perfil.css */
+/* MySpace\MyS_Front\src\paginas\perfil\Perfil.css */
 
 /* ========================================
-   GRID PRINCIPAL DE PERFIL
+   GRID ESPECÍFICO DE PERFIL
+   (Hereda todo de MainLayout)
 ======================================== */
 .perfil-grid {
   display: grid;
@@ -14,4 +15,537 @@
   min-height: 100vh;
   gap: 0 13px;
   transition: all 0.3s ease;
+}
+
+/* ========================================
+   CONTENIDO PRINCIPAL DEL PERFIL
+======================================== */
+.perfil-main-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+/* ========================================
+   HEADER DEL PERFIL (IMAGEN + DESCRIPCIÓN)
+======================================== */
+.perfil-header {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #609ffa;
+  align-items: center;
+}
+
+.perfil-main-ima-perf {
+  flex-shrink: 0;
+}
+
+.perfil-main-ima-perf img {
+  width: 120px;
+  height: 120px;
+  border: 2px solid #609ffa;
+  object-fit: cover;
+  display: block;
+}
+
+.perfil-descrip-perf {
+  flex: 1;
+}
+
+.perfil-descrip-perf h2 {
+  margin: 0 0 0.5rem 0;
+  color: #3c77cb;
+  font-size: 1.8rem;
+}
+
+.perfil-descrip-perf p {
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+  text-align: justify;
+}
+
+/* ========================================
+   SECCIÓN DE BLOG/POSTS
+======================================== */
+.perfil-main-blog {
+  width: 100%;
+}
+
+.perfil-main-blog hr {
+  border: none;
+  border-top: 1px solid #609ffa;
+  margin: 1rem 0;
+}
+
+.perfil-blog-area {
+  padding: 0;
+}
+
+/* ========================================
+   NAVBAR DE PERFIL
+======================================== */
+.perfil-main-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.perfil-navbar-left,
+.perfil-navbar-right {
+  display: flex;
+}
+
+.perfil-navbar-ul,
+.perfil-mod {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.perfil-navbar-ul li button,
+.perfil-mod li a {
+  font-size: 14px;
+  color: #2d5faa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.perfil-navbar-ul li button:hover,
+.perfil-mod li a:hover {
+  text-decoration: underline;
+  color: #1a4080;
+}
+
+.perfil-mod li a i {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+/* ========================================
+   CONTENEDOR DE POSTS
+======================================== */
+.perfil-all-post {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.perfil-sin-posts {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border: 1px solid #609ffa;
+}
+
+.perfil-sin-posts p {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.perfil-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ========================================
+   POST INDIVIDUAL
+======================================== */
+.perfil-blog-post {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 10px;
+  animation: fadeInPost 0.3s ease-out;
+}
+
+@keyframes fadeInPost {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfil-post-perf {
+  border: 1px solid #609ffa;
+  background: #fff;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "info-main info-main"
+    "post post-ima"
+    "opciones opciones";
+  gap: 10px;
+  transition: box-shadow 0.2s ease;
+}
+
+.perfil-post-perf:hover {
+  box-shadow: 0 2px 8px rgba(96, 159, 250, 0.15);
+}
+
+/* ========================================
+   INFORMACIÓN DEL POST
+======================================== */
+.perfil-info-main {
+  grid-area: info-main;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.perfil-info-main img {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #999;
+  margin-right: 6px;
+  object-fit: cover;
+}
+
+.perfil-info-main h6 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.perfil-ima-inf {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.perfil-nombre {
+  color: #60abba;
+  font-weight: 500;
+}
+
+.perfil-public {
+  color: #0c1c33;
+}
+
+.perfil-fecha {
+  color: #ba3708;
+}
+
+/* ========================================
+   CONTENIDO DEL POST
+======================================== */
+.perfil-post {
+  grid-area: post;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  text-align: justify;
+}
+
+.perfil-post p {
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: justify;
+  margin: 0;
+  color: #333;
+}
+
+/* ========================================
+   IMAGEN DEL POST
+======================================== */
+.perfil-post-ima {
+  grid-area: post-ima;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfil-post-ima img {
+  width: 140px;
+  max-width: 100%;
+  border: 1px solid #c6c6c6;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+/* ========================================
+   BOTONES DE OPCIONES
+======================================== */
+.perfil-opciones-botton {
+  grid-area: opciones;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.perfil-crear-coment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #072b5d;
+  font-size: 1rem;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.perfil-crear-coment:hover {
+  color: #0a3d7a;
+  transform: scale(1.1);
+}
+
+.perfil-check {
+  font-size: 12px;
+  color: #1a4f9d;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.perfil-check:hover {
+  color: #0d2f5d;
+  text-decoration: underline;
+}
+
+.perfil-kudos {
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  color: rgb(70, 138, 155);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 0;
+  margin: 0;
+}
+
+.perfil-kudos:hover {
+  transform: scale(1.15);
+  color: rgb(50, 118, 135);
+}
+
+.perfil-kudos.clicked {
+  animation: kudosClick 0.3s forwards;
+}
+
+@keyframes kudosClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ========================================
+   COMENTARIOS
+======================================== */
+.perfil-comentarios-lista {
+  margin-top: 15px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfil-comentario-item {
+  background: #ffffff;
+  border: 1px solid #609ffa;
+  padding: 10px;
+  transition: box-shadow 0.2s ease;
+}
+
+.perfil-comentario-item:hover {
+  box-shadow: 0 2px 6px rgba(96, 159, 250, 0.2);
+}
+
+.perfil-comentario-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.perfil-comentario-avatar {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #999;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.perfil-comentario-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.perfil-comentario-autor {
+  color: #60abba;
+  font-weight: 500;
+}
+
+.perfil-comentario-texto {
+  color: #0c1c33;
+}
+
+.perfil-comentario-contenido {
+  margin-left: 48px;
+}
+
+.perfil-comentario-contenido p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  text-align: justify;
+}
+
+/* ========================================
+   BOTONES DE COMENTARIO
+======================================== */
+.perfil-opciones-comentario {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.perfil-check-comentario {
+  font-size: 12px;
+  color: #1a4f9d;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.perfil-check-comentario:hover {
+  color: #0d2f5d;
+  text-decoration: underline;
+}
+
+.perfil-kudos-comentario {
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  color: rgb(70, 138, 155);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 0;
+  margin: 0;
+}
+
+.perfil-kudos-comentario:hover {
+  transform: scale(1.15);
+  color: rgb(50, 118, 135);
+}
+
+.perfil-kudos-comentario.clicked {
+  animation: kudosClick 0.3s forwards;
+}
+
+/* ========================================
+   RESPONSIVE - MÓVILES
+======================================== */
+@media (max-width: 768px) {
+  .perfil-grid {
+    grid-template-columns: 35px 1fr 35px;
+  }
+
+  .perfil-main-content {
+    padding: 0.5rem;
+  }
+
+  .perfil-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .perfil-main-ima-perf img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .perfil-descrip-perf h2 {
+    font-size: 1.5rem;
+  }
+
+  .perfil-post-perf {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "info-main"
+      "post"
+      "post-ima"
+      "opciones";
+  }
+
+  .perfil-post-ima img {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .perfil-comentarios-lista {
+    margin-left: 10px;
+  }
+
+  .perfil-comentario-contenido {
+    margin-left: 10px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - DESKTOP GRANDE
+======================================== */
+@media (min-width: 1200px) {
+  .perfil-main-content {
+    max-width: 900px;
+  }
+
+  .perfil-main-ima-perf img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .perfil-post-ima img {
+    width: 180px;
+  }
 }

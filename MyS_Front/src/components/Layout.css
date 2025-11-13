@@ -1,0 +1,279 @@
+/* MySpace\MyS_Front\src\layouts\MainLayout.css */
+
+/* ========================================
+   RESET GLOBAL
+======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  min-height: 100%;
+  font-family: "Anaheim", sans-serif;
+  background-color: #e3eaf4;
+}
+
+/* ========================================
+   VARIABLES CSS DEL LAYOUT
+======================================== */
+:root {
+  --layout-color-primary: #609ffa;
+  --layout-color-secondary: #bfd5f1;
+  --layout-color-tertiary: #3c77cb;
+  --layout-color-bg-light: #f4fbfd;
+  --layout-color-text-dark: #1a4f9d;
+  --layout-transition: 0.3s ease;
+  --layout-header-height: 120px;
+  --layout-footer-height: 80px;
+}
+
+/* ========================================
+   GRID PRINCIPAL DEL LAYOUT
+======================================== */
+.layout-grid {
+  display: grid;
+  grid-template-rows: var(--layout-header-height) auto var(--layout-footer-height);
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "izq header der"
+    "izq main der"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 0 13px;
+  transition: all var(--layout-transition);
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL (Header + Main)
+======================================== */
+.layout-main-wrapper {
+  grid-area: header / header / main / main;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+.layout-header {
+  background: var(--layout-color-secondary);
+  border: 1px solid var(--layout-color-primary);
+  font-family: "Bree Serif", serif;
+  color: white;
+  height: var(--layout-header-height);
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  gap: 1rem;
+}
+
+.layout-header h1 {
+  margin: 1rem;
+}
+
+.layout-header p {
+  font-size: 1.3rem;
+  margin-top: 20px;
+  color: white;
+  font-weight: 400;
+}
+
+.layout-header h1 a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 3.5rem;
+  padding-right: 20px;
+  border-right: 3px solid white;
+  transition: opacity 0.2s ease;
+}
+
+.layout-header h1 a:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+/* ========================================
+   MAIN
+======================================== */
+.layout-main {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--layout-color-primary);
+  border-top: none;
+  background: var(--layout-color-bg-light);
+  flex: 1;
+  min-height: 400px;
+}
+
+/* ========================================
+   FOOTER DEL MAIN (W3C Badges)
+======================================== */
+.layout-main-footer {
+  background: var(--layout-color-secondary);
+  border-top: 1px solid var(--layout-color-primary);
+  padding: 10px 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.layout-main-footer p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.layout-main-footer a {
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.layout-main-footer a:hover {
+  transform: scale(1.05);
+}
+
+.layout-main-footer img {
+  display: block;
+}
+
+/* ========================================
+   FOOTER GLOBAL
+======================================== */
+.layout-footer {
+  grid-area: footer;
+  padding: 20px;
+  text-align: center;
+  background: transparent;
+}
+
+.layout-footer ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.layout-footer ul li {
+  margin: 0 3px;
+  font-size: 14px;
+}
+
+.layout-footer ul li a {
+  text-decoration: none;
+  color: var(--layout-color-text-dark);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.layout-footer ul li a:hover {
+  text-decoration: underline;
+  color: #0d2f5d;
+}
+
+.layout-footer p {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* ========================================
+   RESPONSIVE - TABLETS
+======================================== */
+@media (max-width: 768px) {
+  .layout-grid {
+    grid-template-columns: 35px 1fr 35px;
+  }
+
+  .layout-header {
+    padding-left: 0.5rem;
+  }
+
+  .layout-header h1 {
+    margin: 0.5rem;
+  }
+
+  .layout-header h1 a {
+    font-size: 2.5rem;
+    padding-right: 15px;
+  }
+
+  .layout-header p {
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+
+  .layout-footer ul {
+    font-size: 12px;
+  }
+
+  .layout-footer ul li a {
+    font-size: 12px;
+  }
+
+  .layout-footer p {
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - DESKTOP GRANDE
+======================================== */
+@media (min-width: 1200px) {
+  .layout-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .layout-main-wrapper {
+    max-width: 100%;
+  }
+
+  .layout-header {
+    border-radius: 0;
+  }
+}
+
+/* ========================================
+   UTILIDADES GLOBALES DEL LAYOUT
+======================================== */
+
+/* Clase para ocultar elementos visualmente pero mantener accesibilidad */
+.layout-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Animación suave para cambios de contenido */
+.layout-fade-in {
+  animation: layoutFadeIn 0.3s ease-in;
+}
+
+@keyframes layoutFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

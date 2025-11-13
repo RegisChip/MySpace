@@ -60,6 +60,24 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# Orígenes que Django permitirá para solicitudes CORS
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000', # Servidor de desarrollo de React
+    'http://localhost',
+    'http://127.0.0.1',
+    # Agrega el dominio de producción
+    # 'https://tudominio.com',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost', 
+    'http://localhost:3000', # Típico para el servidor de desarrollo de React
+    'http://127.0.0.1:8000', # Si estás usando Waitress en el puerto 8000
+    'http://127.0.0.1:80', # Si Nginx/Waitress sirve la app en el puerto 80
+    # Agrega el dominio de producción cuando hagas el despliegue final
+    # 'https://tudominio.com', 
+]
+
 # Django REST Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -154,3 +172,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

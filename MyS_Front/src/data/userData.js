@@ -10,6 +10,12 @@ const usersData = [
   { id: 8, name: "Usuario 8", avatar: "/user.svg" },
   { id: 9, name: "Usuario 9", avatar: "/user.svg" },
   { id: 10, name: "Usuario 10", avatar: "/user.svg" },
+  { id: 15, name: "Usuario 15", avatar: "/user.svg" },
+  { id: 16, name: "Usuario 16", avatar: "/user.svg" },
+  { id: 17, name: "Usuario 17", avatar: "/user.svg" },
+  { id: 18, name: "Usuario 18", avatar: "/user.svg" },
+  { id: 19, name: "Usuario 19", avatar: "/user.svg" },
+  { id: 20, name: "Usuario 20", avatar: "/user.svg" },
 ];
 
 export default usersData;

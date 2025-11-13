@@ -1,7 +1,10 @@
+// MySpace\MyS_Front\src\paginas\tableros\General.jsx
+
 import React, { useState, useEffect, useCallback } from "react";
-import "./General.css";
+import MainLayout from "../../components/Layout";
 import PostFlotante from "../../ventanas/PostFlotante";
 import ComentarioFlotante from "../../ventanas/ComentarioFlotante";
+import "./General.css";
 
 // Importar funciones de la API
 import { 
@@ -14,11 +17,6 @@ import {
   estaAutenticado,
   getUsuarioActual
 } from "../../Api";
-// importe de las bases
-
-import Base_Main from "../../bases/Base_Main";
-import Base_AsideIZ from "../../bases/Base_AsideIZ";
-import Base_AsideDE from "../../bases/Base_AsideDE";
 
 const General = () => {
     // --- Estado principal ---
@@ -31,7 +29,7 @@ const General = () => {
     const [clickedKudos, setClickedKudos] = useState(null);
     const [comentarioVisibleId, setComentarioVisibleId] = useState(null);
     const [showPostFlotante, setShowPostFlotante] = useState(false);
-    const [mostrarComentariosDePost, setMostrarComentariosDePost] = useState({}); // 👈 NUEVO ESTADO
+    const [mostrarComentariosDePost, setMostrarComentariosDePost] = useState({});
     
     // Verificar autenticación al montar
     useEffect(() => {
@@ -81,7 +79,6 @@ const General = () => {
     
     // Cargar comentarios (PÚBLICO - no requiere token)
     const cargarComentarios = async (postId) => {
-        // Si ya tenemos los comentarios, no los volvemos a cargar
         if (comentariosPorPost[postId]) {
             return;
         }
@@ -107,15 +104,13 @@ const General = () => {
         }
     };
     
-    // 👇 Cargar comentarios al montar el componente
+    // Cargar comentarios al montar el componente
     useEffect(() => {
         const cargarTodosLosComentarios = async () => {
             if (posts.length > 0) {
-                // Cargar comentarios para cada post y mostrarlos
                 const promesas = posts.map(post => cargarComentarios(post.id));
                 await Promise.all(promesas);
                 
-                // Marcar todos los posts como visibles
                 const todosVisibles = {};
                 posts.forEach(post => {
                     todosVisibles[post.id] = true;
@@ -125,24 +120,21 @@ const General = () => {
         };
         
         cargarTodosLosComentarios();
-    }, [posts.length]); // Se ejecuta cuando cambia el número de posts
+    }, [posts.length]);
     
-    // 👇 NUEVA FUNCIÓN: Toggle para mostrar/ocultar comentarios
+    // Toggle para mostrar/ocultar comentarios
     const toggleMostrarComentarios = async (postId) => {
-        // Si ya están visibles, los ocultamos
         if (mostrarComentariosDePost[postId]) {
             setMostrarComentariosDePost(prev => ({
                 ...prev,
                 [postId]: false
             }));
         } else {
-            // Si no están visibles, los mostramos y cargamos si es necesario
             setMostrarComentariosDePost(prev => ({
                 ...prev,
                 [postId]: true
             }));
             
-            // Cargar comentarios si no los tenemos
             if (!comentariosPorPost[postId]) {
                 await cargarComentarios(postId);
             }
@@ -215,7 +207,6 @@ const General = () => {
                 
                 const resultado = await crearPublicacion(postData);
                 
-                // Agregar el nuevo post al inicio
                 const nuevoPostFormateado = {
                     id: resultado.id,
                     perfilId: resultado.perfil,
@@ -279,7 +270,6 @@ const General = () => {
                     [postId]: [...(prev[postId] || []), nuevoComentarioObj]
                 }));
                 
-                // 👇 Mostrar los comentarios automáticamente después de crear uno
                 setMostrarComentariosDePost(prev => ({
                     ...prev,
                     [postId]: true
@@ -301,192 +291,170 @@ const General = () => {
     
     if (loading) {
         return (
-            <div className="general-grid">
-                <Base_AsideIZ usuario={usuarioLogeado} />
-                <Base_Main tituloPagina="General">
-                    <div className="main-blog">
-                        <p style={{ textAlign: "center", padding: "2rem" }}>
-                            Cargando publicaciones...
-                        </p>
-                    </div>
-                </Base_Main>
-                <Base_AsideDE />
-            </div>
+            <MainLayout tituloPagina="General" gridClass="general-grid">
+                <div className="main-blog">
+                    <p style={{ textAlign: "center", padding: "2rem" }}>
+                        Cargando publicaciones...
+                    </p>
+                </div>
+            </MainLayout>
         );
     }
     
     if (error) {
         return (
-            <div className="general-grid">
-                <Base_AsideIZ usuario={usuarioLogeado} />
-                <Base_Main tituloPagina="General">
-                    <div className="main-blog">
-                        <p style={{ textAlign: "center", padding: "2rem", color: "red" }}>
-                            {error}
-                        </p>
-                    </div>
-                </Base_Main>
-                <Base_AsideDE />
-            </div>
+            <MainLayout tituloPagina="General" gridClass="general-grid">
+                <div className="main-blog">
+                    <p style={{ textAlign: "center", padding: "2rem", color: "red" }}>
+                        {error}
+                    </p>
+                </div>
+            </MainLayout>
         );
     }
     
     return (
-        <div className="general-grid">
-            {/* ASIDE IZQUIERDO - usando la base */}
-            <Base_AsideIZ usuario={usuarioLogeado} />
-            
-            {/* MAIN - usando la base */}
-            <Base_Main tituloPagina="General">
-                <div className="main-blog">
-                    <hr />
-                    <div className="blog-area">
-                        <nav className="main-navbar">
-                            <ul className="navbar-list">
-                                <li>
-                                    <button 
-                                        onClick={() => {
-                                            if (!autenticado) {
-                                                alert("Debes iniciar sesión para crear posts");
-                                                return;
-                                            }
-                                            setShowPostFlotante(true);
-                                        }}>
-                                        [Crear Post]
-                                    </button>
-                                </li>
-                                <li>
-                                    <button>[Buscar]</button>
-                                </li>
-                                <li>
-                                    <button>[Hashtags]</button>
-                                </li>
-                            </ul>
-                            {showPostFlotante && (
-                                <PostFlotante
-                                    onClose={() => setShowPostFlotante(false)}
-                                    onAddPost={handleAddPost}
-                                />
-                            )}
-                        </nav>
-                        
-                        <div className="general-all-post">
-                            {posts.length === 0 ? (
-                                <p style={{ textAlign: "center", padding: "2rem" }}>
-                                    No hay publicaciones aún
-                                </p>
-                            ) : (
-                                posts.map((post) => (
-                                    <div className="general-blog-post" key={post.id}>
-                                        <div className="general-post-perf">
-                                            <div className="general-info-main">
-                                                <img className="general-ima-inf" src={post.avatar} alt="foto perfil" />
-                                                <h6 className="general-nombre">{post.author}</h6>
-                                                <h6 className="general-public">Publicó</h6>
-                                                <h6 className="general-fecha">{post.date}</h6>
-                                                <div className="general-opciones-botton">
-                                                    <button
-                                                        className="general-crear-coment"
-                                                        onClick={() => {
-                                                            if (!autenticado) {
-                                                                alert("Debes iniciar sesión para comentar");
-                                                                return;
-                                                            }
-                                                            toggleComentario(post.id);
-                                                        }}>
-                                                        <i className="bi bi-caret-right-fill"></i>
-                                                    </button>
-                                                    {comentarioVisibleId === post.id && (
-                                                        <ComentarioFlotante
-                                                            onClose={() => setComentarioVisibleId(null)}
-                                                            onSubmit={(texto) => handleAddComentario(post.id, texto)}
-                                                        />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            
-                                            {/* Contenido del post */}
-                                            <div className="general-post">
-                                                <p>{post.content}</p>
-                                            </div>
-                                            
-                                            {post.image && (
-                                                <div className="general-post-ima">
-                                                    <img className="general-ima-pub" src={post.image} alt="imagen-post" />
-                                                </div>
-                                            )}
-                                            
-                                            {/* Botones de opciones */}
+        <MainLayout tituloPagina="General" gridClass="general-grid">
+            <div className="main-blog">
+                <hr />
+                <div className="blog-area">
+                    <nav className="main-navbar">
+                        <ul className="navbar-list">
+                            <li>
+                                <button 
+                                    onClick={() => {
+                                        if (!autenticado) {
+                                            alert("Debes iniciar sesión para crear posts");
+                                            return;
+                                        }
+                                        setShowPostFlotante(true);
+                                    }}>
+                                    [Crear Post]
+                                </button>
+                            </li>
+                            <li>
+                                <button>[Buscar]</button>
+                            </li>
+                            <li>
+                                <button>[Hashtags]</button>
+                            </li>
+                        </ul>
+                        {showPostFlotante && (
+                            <PostFlotante
+                                onClose={() => setShowPostFlotante(false)}
+                                onAddPost={handleAddPost}
+                            />
+                        )}
+                    </nav>
+                    
+                    <div className="general-all-post">
+                        {posts.length === 0 ? (
+                            <p style={{ textAlign: "center", padding: "2rem" }}>
+                                No hay publicaciones aún
+                            </p>
+                        ) : (
+                            posts.map((post) => (
+                                <div className="general-blog-post" key={post.id}>
+                                    <div className="general-post-perf">
+                                        <div className="general-info-main">
+                                            <img className="general-ima-inf" src={post.avatar} alt="foto perfil" />
+                                            <h6 className="general-nombre">{post.author}</h6>
+                                            <h6 className="general-public">Publicó</h6>
+                                            <h6 className="general-fecha">{post.date}</h6>
                                             <div className="general-opciones-botton">
-                                                <button className="general-check" type="button">
-                                                    [check]
-                                                </button>
                                                 <button
-                                                    className={`general-kudos ${clickedKudos === post.id ? 'clicked' : ''}`}
-                                                    onClick={() => handleKudos(post.id, "post")}
-                                                    title={`${post.kudos || 0} kudos`}
-                                                    disabled={!autenticado}>
-                                                    <i className="bi bi-bug-fill"></i>
+                                                    className="general-crear-coment"
+                                                    onClick={() => {
+                                                        if (!autenticado) {
+                                                            alert("Debes iniciar sesión para comentar");
+                                                            return;
+                                                        }
+                                                        toggleComentario(post.id);
+                                                    }}>
+                                                    <i className="bi bi-caret-right-fill"></i>
                                                 </button>
-                                                
-                                                {/* 👇 BOTÓN PARA VER/OCULTAR COMENTARIOS */}
-                                                <button
-                                                    className="general-ver-comentarios"
-                                                    onClick={() => toggleMostrarComentarios(post.id)}
-                                                    type="button">
-                                                    {mostrarComentariosDePost[post.id] ? '[-] Ocultar' : '[+] Ver'} comentarios
-                                                </button>
+                                                {comentarioVisibleId === post.id && (
+                                                    <ComentarioFlotante
+                                                        onClose={() => setComentarioVisibleId(null)}
+                                                        onSubmit={(texto) => handleAddComentario(post.id, texto)}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                         
-                                        {/* 👇 Mostrar comentarios SOLO si están visibles */}
-                                        {mostrarComentariosDePost[post.id] && comentariosPorPost[post.id] && comentariosPorPost[post.id].length > 0 && (
-                                            <div className="general-comentarios-lista">
-                                                {comentariosPorPost[post.id].map(c => (
-                                                    <div key={c.id} className="general-comentario-item">
-                                                        <div className="general-comentario-header">
-                                                            <img 
-                                                                className="general-comentario-avatar" 
-                                                                src={c.avatar} 
-                                                                alt={`Avatar de ${c.author}`} 
-                                                            />
-                                                            <div className="general-comentario-info">
-                                                                <span className="general-comentario-autor">{c.author}</span>
-                                                                <span className="general-comentario-texto"> respondió</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="general-comentario-contenido">
-                                                            <p>{c.text}</p>
-                                                        </div>
-                                                    
-                                                        {/* BOTONES DE KUDOS Y CHECK PARA CADA COMENTARIO */}
-                                                        <div className="general-opciones-comentario">
-                                                            <button className="general-check-comentario" type="button">
-                                                                [check]
-                                                            </button>
-                                                            <button
-                                                                className={`general-kudos-comentario ${clickedKudos === c.id ? 'clicked' : ''}`}
-                                                                onClick={() => handleKudos(c.id, "comentario")}
-                                                                title={`${c.kudos || 0} kudos`}
-                                                                disabled={!autenticado}>
-                                                                <i className="bi bi-bug-fill"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                ))}
+                                        <div className="general-post">
+                                            <p>{post.content}</p>
+                                        </div>
+                                        
+                                        {post.image && (
+                                            <div className="general-post-ima">
+                                                <img className="general-ima-pub" src={post.image} alt="imagen-post" />
                                             </div>
                                         )}
+                                        
+                                        <div className="general-opciones-botton">
+                                            <button className="general-check" type="button">
+                                                [check]
+                                            </button>
+                                            <button
+                                                className={`general-kudos ${clickedKudos === post.id ? 'clicked' : ''}`}
+                                                onClick={() => handleKudos(post.id, "post")}
+                                                title={`${post.kudos || 0} kudos`}
+                                                disabled={!autenticado}>
+                                                <i className="bi bi-bug-fill"></i>
+                                            </button>
+                                            
+                                            <button
+                                                className="general-ver-comentarios"
+                                                onClick={() => toggleMostrarComentarios(post.id)}
+                                                type="button">
+                                                {mostrarComentariosDePost[post.id] ? '[-] Ocultar' : '[+] Ver'} comentarios
+                                            </button>
+                                        </div>
                                     </div>
-                                ))
-                            )}
-                        </div>
+                                    
+                                    {mostrarComentariosDePost[post.id] && comentariosPorPost[post.id] && comentariosPorPost[post.id].length > 0 && (
+                                        <div className="general-comentarios-lista">
+                                            {comentariosPorPost[post.id].map(c => (
+                                                <div key={c.id} className="general-comentario-item">
+                                                    <div className="general-comentario-header">
+                                                        <img 
+                                                            className="general-comentario-avatar" 
+                                                            src={c.avatar} 
+                                                            alt={`Avatar de ${c.author}`} 
+                                                        />
+                                                        <div className="general-comentario-info">
+                                                            <span className="general-comentario-autor">{c.author}</span>
+                                                            <span className="general-comentario-texto"> respondió</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="general-comentario-contenido">
+                                                        <p>{c.text}</p>
+                                                    </div>
+                                                
+                                                    <div className="general-opciones-comentario">
+                                                        <button className="general-check-comentario" type="button">
+                                                            [check]
+                                                        </button>
+                                                        <button
+                                                            className={`general-kudos-comentario ${clickedKudos === c.id ? 'clicked' : ''}`}
+                                                            onClick={() => handleKudos(c.id, "comentario")}
+                                                            title={`${c.kudos || 0} kudos`}
+                                                            disabled={!autenticado}>
+                                                            <i className="bi bi-bug-fill"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
-            </Base_Main>
-            
-            {/* ASIDE DERECHO - usando la base */}
-            <Base_AsideDE />
-        </div>
+            </div>
+        </MainLayout>
     );
 }
 

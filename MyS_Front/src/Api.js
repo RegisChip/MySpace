@@ -1,5 +1,11 @@
 // MySpace\MyS_Front\src\Api.js
-const API_URL = "http://localhost/api"; // API de nginx
+// const API_URL = "http://localhost/api"; // API de nginx
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost/api"  // Para tu propia PC
+    : "http://192.168.1.144/api"; // Para otras PCs en la LAN
+
+
 
 // ============================================
 // HELPER FUNCTIONS

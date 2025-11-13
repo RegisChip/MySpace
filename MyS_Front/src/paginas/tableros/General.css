@@ -1,9 +1,11 @@
 /* MySpace\MyS_Front\src\paginas\tableros\General.css */
 
 /* ========================================
-   GRID PRINCIPAL DE GENERAL
+   GRID ESPECÍFICO DE GENERAL
+   (Hereda todo de MainLayout)
 ======================================== */
 .general-grid {
+  /* Usa la configuración base de layout-grid */
   display: grid;
   grid-template-rows: 120px auto 80px;
   grid-template-columns: auto 1fr auto;
@@ -16,7 +18,9 @@
   transition: all 0.3s ease;
 }
 
-/* === BLOG AREA === */
+/* ========================================
+   BLOG AREA - CONTENEDOR PRINCIPAL
+======================================== */
 .main-blog {
   padding: 1rem;
   max-width: 800px;
@@ -24,6 +28,9 @@
   width: 100%;
 }
 
+/* ========================================
+   NAVBAR DE ACCIONES
+======================================== */
 .main-navbar {
   margin-bottom: 8px;
 }
@@ -43,32 +50,49 @@
   border: none;
   cursor: pointer;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .navbar-list button:hover {
   text-decoration: underline;
+  color: #1a4080;
 }
 
 /* ========================================
-   POSTS Y COMENTARIOS
+   CONTENEDOR DE POSTS
 ======================================== */
-
-
 .general-all-post {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
+/* ========================================
+   POST INDIVIDUAL
+======================================== */
 .general-blog-post {
-  border: none;  /* Quita el borde del contenedor principal */
-  background: transparent;  /* Sin fondo */
-  padding: 0;  /* Sin padding */
+  background: transparent;
+  padding: 0;
   margin-bottom: 10px;
+  animation: fadeInPost 0.3s ease-out;
+}
+
+@keyframes fadeInPost {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .general-post-perf {
-  border: 1px solid #609ffa;  /* Mueve el borde aquí */
-  background: #fff;  /* Mueve el fondo aquí */
-  padding: 10px;  /* Mueve el padding aquí */
+  border: 1px solid #609ffa;
+  background: #fff;
+  padding: 10px;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
@@ -76,13 +100,23 @@
     "post post-ima"
     "opciones opciones";
   gap: 10px;
+  transition: box-shadow 0.2s ease;
 }
 
+.general-post-perf:hover {
+  box-shadow: 0 2px 8px rgba(96, 159, 250, 0.15);
+}
+
+/* ========================================
+   INFORMACIÓN DEL POST (AUTOR, FECHA)
+======================================== */
 .general-info-main {
   grid-area: info-main;
   display: flex;
   align-items: center;
   font-size: 12px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .general-info-main img {
@@ -90,10 +124,11 @@
   height: 35px;
   border: 1px solid #999;
   margin-right: 6px;
+  object-fit: cover;
 }
 
 .general-info-main h6 {
-  margin: 0 2px;
+  margin: 0;
   font-size: 12px;
   font-weight: normal;
 }
@@ -101,40 +136,25 @@
 .general-ima-inf {
   width: 40px;
   height: 40px;
+  flex-shrink: 0;
 }
 
 .general-nombre {
   color: #60abba;
-  margin-right: 5px;
+  font-weight: 500;
 }
 
 .general-public {
   color: #0c1c33;
-  margin-right: 5px;
 }
 
 .general-fecha {
   color: #ba3708;
-  margin-right: 5px;
 }
 
-.general-opciones-botton {
-  grid-area: opciones;
-  display: flex;
-  justify-content: flex-end; /* Alinea a la derecha */
-  align-items: center;       /* Alinea verticalmente */
-  gap: 10px;                 /* Espacio entre los elementos */
-  margin-top: 4px;
-}
-
-.general-crear-coment {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #072b5d;
-  font-size: 1rem;
-}
-
+/* ========================================
+   CONTENIDO DEL POST
+======================================== */
 .general-post {
   grid-area: post;
   font-size: 13px;
@@ -145,11 +165,15 @@
 
 .general-post p {
   font-size: 13px;
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: justify;
   margin: 0;
+  color: #333;
 }
 
+/* ========================================
+   IMAGEN DEL POST
+======================================== */
 .general-post-ima {
   grid-area: post-ima;
   display: flex;
@@ -159,67 +183,78 @@
 
 .general-post-ima img {
   width: 140px;
+  max-width: 100%;
   border: 1px solid #c6c6c6;
   display: block;
   margin: 0 auto;
   object-fit: cover;
 }
 
-
-.general-post-ima {
-  grid-area: post-ima;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.general-post-ima img {
-  width: 140px;
-  border: 1px solid #c6c6c6;
-  display: block;
-  margin: 0 auto;
-  object-fit: cover;
-}
-
-
+/* ========================================
+   BOTONES DE OPCIONES
+======================================== */
 .general-opciones-botton {
   grid-area: opciones;
   display: flex;
-  justify-content: flex-end; /* Alinea a la derecha */
-  align-items: center;       /* Alinea verticalmente */
-  gap: 10px;                 /* Espacio entre los elementos */
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
   margin-top: 4px;
 }
 
+.general-crear-coment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #072b5d;
+  font-size: 1rem;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.general-crear-coment:hover {
+  color: #0a3d7a;
+  transform: scale(1.1);
+}
 
 .general-check {
-    font-size: 12px;
-    color: #1a4f9d;
-    text-decoration: none;
-    border: none;
-    background: none;
+  font-size: 12px;
+  color: #1a4f9d;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.general-check:hover {
+  color: #0d2f5d;
+  text-decoration: underline;
 }
 
 .general-kudos {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    margin: 0;
-    padding: 0px;
-    font-size: 25px;
-    color: rgb(70, 138, 155);
-    border: none;
-    background: none;
-    cursor:pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-    position: relative;
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  color: rgb(70, 138, 155);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 0;
+  margin: 0;
 }
 
 .general-kudos:hover {
-  transform: scale(1.05);
+  transform: scale(1.15);
+  color: rgb(50, 118, 135);
+}
+
+.general-kudos:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .general-kudos.clicked {
@@ -227,24 +262,64 @@
 }
 
 @keyframes kudosClick {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-/* === ESTILOS PARA COMENTARIOS === */
+.general-ver-comentarios {
+  font-size: 12px;
+  color: #1a4f9d;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.general-ver-comentarios:hover {
+  color: #0d2f5d;
+  text-decoration: underline;
+}
+
+/* ========================================
+   COMENTARIOS
+======================================== */
 .general-comentarios-lista {
   margin-top: 15px;
   margin-left: 40px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .general-comentario-item {
   background: #ffffff;
   border: 1px solid #609ffa;
   padding: 10px;
+  transition: box-shadow 0.2s ease;
+}
+
+.general-comentario-item:hover {
+  box-shadow: 0 2px 6px rgba(96, 159, 250, 0.2);
 }
 
 .general-comentario-header {
@@ -259,6 +334,7 @@
   height: 40px;
   border: 1px solid #999;
   flex-shrink: 0;
+  object-fit: cover;
 }
 
 .general-comentario-info {
@@ -285,51 +361,110 @@
   margin: 0;
   font-size: 13px;
   line-height: 1.5;
-  color: #000000;
+  color: #333;
   text-align: justify;
 }
 
-
-/* === Botones de comentario === */
+/* ========================================
+   BOTONES DE COMENTARIO
+======================================== */
 .general-opciones-comentario {
-  grid-area: opciones;
   display: flex;
-  justify-content: flex-end; /* Alinea a la derecha */
-  align-items: center;       /* Alinea verticalmente */
-  gap: 10px;                 /* Espacio entre los elementos */
-  margin-top: 4px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .general-check-comentario {
-    font-size: 12px;
-    color: #1a4f9d;
-    text-decoration: none;
-    border: none;
-    background: none;
+  font-size: 12px;
+  color: #1a4f9d;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.general-check-comentario:hover {
+  color: #0d2f5d;
+  text-decoration: underline;
 }
 
 .general-kudos-comentario {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    margin: 0;
-    padding: 0px;
-    font-size: 25px;
-    color: rgb(70, 138, 155);
-    border: none;
-    background: none;
-    cursor:pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-    position: relative;
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  color: rgb(70, 138, 155);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding: 0;
+  margin: 0;
 }
 
 .general-kudos-comentario:hover {
-  transform: scale(1.05);
+  transform: scale(1.15);
+  color: rgb(50, 118, 135);
+}
+
+.general-kudos-comentario:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .general-kudos-comentario.clicked {
   animation: kudosClick 0.3s forwards;
+}
+
+/* ========================================
+   RESPONSIVE - MÓVILES
+======================================== */
+@media (max-width: 768px) {
+  .general-grid {
+    grid-template-columns: 35px 1fr 35px;
+  }
+
+  .main-blog {
+    padding: 0.5rem;
+  }
+
+  .general-post-perf {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "info-main"
+      "post"
+      "post-ima"
+      "opciones";
+  }
+
+  .general-post-ima img {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .general-comentarios-lista {
+    margin-left: 10px;
+  }
+
+  .general-comentario-contenido {
+    margin-left: 10px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - DESKTOP GRANDE
+======================================== */
+@media (min-width: 1200px) {
+  .main-blog {
+    max-width: 900px;
+  }
+
+  .general-post-ima img {
+    width: 180px;
+  }
 }
