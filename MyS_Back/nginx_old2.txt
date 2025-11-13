@@ -1,7 +1,7 @@
 worker_processes 1;
 
-events {
-    worker_connections 1024;
+events { 
+    worker_connections 1024; 
 }
 
 http {
@@ -10,13 +10,34 @@ http {
     sendfile on;
     keepalive_timeout 65;
 
+    # ==============================
+    #  Redirigir HTTP → HTTPS
+    # ==============================
     server {
         listen 80;
         server_name localhost;
+        return 301 https://$host$request_uri;
+    }
 
-        # --- Django Backend ---
+    # ==============================
+    #  Servidor principal HTTPS
+    # ==============================
+    server {
+        listen 443 ssl;
+        server_name localhost;
+
+        # --- Certificados generados con mkcert ---
+        ssl_certificate     C:/certs/localhost.pem;
+        ssl_certificate_key C:/certs/localhost-key.pem;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        # =========================
+        #  Django API
+        # =========================
         location /api/ {
-            proxy_pass http://127.0.0.1:8001;
+            proxy_pass http://127.0.0.1:8001;  # Waitress/Django backend
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -31,32 +52,51 @@ http {
             }
         }
 
-        # --- Django admin (opcional) ---
+        # =========================
+        #  Django admin
+        # =========================
         location /admin/ {
             proxy_pass http://127.0.0.1:8001/admin/;
         }
 
-        # --- React static assets ---
+        # =========================
+        #  Django static files
+        # =========================
+        location /django_static/ {
+            alias C:/WebDeveloper/Proyecto_Programacion_Web/Web_U4/MyS_Back/staticfiles/;
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+
+        # =========================
+        #  React static files (JS, CSS)
+        # =========================
         location /static/ {
             alias C:/WebDeveloper/Proyecto_Programacion_Web/Web_U4/MyS_Front/build/static/;
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
 
-        # --- Archivos como favicon, manifest, etc. ---
-        location ~* \.(ico|png|json|txt|svg|jpg|jpeg)$ {
+        # =========================
+        #  React manifest, favicon, logos
+        # =========================
+        location ~* ^/(manifest\.json|favicon\.ico|logo192\.png|logo512\.png|robots\.txt)$ {
             root C:/WebDeveloper/Proyecto_Programacion_Web/Web_U4/MyS_Front/build;
-            expires 30d;
             access_log off;
         }
 
-        # --- React index.html ---
+        # =========================
+        #  React index.html
+        # =========================
         location / {
             root C:/WebDeveloper/Proyecto_Programacion_Web/Web_U4/MyS_Front/build;
             index index.html;
             try_files $uri /index.html;
         }
 
+        # =========================
+        #  Páginas de error
+        # =========================
         error_page 500 502 503 504 /50x.html;
         location = /50x.html {
             root html;

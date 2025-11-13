@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .models import Usuario, Perfil, Seguidores
+from django.db import IntegrityError # 👈 Importación CLAVE
+from .models import Usuario, Perfil # (asumo que importas todos tus modelos)
 from .serializers import (
     UsuarioSerializer, PerfilSerializer, SeguidoresSerializer,
     LoginSerializer, RegistroSerializer
@@ -173,3 +174,105 @@ def logout_view(request):
         {'message': 'Sesión cerrada exitosamente'}, 
         status=status.HTTP_205_RESET_CONTENT
     )
+    
+# ======= APIS DE AUTENTICACIÓN (MODIFICADO REGISTRO) ======= #
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def registro_view(request):
+    """Registrar nuevo usuario con captura de IntegrityError"""
+    serializer = RegistroSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        try: # 👈 BLOQUE TRY para manejar la restricción unique_together
+            resultado = serializer.save()
+        except IntegrityError as e:
+            # Mensaje específico para la restricción de nombre completo
+            if 'unique_together' in str(e) or 'nombre' in str(e) or 'duplicate key' in str(e):
+                return Response(
+                    {'error': 'Ya existe un usuario con la misma combinación de nombre y apellidos.'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            # Otro error inesperado
+            return Response(
+                {'error': f'Error de base de datos inesperado: {str(e)}'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        usuario = resultado['usuario']
+        perfil = resultado['perfil']
+        
+        # Generar tokens JWT...
+        refresh = RefreshToken.for_user(usuario)
+        
+        return Response({
+            'message': 'Usuario registrado exitosamente',
+            'usuario': UsuarioSerializer(usuario).data,
+            'perfil': PerfilSerializer(perfil).data,
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+        }, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# ... (login_view y logout_view se mantienen iguales) ...
+
+
+# ======= 🌐 NUEVAS VISTAS DE VALIDACIÓN AJAX EN TIEMPO REAL ======= #
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def validar_email_ajax(request):
+    """Verifica si el correo ya existe."""
+    correo = request.data.get('correo')
+    
+    if not correo:
+        return Response({'error': 'El campo correo es requerido.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if Usuario.objects.filter(correo=correo).exists():
+        return Response(
+            {'disponible': False, 'mensaje': 'Este correo ya está registrado.'}, 
+            status=status.HTTP_200_OK 
+        )
+    
+    return Response(
+        {'disponible': True, 'mensaje': 'Correo disponible.'}, 
+        status=status.HTTP_200_OK
+    )
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def validar_nombre_completo_ajax(request):
+    """Verifica si la combinación de nombre, apellido p. y m. ya existe."""
+    data = request.data
+    nombre = data.get('nombre')
+    apellido_p = data.get('apellido_p')
+    apellido_m = data.get('apellido_m')
+    
+    if not all([nombre, apellido_p, apellido_m]):
+        # No validar si faltan campos, se asume que se validarán juntos al salir del último.
+        return Response(
+            {'disponible': True, 'mensaje': 'Faltan campos.'}, 
+            status=status.HTTP_200_OK
+        )
+
+    # Búsqueda que ignora mayúsculas/minúsculas para la unicidad
+    if Usuario.objects.filter(
+        nombre__iexact=nombre,          
+        apellido_p__iexact=apellido_p,
+        apellido_m__iexact=apellido_m
+    ).exists():
+        return Response(
+            {'disponible': False, 'mensaje': 'Ya existe un usuario con esta combinación exacta de nombre y apellidos.'}, 
+            status=status.HTTP_200_OK
+        )
+    
+    return Response(
+        {'disponible': True, 'mensaje': 'Combinación de nombre disponible.'}, 
+        status=status.HTTP_200_OK
+    )
+
+# ... (El resto de tus ViewSets y APIs) ...

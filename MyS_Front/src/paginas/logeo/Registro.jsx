@@ -1,15 +1,17 @@
 // MySpace\MyS_Front\src\paginas\logeo\Registro.jsx
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Registro.css";
-import { registro } from "../../Api";
+// ✅ IMPORTAR DESDE Api.js (unificado)
+import { registro, validarEmail, validarNombreCompleto } from "../../Api";
 import Base_Main from "../../bases/Base_Main"; 
 
 export default function Registro() {
   
   const navigate = useNavigate();
 
+  // ===== ESTADOS DEL FORMULARIO =====
   const [nombre, setNombre] = useState("");
   const [apPaterno, setApPaterno] = useState("");
   const [apMaterno, setApMaterno] = useState("");
@@ -17,12 +19,132 @@ export default function Registro() {
   const [pass1, setPass1] = useState("");
   const [pass2, setPass2] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
+  
+  // ===== ESTADOS DE VALIDACIÓN AJAX =====
+  const [emailStatus, setEmailStatus] = useState({ mensaje: "", tipo: "" }); // tipo: "success", "error", "validando"
+  const [nombreStatus, setNombreStatus] = useState({ mensaje: "", tipo: "" });
+  
+  // ===== ESTADO DE LOADING =====
   const [loading, setLoading] = useState(false);
 
+  // ===== REFERENCIAS PARA DEBOUNCING =====
+  const timeoutEmailRef = useRef(null);
+  const timeoutNombreRef = useRef(null);
+
+  // ===== CLEANUP AL DESMONTAR =====
+  useEffect(() => {
+    return () => {
+      if (timeoutEmailRef.current) clearTimeout(timeoutEmailRef.current);
+      if (timeoutNombreRef.current) clearTimeout(timeoutNombreRef.current);
+    };
+  }, []);
+
+  // ========================================
+  // ✅ VALIDACIÓN AJAX: EMAIL EN TIEMPO REAL
+  // ========================================
+  const validarEmailEnTiempoReal = useCallback(async (email) => {
+    // Limpiar timeout anterior
+    if (timeoutEmailRef.current) {
+      clearTimeout(timeoutEmailRef.current);
+    }
+
+    // Validación básica
+    if (!email || email.trim() === "") {
+      setEmailStatus({ mensaje: "", tipo: "" });
+      return;
+    }
+
+    // Validación de formato
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailStatus({ mensaje: "Formato de correo inválido", tipo: "error" });
+      return;
+    }
+
+    // Mostrar estado de validación
+    setEmailStatus({ mensaje: "Validando...", tipo: "validando" });
+
+    // Debouncing: Esperar 600ms
+    timeoutEmailRef.current = setTimeout(async () => {
+      try {
+        // ✅ PETICIÓN AJAX
+        const response = await validarEmail(email);
+        
+        if (response.existe) {
+          setEmailStatus({ 
+            mensaje: "Este correo ya está registrado", 
+            tipo: "error" 
+          });
+        } else {
+          setEmailStatus({ 
+            mensaje: "Correo disponible", 
+            tipo: "success" 
+          });
+        }
+      } catch (error) {
+        console.error("Error validando email:", error);
+        setEmailStatus({ 
+          mensaje: "Error al validar correo", 
+          tipo: "error" 
+        });
+      }
+    }, 600);
+  }, []);
+
+  // ================================================
+  // ✅ VALIDACIÓN AJAX: NOMBRE COMPLETO EN TIEMPO REAL
+  // ================================================
+  const validarNombreEnTiempoReal = useCallback(async (nom, apP, apM) => {
+    // Limpiar timeout anterior
+    if (timeoutNombreRef.current) {
+      clearTimeout(timeoutNombreRef.current);
+    }
+
+    // Validar que los tres campos tengan contenido
+    if (!nom || !apP || !apM) {
+      setNombreStatus({ mensaje: "", tipo: "" });
+      return;
+    }
+
+    // Mostrar estado de validación
+    setNombreStatus({ mensaje: "Verificando disponibilidad...", tipo: "validando" });
+
+    // Debouncing: Esperar 800ms
+    timeoutNombreRef.current = setTimeout(async () => {
+      try {
+        // ✅ PETICIÓN AJAX
+        const response = await validarNombreCompleto(nom, apP, apM);
+        
+        if (response.existe) {
+          setNombreStatus({ 
+            mensaje: "Ya existe un usuario con este nombre completo", 
+            tipo: "error" 
+          });
+        } else {
+          setNombreStatus({ mensaje: "", tipo: "" });
+        }
+      } catch (error) {
+        console.error("Error validando nombre completo:", error);
+        setNombreStatus({ mensaje: "", tipo: "" });
+      }
+    }, 800);
+  }, []);
+
+  // ========================================
+  // ✅ REGISTRO AJAX: ENVÍO DEL FORMULARIO
+  // ========================================
   const registrarUsuario = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // ✅ Previene recarga de página
     
     console.log("=== INICIO REGISTRO ===");
+    
+    // ===== VALIDACIONES EN EL CLIENTE =====
+    
+    // Verificar errores de validación
+    if (emailStatus.tipo === "error" || nombreStatus.tipo === "error") {
+      alert("Por favor corrige los errores en el formulario");
+      return;
+    }
     
     // Validar contraseñas
     if (pass1 !== pass2) {
@@ -43,12 +165,12 @@ export default function Registro() {
     setLoading(true);
     
     try {
-      // Preparar datos para enviar al backend
+      // ===== PREPARAR DATOS =====
       const userData = {
-        nombre: nombre,
-        apellido_p: apPaterno,
-        apellido_m: apMaterno,
-        correo: correo,
+        nombre: nombre.trim(),
+        apellido_p: apPaterno.trim(),
+        apellido_m: apMaterno.trim(),
+        correo: correo.trim().toLowerCase(),
         contrasena: pass1,
         fecha_nacimiento: new Date(fechaNacimiento).toISOString(),
         nom_usuario: nombre.toLowerCase().replace(/\s+/g, ''),
@@ -58,23 +180,13 @@ export default function Registro() {
       
       console.log("Enviando datos:", userData);
       
+      // ✅ PETICIÓN AJAX DE REGISTRO
       const data = await registro(userData);
       
       console.log("Registro exitoso:", data);
       
-      // IMPORTANTE: Guardar usuario en localStorage después del registro
-      const usuarioLogeado = {
-        correo: data.usuario.correo,
-        nombre: data.usuario.nombre,
-        apellido_p: data.usuario.apellido_p,
-        apellido_m: data.usuario.apellido_m,
-        fecha_nacimiento: data.usuario.fecha_nacimiento,
-        nom_usuario: data.perfil?.nom_usuario || data.usuario.nombre,
-        descripcion: data.perfil?.descripcion || "",
-        imagen: data.perfil?.foto_perfil || "https://via.placeholder.com/150"
-      };
-      
-      localStorage.setItem("usuarioLogeado", JSON.stringify(usuarioLogeado));
+      // ===== NOTA: registro() ya guarda en localStorage =====
+      // localStorage.setItem("usuarioLogeado", JSON.stringify(data));
       
       alert(`¡Bienvenido ${data.usuario.nombre}! Tu cuenta ha sido creada.`);
       navigate("/perfil");
@@ -82,6 +194,7 @@ export default function Registro() {
     } catch (error) {
       console.error("Error en registro:", error);
       
+      // ===== MANEJO DE ERRORES =====
       let errorMsg = "Error al registrar usuario";
       try {
         const errorData = JSON.parse(error.message);
@@ -102,60 +215,138 @@ export default function Registro() {
     }
   };
 
+  // ========================================
+  // ✅ HANDLERS DE CAMBIO CON VALIDACIÓN
+  // ========================================
+  
+  const handleCorreoChange = (e) => {
+    const nuevoCorreo = e.target.value;
+    setCorreo(nuevoCorreo);
+    validarEmailEnTiempoReal(nuevoCorreo);
+  };
+
+  const handleNombreChange = (e) => {
+    const nuevoNombre = e.target.value;
+    setNombre(nuevoNombre);
+    validarNombreEnTiempoReal(nuevoNombre, apPaterno, apMaterno);
+  };
+
+  const handleApPaternoChange = (e) => {
+    const nuevoApPaterno = e.target.value;
+    setApPaterno(nuevoApPaterno);
+    validarNombreEnTiempoReal(nombre, nuevoApPaterno, apMaterno);
+  };
+
+  const handleApMaternoChange = (e) => {
+    const nuevoApMaterno = e.target.value;
+    setApMaterno(nuevoApMaterno);
+    validarNombreEnTiempoReal(nombre, apPaterno, nuevoApMaterno);
+  };
+
+  // ========================================
+  // ✅ FUNCIÓN HELPER PARA ESTILOS
+  // ========================================
+  const getStatusClass = (status) => {
+    if (status.tipo === "success") return "status-success";
+    if (status.tipo === "error") return "status-error";
+    if (status.tipo === "validando") return "status-validando";
+    return "";
+  };
+
+  // ========================================
+  // ✅ RENDERIZADO
+  // ========================================
+
   return (
     <Base_Main tituloPagina="Registro">
       <div className="registro-contenido">
         <form className="registro-forma" onSubmit={registrarUsuario}>
           <table>
             <tbody>
+              {/* ===== NOMBRE ===== */}
               <tr>
                 <td>Nombre</td>
                 <td>
                   <input
                     type="text"
                     value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
+                    onChange={handleNombreChange}
                     required
                     disabled={loading}
                   />
                 </td>
               </tr>
+              
+              {/* ===== APELLIDO PATERNO ===== */}
               <tr>
                 <td>Apellido Paterno</td>
                 <td>
                   <input
                     type="text"
                     value={apPaterno}
-                    onChange={(e) => setApPaterno(e.target.value)}
+                    onChange={handleApPaternoChange}
                     required
                     disabled={loading}
                   />
                 </td>
               </tr>
+              
+              {/* ===== APELLIDO MATERNO ===== */}
               <tr>
                 <td>Apellido Materno</td>
                 <td>
                   <input
                     type="text"
                     value={apMaterno}
-                    onChange={(e) => setApMaterno(e.target.value)}
+                    onChange={handleApMaternoChange}
                     required
                     disabled={loading}
                   />
                 </td>
               </tr>
+              
+              {/* ===== MENSAJE DE VALIDACIÓN NOMBRE ===== */}
+              {nombreStatus.mensaje && (
+                <tr>
+                  <td colSpan="2">
+                    <span className={`status-mensaje ${getStatusClass(nombreStatus)}`}>
+                      {nombreStatus.tipo === "validando" && "⏳ "}
+                      {nombreStatus.tipo === "error" && "⚠️ "}
+                      {nombreStatus.mensaje}
+                    </span>
+                  </td>
+                </tr>
+              )}
+              
+              {/* ===== CORREO ===== */}
               <tr>
                 <td>Correo</td>
                 <td>
                   <input
                     type="email"
                     value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
+                    onChange={handleCorreoChange}
                     required
                     disabled={loading}
                   />
                 </td>
               </tr>
+              
+              {/* ===== MENSAJE DE VALIDACIÓN EMAIL ===== */}
+              {emailStatus.mensaje && (
+                <tr>
+                  <td colSpan="2">
+                    <span className={`status-mensaje ${getStatusClass(emailStatus)}`}>
+                      {emailStatus.tipo === "validando" && "⏳ "}
+                      {emailStatus.tipo === "error" && "❌ "}
+                      {emailStatus.tipo === "success" && "✅ "}
+                      {emailStatus.mensaje}
+                    </span>
+                  </td>
+                </tr>
+              )}
+              
+              {/* ===== FECHA DE NACIMIENTO ===== */}
               <tr>
                 <td>Fecha de Nacimiento</td>
                 <td>
@@ -169,6 +360,8 @@ export default function Registro() {
                   />
                 </td>
               </tr>
+              
+              {/* ===== CONTRASEÑA ===== */}
               <tr>
                 <td>Contraseña</td>
                 <td>
@@ -178,9 +371,12 @@ export default function Registro() {
                     onChange={(e) => setPass1(e.target.value)}
                     required
                     disabled={loading}
+                    minLength={6}
                   />
                 </td>
               </tr>
+              
+              {/* ===== REPETIR CONTRASEÑA ===== */}
               <tr>
                 <td>Repetir Contraseña</td>
                 <td>
@@ -190,6 +386,7 @@ export default function Registro() {
                     onChange={(e) => setPass2(e.target.value)}
                     required
                     disabled={loading}
+                    minLength={6}
                   />
                 </td>
               </tr>
@@ -199,7 +396,7 @@ export default function Registro() {
           <button 
             type="submit" 
             className="registro-boton"
-            disabled={loading}
+            disabled={loading || emailStatus.tipo === "validando" || nombreStatus.tipo === "validando"}
           >
             {loading ? "Registrando..." : "Registrarse"}
           </button>

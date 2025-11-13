@@ -1,11 +1,10 @@
 // MySpace\MyS_Front\src\Api.js
+
 // const API_URL = "http://localhost/api"; // API de nginx
 const API_URL =
   window.location.hostname === "localhost"
     ? "http://localhost/api"  // Para tu propia PC
     : "http://192.168.1.144/api"; // Para otras PCs en la LAN
-
-
 
 // ============================================
 // HELPER FUNCTIONS
@@ -128,6 +127,49 @@ export const logout = async () => {
   }
   
   localStorage.removeItem("usuarioLogeado");
+};
+
+
+// ============================================
+// ✅ VALIDACIONES AJAX EN TIEMPO REAL (NUEVO)
+// ============================================
+
+/**
+ * Valida si un correo ya está registrado
+ * @param {string} correo - Email a validar
+ * @returns {Promise<{existe: boolean, mensaje: string}>}
+ */
+export const validarEmail = async (correo) => {
+  try {
+    const data = await fetchPublico("/usuario/validar/email/", {
+      method: "POST",
+      body: JSON.stringify({ correo }),
+    });
+    return data;
+  } catch (error) {
+    console.error("Error al validar email:", error);
+    throw new Error("Error de conexión al validar el correo.");
+  }
+};
+
+/**
+ * Valida si un nombre completo ya existe (unique_together)
+ * @param {string} nombre 
+ * @param {string} apellido_p 
+ * @param {string} apellido_m 
+ * @returns {Promise<{existe: boolean, mensaje: string}>}
+ */
+export const validarNombreCompleto = async (nombre, apellido_p, apellido_m) => {
+  try {
+    const data = await fetchPublico("/usuario/validar/nombre-completo/", {
+      method: "POST",
+      body: JSON.stringify({ nombre, apellido_p, apellido_m }),
+    });
+    return data;
+  } catch (error) {
+    console.error("Error al validar nombre completo:", error);
+    throw new Error("Error de conexión al validar el nombre completo.");
+  }
 };
 
 

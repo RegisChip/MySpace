@@ -28,6 +28,9 @@ class Usuario(models.Model):
         db_table = 'cuenta_usr_usuario'
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
+        
+        # 🚨 RESTRICCIÓN CLAVE: La combinación de los 3 campos debe ser única
+        unique_together = ('nombre', 'apellido_p', 'apellido_m',)
 
 class Perfil(models.Model):
     nom_usuario = models.CharField(max_length=30, unique=True)
