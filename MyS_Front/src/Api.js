@@ -2,7 +2,7 @@
 
 const API_URL = window.location.hostname === "localhost"
   ? "https://localhost/api"
-  : `https://${window.location.hostname}/api`;
+  : `https://10.31.3.197/api`;
   // Se utiliza https en localhost para simular un entorno seguro
 
 // Mensajes para la consola del navegador

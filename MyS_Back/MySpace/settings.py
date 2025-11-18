@@ -21,7 +21,7 @@ SECRET_KEY = 'django-insecure-mj3no#%qp_-5^^t)y#c!ezm8iq)j9z1#20tu$2rag5iklv-vkw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.1.144']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.1.144', '10.31.3.197']
 
 # Application definition
 
@@ -63,6 +63,8 @@ MIDDLEWARE = [
 
 # Permite tanto HTTP como HTTPS durante desarrollo
 CORS_ALLOWED_ORIGINS = [
+    "https://10.31.3.197",
+    "http://10.31.3.197",
     'https://localhost',       # HTTPS (principal para desarrollo)
     'https://localhost:3000',  # React dev server con HTTPS
     'http://localhost:3000',   # React dev server sin HTTPS (fallback)
@@ -74,6 +76,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://localhost:3000',
     'http://localhost:3000',
     'https://127.0.0.1',
+    "https://10.31.3.197",
+    "http://10.31.3.197",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG # En desarrollo
