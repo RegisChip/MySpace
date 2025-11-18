@@ -3,35 +3,20 @@
 from django.db import models
 from cuenta_usr.models import Perfil
 
-# Create your models here.
-
 class Publicacion(models.Model):
     texto = models.TextField()
     fecha_pub = models.DateField(auto_now_add=True)
     like_pub = models.IntegerField(default=0)
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='publicaciones')
 
-    class Meta:
-        verbose_name = "Publicacion"
-        verbose_name_plural = "Publicaciones"
-
+    # Propiedades adicionales de Publicaciones
     def __str__(self):
         return f"Publicación de {self.perfil.nom_usuario} ({self.id})"
-
-
-class Fotos(models.Model):
-    ruta_foto = models.CharField(max_length=255)
-    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='fotos')
-
-    class Meta:
-        verbose_name = "Foto"
-        verbose_name_plural = "Fotos"
-
-    def __str__(self):
-        return f"Foto {self.id} de publicación {self.publicacion.id}"
     
-
-
+    class Meta: # Configura atributos de la tabla de BD
+        # Nombre de la tabla
+        verbose_name = "Publicacion"
+        verbose_name_plural = "Publicaciones"
 
 
 class Comentario(models.Model):
@@ -41,9 +26,25 @@ class Comentario(models.Model):
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='comentarios')
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='comentarios')
 
+    # Propiedades adicionales de Comentarios
+    def __str__(self):
+        return f"Comentario de {self.perfil.nom_usuario} en publicación {self.publicacion.id}"
+    
     class Meta:
+        # Nombre de la tabla
         verbose_name = "Comentario"
         verbose_name_plural = "Comentarios"
 
+
+class Fotos(models.Model):
+    ruta_foto = models.CharField(max_length=255)
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='fotos')
+
+    # Propiedades adicionales de Fotos
     def __str__(self):
-        return f"Comentario de {self.perfil.nom_usuario} en publicación {self.publicacion.id}"
+        return f"Foto {self.id} de publicación {self.publicacion.id}"
+    
+    class Meta:
+        # Nombre de la tabla
+        verbose_name = "Foto"
+        verbose_name_plural = "Fotos"

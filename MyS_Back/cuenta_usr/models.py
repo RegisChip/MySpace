@@ -1,6 +1,7 @@
 ﻿# MySpace\MyS_Back\cuenta_usr\models.py
 
 from django.db import models
+from django.contrib.auth.hashers import check_password as django_chp # verifica la contraseña
 
 class Usuario(models.Model):
     nombre = models.CharField(max_length=30)
@@ -10,27 +11,31 @@ class Usuario(models.Model):
     contrasena = models.CharField(max_length=100)
     fecha_nacimiento = models.DateTimeField()
 
-    # Propiedades requeridas por JWT
+    # Propiedades requeridas por JWT ===========
     @property
-    def is_authenticated(self):
-        """Siempre retorna True para usuarios válidos"""
+    def is_authenticated(self): # Siempre retorna True para validar usuarios
         return True
-    
     @property
-    def is_anonymous(self):
-        """Siempre retorna False para usuarios válidos"""
+    def is_anonymous(self): # Siemore retorna False para validar usuarios
         return False
-
+    @property
+    def pk(self): # SimpleJWT necesita acceder al pk o id
+        return self.id
+    # Metodos criticos para JWT ================
+    def check_password(self, raw_password): # Verifica si la contrcontraseña coincide con la base de datos
+        return django_chp(raw_password, self.contrasena)
+    
+    # Propiedades adicionales de Usuario
     def __str__(self):
         return f"{self.nombre} {self.apellido_p}"
     
-    class Meta:
+    class Meta: # Configura atributos de la tabla de BD
         db_table = 'cuenta_usr_usuario'
+        unique_together = ('nombre', 'apellido_p', 'apellido_m',)
+        # Nombre de la tabla
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
-        
-        # 🚨 RESTRICCIÓN CLAVE: La combinación de los 3 campos debe ser única
-        unique_together = ('nombre', 'apellido_p', 'apellido_m',)
+
 
 class Perfil(models.Model):
     nom_usuario = models.CharField(max_length=30, unique=True)
@@ -38,23 +43,27 @@ class Perfil(models.Model):
     foto_perfil = models.CharField(max_length=255, blank=True, null=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='perfiles')
 
+    # Propiedades adicionales de Perfil
     def __str__(self):
         return self.nom_usuario
     
-    class Meta:
+    class Meta: # Configura atributos de la tabla de BD
         db_table = 'cuenta_usr_perfil'
+        # Nombre de la tabla
         verbose_name = "Perfil"
         verbose_name_plural = "Perfiles"
 
-class Seguidores(models.Model):
-    perfil_seguidor = models.ForeignKey(
-        Perfil, on_delete=models.CASCADE, related_name='siguiendo'
-    )
-    perfil_seguido = models.ForeignKey(
-        Perfil, on_delete=models.CASCADE, related_name='seguidores'
-    )
 
-    class Meta:
+class Seguidores(models.Model):
+    # Perfil sigue a otro Perfil
+    perfil_seguidor = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='siguiendo')
+    perfil_seguido = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='seguidores')
+
+    # Propiedades adicionales de Seguidores
+    def __str__(self):
+        return f"{self.perfil_seguidor} sigue a {self.perfil_seguido}"
+    
+    class Meta: # Configura atributos de la tabla de BD
         db_table = 'cuenta_usr_seguidores' 
         unique_together = ('perfil_seguidor', 'perfil_seguido')
         constraints = [
@@ -63,15 +72,13 @@ class Seguidores(models.Model):
                 name='no_self_follow'
             )
         ]
+        # Nombre de la tabla
         verbose_name = "Seguimiento"
         verbose_name_plural = "Seguimientos"
 
-    def __str__(self):
-        return f"{self.perfil_seguidor} sigue a {self.perfil_seguido}"
 
+class ConfiguracionesUsuario(models.Model): # Tabla bajo revision
 
-class ConfiguracionesUsuario(models.Model):
-    # Así está en la base de datos, pero no sé si se va a a modificar después
     MODO_TEMA_CHOICES = [
         ('claro', 'Claro'),
         ('obscuro', 'Obscuro'),
@@ -91,5 +98,19 @@ class ConfiguracionesUsuario(models.Model):
     acentos = models.CharField(max_length=45, default='#e74c3c')
     perfil = models.OneToOneField(Perfil, on_delete=models.CASCADE, related_name='configuracion')
 
+    # Propiedades adicionales de ConfiguracionesUsuario
     def __str__(self):
         return f"Configuración de {self.perfil.nom_usuario}"
+    
+    class Meta: # Configura atributos de la tabla de BD
+        db_table = 'cuenta_usr_configuracionesusuario' 
+        unique_together = ('perfil_seguidor', 'perfil_seguido')
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(perfil_seguidor=models.F('perfil_seguido')),
+                name='no_self_follow'
+            )
+        ]
+        # Nombre de la tabla
+        verbose_name = "ConfiguracionesUsuario"
+        verbose_name_plural = "ConfiguracionesUsuarios"

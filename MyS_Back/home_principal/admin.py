@@ -1,4 +1,5 @@
 # MySpace\MyS_Back\home_principal\admin.py
+
 # Se utiliza este admin.py para la gestion y vista de los administradores/superusuarios
 
 from django.contrib import admin
@@ -6,8 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from .models import GrupoExtendido
-
-# Register your models here.
 
 # Elimina el registro original del modelo User
 admin.site.unregister(User)

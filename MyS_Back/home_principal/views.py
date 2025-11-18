@@ -3,7 +3,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-# Create your views here.
 
 # Pequeño menu para la vista de las APIs
 @api_view(['GET'])

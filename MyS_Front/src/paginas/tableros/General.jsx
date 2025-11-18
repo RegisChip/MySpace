@@ -1,12 +1,12 @@
 // MySpace\MyS_Front\src\paginas\tableros\General.jsx
-
 import React, { useState, useEffect, useCallback } from "react";
+// Estructura visual
 import MainLayout from "../../components/Layout";
+import "./General.css";
+// Componentes para publicar
 import PostFlotante from "../../ventanas/PostFlotante";
 import ComentarioFlotante from "../../ventanas/ComentarioFlotante";
-import "./General.css";
-
-// Importar funciones de la API
+// importaciones de las funciones de API
 import { 
   getPublicaciones, 
   getComentariosPorPublicacion,
@@ -19,7 +19,7 @@ import {
 } from "../../Api";
 
 const General = () => {
-    // --- Estado principal ---
+    // Elementos necesarios para general
     const [usuarioLogeado, setUsuarioLogeado] = useState(getUsuarioActual());
     const [autenticado, setAutenticado] = useState(estaAutenticado());
     const [loading, setLoading] = useState(true);
@@ -33,38 +33,75 @@ const General = () => {
     
     // Verificar autenticación al montar
     useEffect(() => {
-        setUsuarioLogeado(getUsuarioActual());
-        setAutenticado(estaAutenticado());
+        const usuario = getUsuarioActual();
+        const auth = estaAutenticado();
+        console.log("Usuario actual:", usuario);
+        console.log("Autenticado:", auth);
+        setUsuarioLogeado(usuario);
+        setAutenticado(auth);
     }, []);
     
-    // Cargar publicaciones (PÚBLICO - no requiere token)
+    // =============================
+    // HELPERS
+    // =============================
+    const formatearFecha = useCallback((fecha) => {
+        return new Date(fecha).toLocaleString("es-MX", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }, []);
+    
+    const formatearPublicacion = useCallback((pub, usuarioPerfil = null) => ({
+        id: pub.id,
+        perfilId: pub.perfil,
+        author: usuarioPerfil?.nom_usuario || pub.perfil_info?.nom_usuario || "Usuario",
+        avatar: usuarioPerfil?.foto_perfil || pub.perfil_info?.foto_perfil || "/default-avatar.png",
+        date: formatearFecha(pub.fecha_pub || new Date()),
+        content: pub.texto || pub.content,
+        image: pub.image || pub.fotos?.[0]?.ruta_foto || null,
+        kudos: pub.like_pub || 0,
+    }), [formatearFecha]);
+    
+    const formatearComentario = useCallback((com) => ({
+        id: com.id,
+        author: com.perfil_info?.nom_usuario || "Usuario",
+        avatar: com.perfil_info?.foto_perfil || "/default-avatar.png",
+        text: com.texto,
+        kudos: com.like_com || 0,
+        fecha: formatearFecha(com.fecha_com),
+    }), [formatearFecha]);
+    
+    const validarUsuarioConPerfil = useCallback(() => {
+        if (!autenticado) {
+            alert("Debes iniciar sesión");
+            return false;
+        }
+        if (!usuarioLogeado?.perfil?.id) {
+            console.error("Usuario sin perfil:", usuarioLogeado);
+            alert("Error: No se encontró el perfil del usuario");
+            return false;
+        }
+        return true;
+    }, [autenticado, usuarioLogeado]);
+    
+    // =============================
+    // PUBLICACIONES Y COMENTARIOS
+    // =============================
     useEffect(() => {
         const cargarPublicaciones = async () => {
             try {
                 setLoading(true);
                 setError(null);
+                
                 const data = await getPublicaciones();
-                const publicaciones = Array.isArray(data)
-                    ? data
-                    : Array.isArray(data.results)
-                        ? data.results
-                        : [];
-                const publicacionesFormateadas = publicaciones.map(pub => ({
-                    id: pub.id,
-                    perfilId: pub.perfil,
-                    author: pub.perfil_info?.nom_usuario || "Usuario",
-                    avatar: pub.perfil_info?.foto_perfil || "/default-avatar.png",
-                    date: new Date(pub.fecha_pub).toLocaleString("es-MX", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    }),
-                    content: pub.texto,
-                    image: pub.fotos && pub.fotos.length > 0 ? pub.fotos[0].ruta_foto : null,
-                    kudos: pub.like_pub,
-                }));
+                const publicaciones = Array.isArray(data) ? data : data.results || [];
+                
+                console.log(`${publicaciones.length} publicaciones cargadas`);
+                
+                const publicacionesFormateadas = publicaciones.map(pub => formatearPublicacion(pub));
                 setPosts(publicacionesFormateadas);
             } catch (err) {
                 console.error("Error al cargar publicaciones:", err);
@@ -75,25 +112,15 @@ const General = () => {
         };
         
         cargarPublicaciones();
-    }, []);
+    }, [formatearPublicacion]);
     
-    // Cargar comentarios (PÚBLICO - no requiere token)
-    const cargarComentarios = async (postId) => {
-        if (comentariosPorPost[postId]) {
-            return;
-        }
+    const cargarComentarios = useCallback(async (postId) => {
+        if (comentariosPorPost[postId]) return;
         
         try {
+            console.log(`Cargando comentarios para post ${postId}...`);
             const comentarios = await getComentariosPorPublicacion(postId);
-            
-            const comentariosFormateados = comentarios.map(com => ({
-                id: com.id,
-                author: com.perfil_info?.nom_usuario || "Usuario",
-                avatar: com.perfil_info?.foto_perfil || "/default-avatar.png",
-                text: com.texto,
-                kudos: com.like_com,
-                fecha: new Date(com.fecha_com).toLocaleString("es-MX"),
-            }));
+            const comentariosFormateados = comentarios.map(formatearComentario);
             
             setComentariosPorPost(prev => ({
                 ...prev,
@@ -102,72 +129,75 @@ const General = () => {
         } catch (err) {
             console.error("Error al cargar comentarios:", err);
         }
-    };
+    }, [comentariosPorPost, formatearComentario]);
     
-    // Cargar comentarios al montar el componente
     useEffect(() => {
+        if (posts.length === 0) return;
+        
         const cargarTodosLosComentarios = async () => {
-            if (posts.length > 0) {
-                const promesas = posts.map(post => cargarComentarios(post.id));
-                await Promise.all(promesas);
-                
-                const todosVisibles = {};
-                posts.forEach(post => {
-                    todosVisibles[post.id] = true;
-                });
-                setMostrarComentariosDePost(todosVisibles);
-            }
+            await Promise.all(posts.map(post => cargarComentarios(post.id)));
+            
+            const visibilidadInicial = Object.fromEntries(
+                posts.map(post => [post.id, true])
+            );
+            setMostrarComentariosDePost(visibilidadInicial);
         };
         
         cargarTodosLosComentarios();
-    }, [posts.length]);
+    }, [posts.length, cargarComentarios]);
     
-    // Toggle para mostrar/ocultar comentarios
-    const toggleMostrarComentarios = async (postId) => {
-        if (mostrarComentariosDePost[postId]) {
-            setMostrarComentariosDePost(prev => ({
-                ...prev,
-                [postId]: false
-            }));
-        } else {
-            setMostrarComentariosDePost(prev => ({
-                ...prev,
-                [postId]: true
-            }));
-            
-            if (!comentariosPorPost[postId]) {
-                await cargarComentarios(postId);
-            }
+    const toggleComentario = useCallback((postId) => {
+        setComentarioVisibleId(prev => prev === postId ? null : postId);
+    }, []);
+    
+    const toggleMostrarComentarios = useCallback(async (postId) => {
+        const estaVisible = mostrarComentariosDePost[postId];
+        
+        setMostrarComentariosDePost(prev => ({
+            ...prev,
+            [postId]: !estaVisible
+        }));
+        
+        if (!estaVisible && !comentariosPorPost[postId]) {
+            await cargarComentarios(postId);
         }
-    };
+    }, [mostrarComentariosDePost, comentariosPorPost, cargarComentarios]);
     
-    // Dar kudos (REQUIERE AUTENTICACIÓN)
-    const handleKudos = useCallback(async (id, tipo = "post") => {
+    // ===============
+    //  KUDOS (LIKES)
+    // ===============
+    const handleKudos = useCallback(async (id, tipo = "post", postId = null) => { 
         if (!autenticado) {
             alert("Debes iniciar sesión para dar kudos");
             return;
         }
         
         try {
+            console.log(`Dando kudos a ${tipo} ${id}...`);
+            
+            const result = tipo === "post" 
+                ? await darLikePublicacion(id)
+                : await darLikeComentario(id);
+            
             if (tipo === "post") {
-                const result = await darLikePublicacion(id);
                 setPosts(prev => prev.map(post => 
                     post.id === id ? { ...post, kudos: result.likes } : post
                 ));
             } else {
-                const result = await darLikeComentario(id);
                 setComentariosPorPost(prev => ({
                     ...prev,
-                    [comentarioVisibleId]: prev[comentarioVisibleId].map(com =>
+                    [postId]: prev[postId]?.map(com =>
                         com.id === id ? { ...com, kudos: result.likes } : com
-                    )
+                    ) || prev[postId]
                 }));
             }
             
             setClickedKudos(id);
             setTimeout(() => setClickedKudos(null), 300);
+            
         } catch (err) {
             console.error("Error al dar kudos:", err);
+            
             if (err.message.includes("autenticado")) {
                 alert("Tu sesión expiró. Por favor inicia sesión nuevamente.");
                 setAutenticado(false);
@@ -176,119 +206,230 @@ const General = () => {
                 alert("Error al dar kudos");
             }
         }
-    }, [autenticado, comentarioVisibleId]);
+    }, [autenticado]);
     
-    // Toggle comentarios
-    const toggleComentario = useCallback(
-        (postId) => {
-            if (comentarioVisibleId === postId) {
-                setComentarioVisibleId(null);
+    // ================================
+    //  CREAR PUBLICACION Y COMENTARIO
+    // ================================
+    const handleAddPost = useCallback(async (nuevoPost) => {
+        if (!validarUsuarioConPerfil()) return;
+        
+        if (!nuevoPost.content?.trim()) {
+            alert("El contenido no puede estar vacío");
+            return;
+        }
+        
+        try {
+            console.log("Creando publicación...");
+            
+            const resultado = await crearPublicacion({
+                content: nuevoPost.content.trim(),
+                perfil: usuarioLogeado.perfil.id,
+                image: nuevoPost.image || null
+            });
+            
+            console.log("Publicación creada:", resultado);
+            
+            const nuevoPostFormateado = formatearPublicacion(
+                { ...resultado, texto: nuevoPost.content },
+                usuarioLogeado.perfil
+            );
+            
+            setPosts(prev => [nuevoPostFormateado, ...prev]);
+            setShowPostFlotante(false);
+            
+        } catch (err) {
+            console.error("Error al crear publicación:", err);
+            
+            if (err.message.includes("autenticado")) {
+                alert("Tu sesión expiró. Por favor inicia sesión nuevamente.");
+                setAutenticado(false);
+                setUsuarioLogeado(null);
             } else {
-                setComentarioVisibleId(postId);
+                alert(`Error al crear la publicación: ${err.message}`);
             }
-        },
-        [comentarioVisibleId]
-    );
+        }
+    }, [validarUsuarioConPerfil, usuarioLogeado, formatearPublicacion]);
     
-    // Crear nuevo post (REQUIERE AUTENTICACIÓN)
-    const handleAddPost = useCallback(
-        async (nuevoPost) => {
-            if (!autenticado) {
-                alert("Debes iniciar sesión para crear publicaciones");
-                return;
-            }
+    const handleAddComentario = useCallback(async (postId, nuevoComentario) => {
+        if (!validarUsuarioConPerfil()) return;
+        
+        if (!nuevoComentario?.trim()) {
+            alert("El comentario no puede estar vacío");
+            return;
+        }
+        
+        try {
+            console.log("Creando comentario...");
             
-            try {
-                const postData = {
-                    texto: nuevoPost.content,
-                    perfil: usuarioLogeado.perfil.id,
-                    fotos_rutas: nuevoPost.image ? [nuevoPost.image] : []
-                };
-                
-                const resultado = await crearPublicacion(postData);
-                
-                const nuevoPostFormateado = {
-                    id: resultado.id,
-                    perfilId: resultado.perfil,
-                    author: usuarioLogeado.perfil.nom_usuario,
-                    avatar: usuarioLogeado.perfil.foto_perfil || "/default-avatar.png",
-                    date: new Date().toLocaleString("es-MX", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    }),
-                    content: nuevoPost.content,
-                    image: nuevoPost.image || null,
-                    kudos: 0,
-                };
-                
-                setPosts(prev => [nuevoPostFormateado, ...prev]);
-                setShowPostFlotante(false);
-            } catch (err) {
-                console.error("Error al crear publicación:", err);
-                if (err.message.includes("autenticado")) {
-                    alert("Tu sesión expiró. Por favor inicia sesión nuevamente.");
-                    setAutenticado(false);
-                    setUsuarioLogeado(null);
-                } else {
-                    alert("Error al crear la publicación");
-                }
-            }
-        }, [autenticado, usuarioLogeado]
-    );
-    
-    // Crear comentario (REQUIERE AUTENTICACIÓN)
-    const handleAddComentario = useCallback(
-        async (postId, nuevoComentario) => {
-            if (!autenticado) {
-                alert("Debes iniciar sesión para comentar");
-                return;
-            }
+            const resultado = await crearComentario({
+                texto: nuevoComentario.trim(),
+                publicacion: postId,
+                perfil: usuarioLogeado.perfil.id
+            });
             
-            try {
-                const comentarioData = {
-                    texto: nuevoComentario,
-                    publicacion: postId,
-                    perfil: usuarioLogeado.perfil.id
-                };
-                
-                const resultado = await crearComentario(comentarioData);
-                
-                const nuevoComentarioObj = {
-                    id: resultado.id,
-                    author: usuarioLogeado.perfil.nom_usuario,
-                    avatar: usuarioLogeado.perfil.foto_perfil || "/default-avatar.png",
-                    text: nuevoComentario,
-                    kudos: 0,
-                    fecha: new Date().toLocaleString("es-MX"),
-                };
-                
-                setComentariosPorPost(prev => ({
-                    ...prev,
-                    [postId]: [...(prev[postId] || []), nuevoComentarioObj]
-                }));
-                
-                setMostrarComentariosDePost(prev => ({
-                    ...prev,
-                    [postId]: true
-                }));
-                
-                setComentarioVisibleId(null);
-            } catch (err) {
-                console.error("Error al crear comentario:", err);
-                if (err.message.includes("autenticado")) {
-                    alert("Tu sesión expiró. Por favor inicia sesión nuevamente.");
-                    setAutenticado(false);
-                    setUsuarioLogeado(null);
-                } else {
-                    alert("Error al crear el comentario");
-                }
+            console.log("Comentario creado:", resultado);
+            
+            const nuevoComentarioObj = {
+                id: resultado.id,
+                author: usuarioLogeado.perfil.nom_usuario,
+                avatar: usuarioLogeado.perfil.foto_perfil || "/default-avatar.png",
+                text: nuevoComentario.trim(),
+                kudos: 0,
+                fecha: formatearFecha(new Date()),
+            };
+            
+            setComentariosPorPost(prev => ({
+                ...prev,
+                [postId]: [...(prev[postId] || []), nuevoComentarioObj]
+            }));
+            
+            setMostrarComentariosDePost(prev => ({
+                ...prev,
+                [postId]: true
+            }));
+            
+            setComentarioVisibleId(null);
+            
+        } catch (err) {
+            console.error("Error al crear comentario:", err);
+            
+            if (err.message.includes("autenticado")) {
+                alert("Tu sesión expiró. Por favor inicia sesión nuevamente.");
+                setAutenticado(false);
+                setUsuarioLogeado(null);
+            } else {
+                alert(`Error al crear el comentario: ${err.message}`);
             }
-        }, [autenticado, usuarioLogeado]
-    );
+        }
+    }, [validarUsuarioConPerfil, usuarioLogeado, formatearFecha]);
     
+    // =============================
+    // RENDER HELPERS
+    // =============================
+    const renderComentario = useCallback((comentario, postId) => (
+        <div key={comentario.id} className="general-comentario-item">
+            <div className="general-comentario-header">
+                <img 
+                    className="general-comentario-avatar" 
+                    src={comentario.avatar} 
+                    alt={`Avatar de ${comentario.author}`} 
+                />
+                <div className="general-comentario-info">
+                    <span className="general-comentario-autor">{comentario.author}</span>
+                    <span className="general-comentario-texto"> respondió</span>
+                </div>
+            </div>
+            <div className="general-comentario-contenido">
+                <p>{comentario.text}</p>
+            </div>
+            <div className="general-opciones-comentario">
+                <button className="general-check-comentario" type="button">
+                    [check]
+                </button>
+                <button
+                    className={`general-kudos-comentario ${clickedKudos === comentario.id ? 'clicked' : ''}`}
+                    onClick={() => handleKudos(comentario.id, "comentario", postId)}
+                    title={`${comentario.kudos || 0} kudos`}
+                    disabled={!autenticado}
+                >
+                    <i className="bi bi-bug-fill"></i>
+                </button>
+            </div>
+        </div>
+    ), [clickedKudos, autenticado, handleKudos]);
+    
+    const renderPost = useCallback((post) => (
+        <div className="general-blog-post" key={post.id}>
+            <div className="general-post-perf">
+                {/* ENCABEZADO */}
+                <div className="general-info-main">
+                    <img className="general-ima-inf" src={post.avatar} alt="foto perfil" />
+                    <h6 className="general-nombre">{post.author}</h6>
+                    <h6 className="general-public">Publicó</h6>
+                    <h6 className="general-fecha">{post.date}</h6>
+                    <div className="general-opciones-botton">
+                        <button 
+                            className="general-crear-coment" 
+                            onClick={() => {
+                                if (!autenticado) {
+                                    alert("Debes iniciar sesión para comentar");
+                                    return;
+                                }
+                                toggleComentario(post.id);
+                            }}
+                        >
+                            <i className="bi bi-caret-right-fill"></i>
+                        </button>
+                        {comentarioVisibleId === post.id && (
+                            <ComentarioFlotante
+                                onClose={() => setComentarioVisibleId(null)}
+                                onSubmit={(texto) => handleAddComentario(post.id, texto)}
+                            />
+                        )}
+                    </div>
+                </div>
+                
+                {/* CONTENIDO */}
+                <div className="general-post">
+                    <p>{post.content}</p>
+                </div>
+                
+                {/* IMAGEN */}
+                {post.image && (
+                    <div className="general-post-ima">
+                        <img className="general-ima-pub" src={post.image} alt="imagen-post" />
+                    </div>
+                )}
+                
+                {/* BOTONES */}
+                <div className="general-opciones-botton">
+                    <button className="general-check" type="button">
+                        [check]
+                    </button>
+                    <button
+                        className={`general-kudos ${clickedKudos === post.id ? 'clicked' : ''}`}
+                        onClick={() => handleKudos(post.id, "post")}
+                        title={`${post.kudos || 0} kudos`}
+                        disabled={!autenticado}
+                    >
+                        <i className="bi bi-bug-fill"></i>
+                    </button>
+                    <button
+                        className="general-ver-comentarios"
+                        onClick={() => toggleMostrarComentarios(post.id)}
+                        type="button"
+                    >
+                        {mostrarComentariosDePost[post.id] ? '[-] Ocultar' : '[+] Ver'} comentarios
+                    </button>
+                </div>
+            </div>
+            
+            {/* COMENTARIOS */}
+            {mostrarComentariosDePost[post.id] && 
+             comentariosPorPost[post.id] && 
+             comentariosPorPost[post.id].length > 0 && (
+                <div className="general-comentarios-lista">
+                    {comentariosPorPost[post.id].map(c => renderComentario(c, post.id))}
+                </div>
+            )}
+        </div>
+    ), [
+        autenticado,
+        clickedKudos,
+        comentarioVisibleId,
+        comentariosPorPost,
+        mostrarComentariosDePost,
+        toggleComentario,
+        handleAddComentario,
+        handleKudos,
+        toggleMostrarComentarios,
+        renderComentario
+    ]);
+    
+    // =============================
+    // RENDERIZADO PRINCIPAL
+    // =============================
     if (loading) {
         return (
             <MainLayout tituloPagina="General" gridClass="general-grid">
@@ -321,24 +462,20 @@ const General = () => {
                     <nav className="main-navbar">
                         <ul className="navbar-list">
                             <li>
-                                <button 
-                                    onClick={() => {
-                                        if (!autenticado) {
-                                            alert("Debes iniciar sesión para crear posts");
-                                            return;
-                                        }
-                                        setShowPostFlotante(true);
-                                    }}>
+                                <button onClick={() => {
+                                    if (!autenticado) {
+                                        alert("Debes iniciar sesión para crear posts");
+                                        return;
+                                    }
+                                    setShowPostFlotante(true);
+                                }}>
                                     [Crear Post]
                                 </button>
                             </li>
-                            <li>
-                                <button>[Buscar]</button>
-                            </li>
-                            <li>
-                                <button>[Hashtags]</button>
-                            </li>
+                            <li><button>[Buscar]</button></li>
+                            <li><button>[Hashtags]</button></li>
                         </ul>
+                        
                         {showPostFlotante && (
                             <PostFlotante
                                 onClose={() => setShowPostFlotante(false)}
@@ -353,109 +490,13 @@ const General = () => {
                                 No hay publicaciones aún
                             </p>
                         ) : (
-                            posts.map((post) => (
-                                <div className="general-blog-post" key={post.id}>
-                                    <div className="general-post-perf">
-                                        <div className="general-info-main">
-                                            <img className="general-ima-inf" src={post.avatar} alt="foto perfil" />
-                                            <h6 className="general-nombre">{post.author}</h6>
-                                            <h6 className="general-public">Publicó</h6>
-                                            <h6 className="general-fecha">{post.date}</h6>
-                                            <div className="general-opciones-botton">
-                                                <button
-                                                    className="general-crear-coment"
-                                                    onClick={() => {
-                                                        if (!autenticado) {
-                                                            alert("Debes iniciar sesión para comentar");
-                                                            return;
-                                                        }
-                                                        toggleComentario(post.id);
-                                                    }}>
-                                                    <i className="bi bi-caret-right-fill"></i>
-                                                </button>
-                                                {comentarioVisibleId === post.id && (
-                                                    <ComentarioFlotante
-                                                        onClose={() => setComentarioVisibleId(null)}
-                                                        onSubmit={(texto) => handleAddComentario(post.id, texto)}
-                                                    />
-                                                )}
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="general-post">
-                                            <p>{post.content}</p>
-                                        </div>
-                                        
-                                        {post.image && (
-                                            <div className="general-post-ima">
-                                                <img className="general-ima-pub" src={post.image} alt="imagen-post" />
-                                            </div>
-                                        )}
-                                        
-                                        <div className="general-opciones-botton">
-                                            <button className="general-check" type="button">
-                                                [check]
-                                            </button>
-                                            <button
-                                                className={`general-kudos ${clickedKudos === post.id ? 'clicked' : ''}`}
-                                                onClick={() => handleKudos(post.id, "post")}
-                                                title={`${post.kudos || 0} kudos`}
-                                                disabled={!autenticado}>
-                                                <i className="bi bi-bug-fill"></i>
-                                            </button>
-                                            
-                                            <button
-                                                className="general-ver-comentarios"
-                                                onClick={() => toggleMostrarComentarios(post.id)}
-                                                type="button">
-                                                {mostrarComentariosDePost[post.id] ? '[-] Ocultar' : '[+] Ver'} comentarios
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    {mostrarComentariosDePost[post.id] && comentariosPorPost[post.id] && comentariosPorPost[post.id].length > 0 && (
-                                        <div className="general-comentarios-lista">
-                                            {comentariosPorPost[post.id].map(c => (
-                                                <div key={c.id} className="general-comentario-item">
-                                                    <div className="general-comentario-header">
-                                                        <img 
-                                                            className="general-comentario-avatar" 
-                                                            src={c.avatar} 
-                                                            alt={`Avatar de ${c.author}`} 
-                                                        />
-                                                        <div className="general-comentario-info">
-                                                            <span className="general-comentario-autor">{c.author}</span>
-                                                            <span className="general-comentario-texto"> respondió</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="general-comentario-contenido">
-                                                        <p>{c.text}</p>
-                                                    </div>
-                                                
-                                                    <div className="general-opciones-comentario">
-                                                        <button className="general-check-comentario" type="button">
-                                                            [check]
-                                                        </button>
-                                                        <button
-                                                            className={`general-kudos-comentario ${clickedKudos === c.id ? 'clicked' : ''}`}
-                                                            onClick={() => handleKudos(c.id, "comentario")}
-                                                            title={`${c.kudos || 0} kudos`}
-                                                            disabled={!autenticado}>
-                                                            <i className="bi bi-bug-fill"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            ))
+                            posts.map(renderPost)
                         )}
                     </div>
                 </div>
             </div>
         </MainLayout>
     );
-}
+};
 
 export default General;

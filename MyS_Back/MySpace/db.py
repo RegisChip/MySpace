@@ -3,9 +3,9 @@
 POSTGRESQL = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mySpace',
+        'NAME': 'BD_MySpace',
         'USER': 'postgres',
-        'PASSWORD': 'R3g1nard-0710',
+        'PASSWORD': '3118Ch$',
         'HOST': 'localhost',
         'PORT': '5432'
     }

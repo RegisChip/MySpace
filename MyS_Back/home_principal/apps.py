@@ -1,3 +1,5 @@
+# MySpace\MyS_Back\home_principal\apps.py
+
 from django.apps import AppConfig
 
 

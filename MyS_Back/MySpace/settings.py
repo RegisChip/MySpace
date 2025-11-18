@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     # Conexion con el React
     'rest_framework',
     'rest_framework_simplejwt',
-    #'rest_framework_simplejwt.token_blacklist',  # Para blacklist de tokens
     'corsheaders',
 
     # Apps
@@ -56,40 +55,125 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS Configuration
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+# ============================================
+# Configuracion de CORS 
+# ============================================
 
 # Orígenes que Django permitirá para solicitudes CORS
+
+# Permite tanto HTTP como HTTPS durante desarrollo
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000', # Servidor de desarrollo de React
-    'http://localhost',
-    'http://127.0.0.1',
-    # Agrega el dominio de producción
-    # 'https://tudominio.com',
+    'https://localhost',       # HTTPS (principal para desarrollo)
+    'https://localhost:3000',  # React dev server con HTTPS
+    'http://localhost:3000',   # React dev server sin HTTPS (fallback)
+    'https://127.0.0.1',       # IP local con HTTPS
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost', 
-    'http://localhost:3000', # Típico para el servidor de desarrollo de React
-    'http://127.0.0.1:8000', # Si estás usando Waitress en el puerto 8000
-    'http://127.0.0.1:80', # Si Nginx/Waitress sirve la app en el puerto 80
-    # Agrega el dominio de producción cuando hagas el despliegue final
-    # 'https://tudominio.com', 
+    'https://localhost',
+    'https://localhost:3000',
+    'http://localhost:3000',
+    'https://127.0.0.1',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = DEBUG # En desarrollo
+CORS_ALLOW_CREDENTIALS = True
+
+# HEADERS ADICIONALES PARA JWT
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# MÉTODOS HTTP PERMITIDOS
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+# ============================================
+# Configuracion de HTTPS
+# ============================================
+
+# CONFIGURACIÓN PARA HTTPS DETRÁS DE PROXY (NGINX)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# CONFIGURACIÓN DE COOKIES PARA HTTPS
+SESSION_COOKIE_SECURE = True  # Solo envia cookie por HTTPS
+CSRF_COOKIE_SECURE = True     # Solo envia CSRF token por HTTPS
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
+
+# ============================================
+# Configuracion del LOGGING
+# ============================================
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'cuenta_usr': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'publicaciones': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
 # Django REST Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'cuenta_usr.authentication.CustomJWTAuthentication',
     ),
-    # Dejamos AllowAny por defecto, cada vista define sus propios permisos
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
 }
+
+# ============================================
+# Configuracion del JWT
+# ============================================
 
 # JWT Configuration
 SIMPLE_JWT = {
@@ -98,14 +182,16 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',  # Campo ID de tu modelo Usuario
-    'USER_ID_CLAIM': 'user_id',  # Claim en el token JWT
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
 # Backend de autenticación personalizado
 AUTHENTICATION_BACKENDS = [
-    'cuenta_usr.backends.UsuarioBackend',  # Tu backend personalizado
-    'django.contrib.auth.backends.ModelBackend',  # Backend por defecto (para admin)
+    'cuenta_usr.backends.UsuarioBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'MySpace.urls'

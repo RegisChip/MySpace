@@ -531,3 +531,64 @@ hr {
 .edit-buttons button:active {
   transform: scale(1.2);
 }
+
+/* Publicaciones y comentarios */
+
+/* ========================================
+   MENSAJES DE ESTADO
+======================================== */
+.edit-sin-datos {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* ========================================
+   TABS ACTIVOS
+======================================== */
+.edit-pest button {
+    position: relative;
+}
+
+.edit-pest button.active {
+    background-color: #2d5faa;
+    color: white;
+    font-weight: bold;
+}
+
+/* ========================================
+   TIPO DE CONTENIDO (POST vs COMENTARIO)
+======================================== */
+.blog-post[data-tipo="comentario"] .post-perf {
+    border-left: 3px solid #60abba;
+}
+
+.blog-post[data-tipo="publicacion"] .post-perf {
+    border-left: 3px solid #2d5faa;
+}
+
+/* ========================================
+   FILTROS
+======================================== */
+.edit-tap {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.edit-tap select,
+.edit-tap input[type="date"] {
+    padding: 8px;
+    border: 1px solid #609ffa;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.edit-tap select {
+    flex: 1;
+}
+
+.edit-tap input[type="date"] {
+    min-width: 150px;
+}

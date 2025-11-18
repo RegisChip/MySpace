@@ -3,69 +3,59 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Cuenta.css";
-import { login } from "../../Api"; // Asumo que esta es la función que llama a tu API de Django
+import { login } from "../../Api";
 import Base_Main from "../../bases/Base_Main";
 
 export default function CuentaPage() {
-  
+
   const navigate = useNavigate();
   
   const [correo, setCorreo] = useState("");
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
-    const [errorMsg, setErrorMsg] = useState(''); // Estado para mostrar errores específicos
+  const [errorMsg, setErrorMsg] = useState('');
+  
+  // Estado para mostrar errores específicos
   
   const logearUsuario = async (e) => {
     e.preventDefault();
-        setErrorMsg(''); // Limpiar errores previos
+    setErrorMsg(''); // Limpiar errores previos
     setLoading(true);
     
     try {
-      // 1. Llamada AJAX al backend
+      console.log("Intentando login con:", { correo });
+      
+      // login() en Api.js ya guarda en localStorage con la estructura correcta
       const data = await login(correo, pass);
+      
       console.log("Login exitoso:", data);
-      
-      // 2. Guardar la información del usuario en localStorage
-      const usuarioLogeado = {
-        correo: data.usuario.correo,
-        nombre: data.usuario.nombre,
-        apellido_p: data.usuario.apellido_p,
-        apellido_m: data.usuario.apellido_m,
-        fecha_nacimiento: data.usuario.fecha_nacimiento,
-        // Datos del perfil
-        nom_usuario: data.perfil?.nom_usuario || data.usuario.nombre,
-        descripcion: data.perfil?.descripcion || "",
-        imagen: data.perfil?.foto_perfil || "https://via.placeholder.com/150"
-      };
-      
-      localStorage.setItem("usuarioLogeado", JSON.stringify(usuarioLogeado));
       
       alert(`¡Bienvenido ${data.usuario.nombre}!`);
       navigate("/perfil");
       
     } catch (error) {
       console.error("Error en login:", error);
-            
-            // 🚨 Manejo de errores mejorado basado en la respuesta de Django/Axios
-            let message = "Error desconocido al iniciar sesión.";
-            
-            if (error.response) {
-                const errorData = error.response.data;
-                // Si la vista de login de Django retorna el error 'error'
-                if (errorData.error) {
-                    message = errorData.error; // Ej: "Correo o contraseña incorrectos"
-                } 
-                // Si el Serializer de Login falla, puede retornar errores de campo
-                else if (errorData.correo) { 
-                    message = errorData.correo[0]; // Ej: "Correo no registrado"
-                } 
-                else if (errorData.non_field_errors) {
-                    message = errorData.non_field_errors[0];
-                }
-            } else {
-                message = "No se pudo conectar con el servidor.";
-            }
-
+      
+      let message = "Error desconocido al iniciar sesión.";
+      
+      // Intentar parsear el error de Django
+      try {
+        const errorData = JSON.parse(error.message);
+        if (errorData.error) {
+          message = errorData.error;
+        } else if (errorData.correo) {
+          message = Array.isArray(errorData.correo) ? errorData.correo[0] : errorData.correo;
+        } else if (errorData.non_field_errors) {
+          message = Array.isArray(errorData.non_field_errors) 
+            ? errorData.non_field_errors[0] 
+            : errorData.non_field_errors;
+        } else {
+          message = JSON.stringify(errorData);
+        }
+      } catch {
+        message = error.message || "No se pudo conectar con el servidor.";
+      }
+      
       setErrorMsg(message);
     } finally {
       setLoading(false);
@@ -113,14 +103,16 @@ export default function CuentaPage() {
                   />
                 </td>
               </tr>
-                            {/* Mostrar el mensaje de error si existe */}
-                            {errorMsg && (
-                                <tr>
-                                    <td colSpan="2" className="error-mensaje">
-                                        <span style={{ color: 'red', fontSize: '0.9em' }}>{errorMsg}</span>
-                                    </td>
-                                </tr>
-                            )}
+              {/* Mostrar el mensaje de error si existe */}
+              {errorMsg && (
+                  <tr>
+                      <td colSpan="2" className="error-mensaje">
+                        <span style={{ color: 'red', fontSize: '0.9em' }}>
+                          {errorMsg}
+                        </span>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
           

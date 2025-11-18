@@ -3,12 +3,11 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Registro.css";
-// ✅ IMPORTAR DESDE Api.js (unificado)
 import { registro, validarEmail, validarNombreCompleto } from "../../Api";
-import Base_Main from "../../bases/Base_Main"; 
+import Base_Main from "../../bases/Base_Main";
 
 export default function Registro() {
-  
+
   const navigate = useNavigate();
 
   // ===== ESTADOS DEL FORMULARIO =====
@@ -21,12 +20,12 @@ export default function Registro() {
   const [fechaNacimiento, setFechaNacimiento] = useState("");
   
   // ===== ESTADOS DE VALIDACIÓN AJAX =====
-  const [emailStatus, setEmailStatus] = useState({ mensaje: "", tipo: "" }); // tipo: "success", "error", "validando"
+  const [emailStatus, setEmailStatus] = useState({ mensaje: "", tipo: "" });
   const [nombreStatus, setNombreStatus] = useState({ mensaje: "", tipo: "" });
   
   // ===== ESTADO DE LOADING =====
   const [loading, setLoading] = useState(false);
-
+  
   // ===== REFERENCIAS PARA DEBOUNCING =====
   const timeoutEmailRef = useRef(null);
   const timeoutNombreRef = useRef(null);
@@ -40,21 +39,16 @@ export default function Registro() {
   }, []);
 
   // ========================================
-  // ✅ VALIDACIÓN AJAX: EMAIL EN TIEMPO REAL
+  // VALIDACIÓN AJAX: EMAIL EN TIEMPO REAL
   // ========================================
   const validarEmailEnTiempoReal = useCallback(async (email) => {
-    // Limpiar timeout anterior
     if (timeoutEmailRef.current) {
       clearTimeout(timeoutEmailRef.current);
     }
-
-    // Validación básica
     if (!email || email.trim() === "") {
       setEmailStatus({ mensaje: "", tipo: "" });
       return;
     }
-
-    // Validación de formato
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setEmailStatus({ mensaje: "Formato de correo inválido", tipo: "error" });
@@ -67,9 +61,9 @@ export default function Registro() {
     // Debouncing: Esperar 600ms
     timeoutEmailRef.current = setTimeout(async () => {
       try {
-        // ✅ PETICIÓN AJAX
         const response = await validarEmail(email);
         
+        // USAR "existe" EN LUGAR DE "disponible"
         if (response.existe) {
           setEmailStatus({ 
             mensaje: "Este correo ya está registrado", 
@@ -92,14 +86,13 @@ export default function Registro() {
   }, []);
 
   // ================================================
-  // ✅ VALIDACIÓN AJAX: NOMBRE COMPLETO EN TIEMPO REAL
+  // VALIDACIÓN AJAX: NOMBRE COMPLETO EN TIEMPO REAL
   // ================================================
   const validarNombreEnTiempoReal = useCallback(async (nom, apP, apM) => {
     // Limpiar timeout anterior
     if (timeoutNombreRef.current) {
       clearTimeout(timeoutNombreRef.current);
     }
-
     // Validar que los tres campos tengan contenido
     if (!nom || !apP || !apM) {
       setNombreStatus({ mensaje: "", tipo: "" });
@@ -112,9 +105,9 @@ export default function Registro() {
     // Debouncing: Esperar 800ms
     timeoutNombreRef.current = setTimeout(async () => {
       try {
-        // ✅ PETICIÓN AJAX
         const response = await validarNombreCompleto(nom, apP, apM);
         
+        // USAR "existe" EN LUGAR DE "disponible"
         if (response.existe) {
           setNombreStatus({ 
             mensaje: "Ya existe un usuario con este nombre completo", 
@@ -131,32 +124,27 @@ export default function Registro() {
   }, []);
 
   // ========================================
-  // ✅ REGISTRO AJAX: ENVÍO DEL FORMULARIO
+  // REGISTRO AJAX: ENVÍO DEL FORMULARIO
   // ========================================
   const registrarUsuario = async (e) => {
-    e.preventDefault(); // ✅ Previene recarga de página
+    e.preventDefault(); // Previene recarga de página
     
-    console.log("=== INICIO REGISTRO ===");
-    
-    // ===== VALIDACIONES EN EL CLIENTE =====
+    console.log("INICIO REGISTRO");
     
     // Verificar errores de validación
     if (emailStatus.tipo === "error" || nombreStatus.tipo === "error") {
       alert("Por favor corrige los errores en el formulario");
       return;
     }
-    
     // Validar contraseñas
     if (pass1 !== pass2) {
       alert("Las contraseñas no coinciden");
       return;
     }
-    
     if (pass1.length < 6) {
       alert("La contraseña debe tener al menos 6 caracteres");
       return;
     }
-    
     if (!fechaNacimiento) {
       alert("Por favor ingresa tu fecha de nacimiento");
       return;
@@ -165,7 +153,7 @@ export default function Registro() {
     setLoading(true);
     
     try {
-      // ===== PREPARAR DATOS =====
+      // PREPARAR DATOS
       const userData = {
         nombre: nombre.trim(),
         apellido_p: apPaterno.trim(),
@@ -180,7 +168,7 @@ export default function Registro() {
       
       console.log("Enviando datos:", userData);
       
-      // ✅ PETICIÓN AJAX DE REGISTRO
+      // registro() en Api.js ya guarda en localStorage con la estructura correcta
       const data = await registro(userData);
       
       console.log("Registro exitoso:", data);
@@ -194,19 +182,21 @@ export default function Registro() {
     } catch (error) {
       console.error("Error en registro:", error);
       
-      // ===== MANEJO DE ERRORES =====
+      // MANEJO DE ERRORES
       let errorMsg = "Error al registrar usuario";
       try {
         const errorData = JSON.parse(error.message);
         if (errorData.correo) {
-          errorMsg = "Este correo ya está registrado";
+          errorMsg = Array.isArray(errorData.correo) ? errorData.correo[0] : "Este correo ya está registrado";
         } else if (errorData.nom_usuario) {
           errorMsg = "Este nombre de usuario ya está en uso";
+        } else if (errorData.error) {
+          errorMsg = errorData.error;
         } else {
           errorMsg = JSON.stringify(errorData);
         }
       } catch {
-        errorMsg = error.message;
+        errorMsg = error.message || "Error de conexión";
       }
       
       alert(errorMsg);
@@ -216,7 +206,7 @@ export default function Registro() {
   };
 
   // ========================================
-  // ✅ HANDLERS DE CAMBIO CON VALIDACIÓN
+  // HANDLERS DE CAMBIO CON VALIDACIÓN
   // ========================================
   
   const handleCorreoChange = (e) => {
@@ -224,19 +214,19 @@ export default function Registro() {
     setCorreo(nuevoCorreo);
     validarEmailEnTiempoReal(nuevoCorreo);
   };
-
+  
   const handleNombreChange = (e) => {
     const nuevoNombre = e.target.value;
     setNombre(nuevoNombre);
     validarNombreEnTiempoReal(nuevoNombre, apPaterno, apMaterno);
   };
-
+  
   const handleApPaternoChange = (e) => {
     const nuevoApPaterno = e.target.value;
     setApPaterno(nuevoApPaterno);
     validarNombreEnTiempoReal(nombre, nuevoApPaterno, apMaterno);
   };
-
+  
   const handleApMaternoChange = (e) => {
     const nuevoApMaterno = e.target.value;
     setApMaterno(nuevoApMaterno);
@@ -244,7 +234,7 @@ export default function Registro() {
   };
 
   // ========================================
-  // ✅ FUNCIÓN HELPER PARA ESTILOS
+  // FUNCIÓN HELPER PARA ESTILOS
   // ========================================
   const getStatusClass = (status) => {
     if (status.tipo === "success") return "status-success";
@@ -252,10 +242,6 @@ export default function Registro() {
     if (status.tipo === "validando") return "status-validando";
     return "";
   };
-
-  // ========================================
-  // ✅ RENDERIZADO
-  // ========================================
 
   return (
     <Base_Main tituloPagina="Registro">
@@ -310,8 +296,8 @@ export default function Registro() {
                 <tr>
                   <td colSpan="2">
                     <span className={`status-mensaje ${getStatusClass(nombreStatus)}`}>
-                      {nombreStatus.tipo === "validando" && "⏳ "}
-                      {nombreStatus.tipo === "error" && "⚠️ "}
+                      {nombreStatus.tipo === "validando"}
+                      {nombreStatus.tipo === "error"}
                       {nombreStatus.mensaje}
                     </span>
                   </td>
@@ -337,9 +323,9 @@ export default function Registro() {
                 <tr>
                   <td colSpan="2">
                     <span className={`status-mensaje ${getStatusClass(emailStatus)}`}>
-                      {emailStatus.tipo === "validando" && "⏳ "}
-                      {emailStatus.tipo === "error" && "❌ "}
-                      {emailStatus.tipo === "success" && "✅ "}
+                      {emailStatus.tipo === "validando"}
+                      {emailStatus.tipo === "error"}
+                      {emailStatus.tipo === "success"}
                       {emailStatus.mensaje}
                     </span>
                   </td>
@@ -390,6 +376,7 @@ export default function Registro() {
                   />
                 </td>
               </tr>
+              
             </tbody>
           </table>
 
