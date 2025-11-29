@@ -19,8 +19,9 @@ http {
         server_name mynetspace.ddns.net localhost;
 
         # LOGS DETALLADOS PARA DESARROLLO
-        access_log logs/access.log;
-        error_log logs/error.log debug;
+        
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log debug;
         
         # HEADERS DE DESARROLLO
         add_header X-Debug-Mode "Development" always;
@@ -75,7 +76,7 @@ http {
         #  React static files (JS, CSS)
         # =========================
         location /static/ {
-            alias /home/ubuntu/MySpace/MyS_Front/build/static;
+            alias /home/ubuntu/MySpace/MyS_Front/build/static/;
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
