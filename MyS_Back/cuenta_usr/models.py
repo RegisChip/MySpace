@@ -77,7 +77,7 @@ class Seguidores(models.Model):
         verbose_name_plural = "Seguimientos"
 
 
-class ConfiguracionesUsuario(models.Model): # Tabla bajo revision
+class ConfiguracionesUsuario(models.Model):
 
     MODO_TEMA_CHOICES = [
         ('claro', 'Claro'),
@@ -98,19 +98,10 @@ class ConfiguracionesUsuario(models.Model): # Tabla bajo revision
     acentos = models.CharField(max_length=45, default='#e74c3c')
     perfil = models.OneToOneField(Perfil, on_delete=models.CASCADE, related_name='configuracion')
 
-    # Propiedades adicionales de ConfiguracionesUsuario
     def __str__(self):
         return f"Configuración de {self.perfil.nom_usuario}"
     
-    class Meta: # Configura atributos de la tabla de BD
+    class Meta:
         db_table = 'cuenta_usr_configuracionesusuario' 
-        unique_together = ('perfil_seguidor', 'perfil_seguido')
-        constraints = [
-            models.CheckConstraint(
-                check=~models.Q(perfil_seguidor=models.F('perfil_seguido')),
-                name='no_self_follow'
-            )
-        ]
-        # Nombre de la tabla
         verbose_name = "ConfiguracionesUsuario"
         verbose_name_plural = "ConfiguracionesUsuarios"
