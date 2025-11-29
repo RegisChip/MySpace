@@ -21,7 +21,10 @@ SECRET_KEY = 'django-insecure-mj3no#%qp_-5^^t)y#c!ezm8iq)j9z1#20tu$2rag5iklv-vkw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'mynetspace.ddns.net'] # Dominio
+ALLOWED_HOSTS = ['localhost',
+                 '127.0.0.1',
+                 '0.0.0.0',
+                 'mynetspace.ddns.net'] # Dominio
 
 # Application definition
 
