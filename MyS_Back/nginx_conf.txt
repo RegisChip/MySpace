@@ -1,3 +1,5 @@
+# MySpace\MyS_Back\nginx_conf.txt
+
 worker_processes auto;  # Detecta automáticamente los núcleos del CPU
 
 events { 
