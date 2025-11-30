@@ -26,31 +26,21 @@ const Base_Main = ({ tituloPagina, children }) => {
                     {/* FOOTER DEL MAIN */}
                     <footer className="base-main-foot">
                         <p>
-                            <a
-                            href="https://validator.w3.org/#validate_by_input" target="_blank"
-                            rel="noreferrer"
-                            >
-                                <img
-                                style={{ border: 0, width: '88px', height: '31px' }}
-                                src="/w3c-html.png"
-                                alt="Valid HTML!" 
-                                />
-                            </a>
+                        <a href="https://validator.w3.org/nu/?doc=https://mynetspace.ddns.net" target="_blank" rel="noreferrer">
+                            <img style={{ border: 0, width: "88px", height: "31px" }}
+                                src="https://www.w3.org/Icons/valid-html401"
+                                alt="Valid HTML!" />
+                        </a>
                         </p>
-                        
+
                         <p>
-                            <a
-                            href="https://jigsaw.w3.org/css-validator/#validate_by_input"
-                            target="_blank"
-                            rel="noreferrer"
-                            >
-                                <img
-                                style={{ border: 0, width: '88px', height: '31px' }}
-                                src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
-                                alt="Valid CSS!" 
-                                />
+                            <a href="https://jigsaw.w3.org/css-validator/check/referer" target="_blank">
+                                <img style={{ border: 0, width: "88px", height: "31px" }} 
+                                    src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
+                                    alt="Valid CSS!" />
                             </a>
                         </p>
+
                     </footer>
                 </main>
 

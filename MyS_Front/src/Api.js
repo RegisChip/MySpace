@@ -1,6 +1,6 @@
 // Configuración de API usando HTTP y el dominio mynetspace.ddns.net
 const API_URL = window.location.hostname === "mynetspace.ddns.net"
-  ? "http://mynetspace.ddns.net/api"
+  ? "https://mynetspace.ddns.net/api"
   : "http://localhost/api";
 
 // Mensajes para la consola del navegador
