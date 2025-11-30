@@ -1,16 +1,13 @@
-// MySpace\MyS_Front\src\Api.js
-
-const API_URL = window.location.hostname === "localhost"
-  ? "https://localhost/api"
-  : `https://10.31.3.197/api`;
-  // Se utiliza https en localhost para simular un entorno seguro
+// Configuración de API usando HTTP y el dominio mynetspace.ddns.net
+const API_URL = window.location.hostname === "mynetspace.ddns.net"
+  ? "http://mynetspace.ddns.net/api"
+  : "http://localhost/api";
 
 // Mensajes para la consola del navegador
 console.log("[DESARROLLO] API_URL configurada:", API_URL);
-console.log("Modo HTTPS activado");
+console.log("Modo HTTP activado");
 
 //=================================================================================
-
 // ==================
 //  FUNCIONES HELPER
 // ==================
@@ -30,8 +27,7 @@ const getToken = () => {
   }
 };
 
-
-// Verificacion del estado del token (si es qu esta expirado)
+// Verificacion del estado del token (si es que esta expirado)
 const isTokenExpired = (token) => {
   if (!token) {
     console.warn("No hay token para verificar");
@@ -54,36 +50,42 @@ const isTokenExpired = (token) => {
 // ======================================================
 //  FUNCION PRINCIPAL PARA PETICIONES CON AUTENTICACION
 // ======================================================
-
 async function fetchConAuth(url, options = {}) {
   const token = getToken();
   // Mensajes para la consola del navegador: verificar si existe el token
   console.log("Verificando autenticación...");
   console.log("Token existe:", !!token);
   console.log("Token expirado:", token ? isTokenExpired(token) : "N/A");
+
   if (!token) {
     console.error("No hay token disponible");
     throw new Error("No estás autenticado o tu sesión expiró");
   }
+
   if (isTokenExpired(token)) {
     console.error("Token expirado");
     localStorage.removeItem("usuarioLogeado");
     throw new Error("No estás autenticado o tu sesión expiró");
   }
+
   const headers = {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`,
     ...options.headers,
   };
+
   // Mensajes para la consola del navegador: detalles de la peticion
   console.log(`[AUTH] ${options.method || 'GET'} ${API_URL}${url}`);
   console.log("Headers:", headers);
+
   const res = await fetch(`${API_URL}${url}`, {
     ...options,
     headers,
   });
+
   // Mensajes para la consola del navegador: resultado de la peticion
   console.log(`Status: ${res.status} ${res.statusText}`);
+
   if (!res.ok) {
     if (res.status === 401) {
       console.error("Backend rechazó el token (401)");
@@ -94,37 +96,40 @@ async function fetchConAuth(url, options = {}) {
     console.error("Error respuesta:", errorText);
     throw new Error(errorText || "Error al conectar con el backend");
   }
+
   // Mensajes para la consola del navegador: respuesta
   console.log("Petición exitosa");
   return res.json();
-};
+}
 
 // =============================================
 // FUNCION PRINCIPAL PARA PETICIONES PUBLICAS 
 // =============================================
-
 async function fetchPublico(url, options = {}) {
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
   };
+
   // Mensajes para la consola del navegador: detalles de la peticion
   console.log(`[PÚBLICO] ${options.method || 'GET'} ${API_URL}${url}`);
+
   const res = await fetch(`${API_URL}${url}`, {
     ...options,
     headers,
   });
+
   if (!res.ok) {
     const errorText = await res.text();
     // Mensajes para la consola del navegador: resultado de la peticion
     console.error("Error respuesta:", errorText);
     throw new Error(errorText || "Error al conectar con el backend");
   }
+
   return res.json();
-};
+}
 
 //=================================================================================
-
 // ================================================================================
 //  RECUPERACION DE LOS DATOS ENVIADOS DESDE EL BACKEND (USUARIOS Y PUBLICACIONES)
 // ================================================================================
@@ -132,12 +137,12 @@ async function fetchPublico(url, options = {}) {
 // =======================
 // AUTENTICACIÓN PÚBLICA
 // =======================
-
 export const registro = async (userData) => { // Registro del usuario
   const data = await fetchPublico("/usuario/registro/", {
     method: "POST",
     body: JSON.stringify(userData),
   });
+
   const usuarioLogeado = {
     usuario: data.usuario,
     perfil: {
@@ -152,18 +157,19 @@ export const registro = async (userData) => { // Registro del usuario
       refresh: data.tokens?.refresh
     }
   };
+
   // Mensajes para la consola del navegador: usuario registrado a la BD
   console.log("Guardando usuario:", usuarioLogeado);
   localStorage.setItem("usuarioLogeado", JSON.stringify(usuarioLogeado));
   return data;
 };
 
-
 export const login = async (correo, contrasena) => { // Inicio de Sesion
   const data = await fetchPublico("/usuario/login/", {
     method: "POST",
     body: JSON.stringify({ correo, contrasena }),
   });
+
   const usuarioLogeado = {
     usuario: data.usuario,
     perfil: {
@@ -178,12 +184,12 @@ export const login = async (correo, contrasena) => { // Inicio de Sesion
       refresh: data.tokens?.refresh
     }
   };
+
   // Mensajes para la consola del navegador: usuario guardado al iniciar sesion
   console.log("Guardando usuario:", usuarioLogeado);
   localStorage.setItem("usuarioLogeado", JSON.stringify(usuarioLogeado));
   return data;
 };
-
 
 export const logout = async () => { // Cierre de Sesion
   const usuario = JSON.parse(localStorage.getItem("usuarioLogeado"));
@@ -205,7 +211,6 @@ export const logout = async () => { // Cierre de Sesion
 // ====================
 //  VALIDACIONES AJAX 
 // ====================
-
 export const validarEmail = async (correo) => { // Validacion del email
   try {
     const data = await fetchPublico("/usuario/validar/email/", {
@@ -219,7 +224,6 @@ export const validarEmail = async (correo) => { // Validacion del email
     throw new Error("Error de conexión al validar el correo.");
   }
 };
-
 
 export const validarNombreCompleto = async (nombre, apellido_p, apellido_m) => { // Validacion del nombre completo
   try {
@@ -241,10 +245,13 @@ export const validarNombreCompleto = async (nombre, apellido_p, apellido_m) => {
 
 // ====== USUARIOS ======
 export const getUsuarios = () => fetchPublico("/usuario/usuarios/");
+
 export const getUsuarioPorId = (id) => 
   fetchPublico(`/usuario/usuarios/${id}/`);
+
 export const getUsuarioPorCorreo = (correo) => 
   fetchPublico(`/usuario/usuarios/por-correo/${correo}/`);
+
 export const actualizarUsuario = (id, data) =>
   fetchConAuth(`/usuario/usuarios/${id}/`, {
     method: "PUT",
@@ -253,16 +260,22 @@ export const actualizarUsuario = (id, data) =>
 
 // ====== PERFILES ======
 export const getPerfiles = () => fetchPublico("/usuario/perfiles/");
+
 export const getPerfilPorId = (id) => 
   fetchPublico(`/usuario/perfiles/${id}/`);
+
 export const getPerfilPorUsuario = (nomUsuario) =>
   fetchPublico(`/usuario/perfiles/por-usuario/${nomUsuario}/`);
+
 export const getSeguidoresPerfil = (perfilId) =>
   fetchPublico(`/usuario/perfiles/${perfilId}/seguidores/`);
+
 export const getSiguiendoPerfil = (perfilId) =>
   fetchPublico(`/usuario/perfiles/${perfilId}/siguiendo/`);
+
 export const getMiPerfil = () =>
   fetchConAuth("/usuario/perfiles/mi_perfil/");
+
 export const actualizarPerfil = (id, data) =>
   fetchConAuth(`/usuario/perfiles/${id}/`, {
     method: "PATCH",
@@ -272,8 +285,10 @@ export const actualizarPerfil = (id, data) =>
 // ====== PUBLICACIONES ======
 export const getPublicaciones = () => 
   fetchPublico("/publicaciones/publicaciones/");
+
 export const getPublicacionesPorPerfil = (perfilId) => 
   fetchPublico(`/publicaciones/publicaciones/por-perfil/${perfilId}/`);
+
 export const getFeedPublicaciones = (perfilId = null) => {
   const url = perfilId 
     ? `/publicaciones/publicaciones/feed/?perfil_id=${perfilId}`
@@ -299,6 +314,7 @@ export const darLikePublicacion = (publicacionId) =>
   fetchConAuth(`/publicaciones/publicaciones/${publicacionId}/dar_like/`, {
     method: "POST",
   });
+
 export const quitarLikePublicacion = (publicacionId) =>
   fetchConAuth(`/publicaciones/publicaciones/${publicacionId}/quitar_like/`, {
     method: "POST",
@@ -307,6 +323,7 @@ export const quitarLikePublicacion = (publicacionId) =>
 // ====== COMENTARIOS ======
 export const getComentariosPorPublicacion = (publicacionId) =>
   fetchPublico(`/publicaciones/comentarios/por-publicacion/${publicacionId}/`);
+
 export const getComentariosPorPerfil = (perfilId) =>
   fetchPublico(`/publicaciones/comentarios/por-perfil/${perfilId}/`);
 
@@ -328,16 +345,15 @@ export const darLikeComentario = (comentarioId) =>
   fetchConAuth(`/publicaciones/comentarios/${comentarioId}/dar_like/`, {
     method: "POST",
   });
+
 export const quitarLikeComentario = (comentarioId) =>
   fetchConAuth(`/publicaciones/comentarios/${comentarioId}/quitar_like/`, {
     method: "POST",
   });
 
-
 // =============
 //  UTILIDADES
 // =============
-
 export const estaAutenticado = () => {
   const token = getToken();
   return token && !isTokenExpired(token);

@@ -19,9 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mj3no#%qp_-5^^t)y#c!ezm8iq)j9z1#20tu$2rag5iklv-vkw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.1.144', '10.31.3.197']
+ALLOWED_HOSTS = ['localhost',
+                 '127.0.0.1',
+                 '0.0.0.0',
+                 'mynetspace.ddns.net'] # Dominio
 
 # Application definition
 
@@ -63,21 +66,15 @@ MIDDLEWARE = [
 
 # Permite tanto HTTP como HTTPS durante desarrollo
 CORS_ALLOWED_ORIGINS = [
-    "https://10.31.3.197",
-    "http://10.31.3.197",
-    'https://localhost',       # HTTPS (principal para desarrollo)
-    'https://localhost:3000',  # React dev server con HTTPS
-    'http://localhost:3000',   # React dev server sin HTTPS (fallback)
-    'https://127.0.0.1',       # IP local con HTTPS
+    "http://mynetspace.ddns.net", # dom : mynetspace.ddns.net
+    "http://localhost",
+    "http://127.0.0.1",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://localhost',
-    'https://localhost:3000',
-    'http://localhost:3000',
-    'https://127.0.0.1',
-    "https://10.31.3.197",
-    "http://10.31.3.197",
+    "http://mynetspace.ddns.net",
+    "http://localhost",
+    "http://127.0.0.1",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG # En desarrollo
@@ -111,11 +108,12 @@ CORS_ALLOW_METHODS = [
 # ============================================
 
 # CONFIGURACIÓN PARA HTTPS DETRÁS DE PROXY (NGINX)
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# CONFIGURACIÓN DE COOKIES PARA HTTPS
-SESSION_COOKIE_SECURE = True  # Solo envia cookie por HTTPS
-CSRF_COOKIE_SECURE = True     # Solo envia CSRF token por HTTPS
+# CONFIGURACIÓN DE COOKIES PARA HTTP
+SESSION_COOKIE_SECURE = False  # Solo envia cookie por HTTPS
+CSRF_COOKIE_SECURE = False     # Solo envia CSRF token por HTTPS
+SECURE_SSL_REDIRECT = False    # Decide si redirigir a HTTPS
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True

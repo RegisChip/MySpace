@@ -1,6 +1,4 @@
-# MySpace\MyS_Back\nginx_conf.txt
-# se modifica nginx.conf para que pueda actuar como proxy entre Django y React
-
+# Configuración de nginx para HTTP sin SSL
 worker_processes 1;
 
 events { 
@@ -14,35 +12,21 @@ http {
     keepalive_timeout 65;
 
     # ==============================
-    #  Redirigir HTTP → HTTPS
+    #  Servidor HTTP (Puerto 80)
     # ==============================
     server {
         listen 80;
-        server_name localhost;
-        return 301 https://$host$request_uri;
-    }
-
-    # ==============================
-    #  Servidor principal HTTPS (DESARROLLO)
-    # ==============================
-    server {
-        listen 443 ssl;
-        server_name localhost;
-
-        # --- Certificados generados con mkcert ---
-        ssl_certificate     C:/certs/localhost.pem;
-        ssl_certificate_key C:/certs/localhost-key.pem;
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_ciphers HIGH:!aNULL:!MD5;
+        server_name mynetspace.ddns.net localhost;
 
         # LOGS DETALLADOS PARA DESARROLLO
-        access_log logs/access.log;
-        error_log logs/error.log debug;  # Nivel debug para desarrollo
         
-        # HEADERS DE DESARROLLO (mostrar errores)
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log debug;
+        
+        # HEADERS DE DESARROLLO
         add_header X-Debug-Mode "Development" always;
         add_header X-Frame-Options "SAMEORIGIN" always;
-
+        
         # =========================
         #  Django API
         # =========================
@@ -51,10 +35,10 @@ http {
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Proto http;
+            proxy_set_header X-Forwarded-Host $host;
             
-            # ELIMINAR CORS HEADERS (Django los maneja)
-            # Solo manejar preflight de OPTIONS
+            # Manejo de preflight CORS
             if ($request_method = 'OPTIONS') {
                 add_header 'Access-Control-Allow-Origin' '$http_origin' always;
                 add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, PATCH, OPTIONS' always;
@@ -75,14 +59,15 @@ http {
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Proto http;
+            proxy_set_header X-Forwarded-Host $host;
         }
 
         # =========================
         #  Django static files
         # =========================
         location /django_static/ {
-            alias C:/MyS_U4/MySpace/MyS_Back/staticfiles/;
+            alias /home/ubuntu/MySpace/MyS_Back/staticfiles;
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
@@ -91,7 +76,7 @@ http {
         #  React static files (JS, CSS)
         # =========================
         location /static/ {
-            alias C:/MyS_U4/MySpace/MyS_Front/build/static/;
+            alias /home/ubuntu/MySpace/MyS_Front/build/static/;
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
@@ -100,7 +85,7 @@ http {
         #  React manifest, favicon, logos
         # =========================
         location ~* ^/(manifest\.json|favicon\.ico|logo192\.png|logo512\.png|robots\.txt)$ {
-            root C:/MyS_U4/MySpace/MyS_Front/build;
+            root /home/ubuntu/MySpace/MyS_Front/build;
             access_log off;
         }
 
@@ -108,7 +93,7 @@ http {
         #  React index.html
         # =========================
         location / {
-            root C:/MyS_U4/MySpace/MyS_Front/build;
+            root /home/ubuntu/MySpace/MyS_Front/build;
             index index.html;
             try_files $uri /index.html;
         }

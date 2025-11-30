@@ -3,10 +3,10 @@
 POSTGRESQL = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'BD_MySpace',
+        'NAME': 'myspacedb',
         'USER': 'postgres',
-        'PASSWORD': '3118Ch$',
-        'HOST': 'localhost',
+        'PASSWORD': '31183119Ch$',
+        'HOST': 'my-db.c5aws0m88zhk.us-east-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
