@@ -66,13 +66,13 @@ MIDDLEWARE = [
 
 # Permite tanto HTTP como HTTPS durante desarrollo
 CORS_ALLOWED_ORIGINS = [
-    "http://mynetspace.ddns.net", # dom : mynetspace.ddns.net
+    "https://mynetspace.ddns.net", # dom : mynetspace.ddns.net
     "http://localhost",
     "http://127.0.0.1",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://mynetspace.ddns.net",
+    "https://mynetspace.ddns.net",
     "http://localhost",
     "http://127.0.0.1",
 ]
@@ -111,9 +111,9 @@ CORS_ALLOW_METHODS = [
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # CONFIGURACIÓN DE COOKIES PARA HTTP
-SESSION_COOKIE_SECURE = False  # Solo envia cookie por HTTPS
-CSRF_COOKIE_SECURE = False     # Solo envia CSRF token por HTTPS
-SECURE_SSL_REDIRECT = False    # Decide si redirigir a HTTPS
+SESSION_COOKIE_SECURE = True  # Solo envia cookie por HTTPS
+CSRF_COOKIE_SECURE = True    # Solo envia CSRF token por HTTPS
+SECURE_SSL_REDIRECT = True    # Decide si redirigir a HTTPS
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True
