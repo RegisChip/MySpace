@@ -163,7 +163,7 @@ export default function Registro() {
         fecha_nacimiento: new Date(fechaNacimiento).toISOString(),
         nom_usuario: nombre.toLowerCase().replace(/\s+/g, ''),
         descripcion: "",
-        foto_perfil: ""
+        foto_perfil: "/user.svg"
       };
       
       console.log("Enviando datos:", userData);
