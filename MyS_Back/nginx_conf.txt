@@ -67,7 +67,7 @@ http {
         #  Django static files
         # =========================
         location /django_static/ {
-            alias /home/ubuntu/MySpace/MyS_Back/staticfiles;
+            alias /home/ubuntu/MySpace/MyS_Back/staticfiles/;
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
