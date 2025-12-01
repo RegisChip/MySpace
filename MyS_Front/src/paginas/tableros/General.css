@@ -468,3 +468,31 @@
     width: 180px;
   }
 }
+
+/* ========================================
+   AJUSTE PARA IMAGEN DE PERFIL POR DEFECTO
+======================================== */
+
+/* Avatar en posts - general-ima-inf */
+.general-ima-inf[src="/user.svg"],
+.general-ima-inf[src$="user.svg"] {
+  object-fit: contain !important; /* Mostrar completa sin recortar */
+  padding: 3px; /* Espacio interno */
+  background-color: #f5f5f5; /* Fondo gris claro */
+}
+
+/* Avatar en comentarios - general-comentario-avatar */
+.general-comentario-avatar[src="/user.svg"],
+.general-comentario-avatar[src$="user.svg"] {
+  object-fit: contain !important;
+  padding: 3px;
+  background-color: #f5f5f5;
+}
+
+/* También se puede aplicar a todas las imágenes dentro de general-info-main */
+.general-info-main img[src="/user.svg"],
+.general-info-main img[src$="user.svg"] {
+  object-fit: contain !important;
+  padding: 3px;
+  background-color: #f5f5f5;
+}

@@ -581,20 +581,24 @@
 /* Imagen principal del perfil en el header */
 .perfil-main-ima-perf img[src="/user.svg"],
 .perfil-main-ima-perf img[src$="user.svg"] {
-  object-fit: contain !important; /* Mostrar completa */
-  padding: 10px; /* Espacio interno para que no toque los bordes */
-  background-color: #f5f5f5; /* Fondo suave */
+  object-fit: contain !important;
+  padding: 10px;
+  background-color: #f5f5f5;
 }
 
-/* Avatar pequeño en los posts */
-.perfil-ima-inf[src="/user.svg"],
-.perfil-ima-inf[src$="user.svg"] {
+/* Avatar pequeño en los posts - MAYOR ESPECIFICIDAD */
+.perfil-info-main .perfil-ima-inf[src="/user.svg"],
+.perfil-info-main .perfil-ima-inf[src$="user.svg"],
+.perfil-info-main img[src="/user.svg"],
+.perfil-info-main img[src$="user.svg"] {
   object-fit: contain !important;
   padding: 3px;
   background-color: #f5f5f5;
 }
 
 /* Avatar en comentarios */
+.perfil-comentario-header .perfil-comentario-avatar[src="/user.svg"],
+.perfil-comentario-header .perfil-comentario-avatar[src$="user.svg"],
 .perfil-comentario-avatar[src="/user.svg"],
 .perfil-comentario-avatar[src$="user.svg"] {
   object-fit: contain !important;
